@@ -1,0 +1,15 @@
+/**
+ * FluxStack Admin Styles
+ * 
+ * This is the main entry point for all admin-related styles.
+ * Each component is organized into its own partial file for better maintainability.
+ */
+
+// Core variables
+@use 'variables' as *;
+
+// Forward all component styles
+@forward 'wp-admin';     // WordPress admin interface styles
+@forward 'login';        // Login page customization
+@forward 'page-builder'; // Page builder interface customization
+@forward 'acf';         // ACF fields and interface styling

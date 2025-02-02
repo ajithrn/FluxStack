@@ -1,0 +1,205 @@
+{
+    "key": "group_fluxstack_general_settings",
+    "title": "Theme Settings",
+    "fields": [
+        {
+            "key": "field_branding_tab",
+            "label": "Branding",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_site_logo",
+            "label": "Site Logo",
+            "name": "site_logo",
+            "type": "image",
+            "return_format": "array",
+            "preview_size": "medium",
+            "instructions": "Upload your site logo",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        },
+        {
+            "key": "field_contact_tab",
+            "label": "Contact Info",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_contact_email",
+            "label": "Email Address",
+            "name": "contact_email",
+            "type": "email",
+            "instructions": "Primary contact email address",
+            "required": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        },
+        {
+            "key": "field_contact_phone",
+            "label": "Phone Number",
+            "name": "contact_phone",
+            "type": "text",
+            "instructions": "Primary contact phone number",
+            "required": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        },
+        {
+            "key": "field_contact_address",
+            "label": "Address",
+            "name": "contact_address",
+            "type": "textarea",
+            "instructions": "Business address",
+            "required": 0,
+            "rows": 4,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        },
+        {
+            "key": "field_social_tab",
+            "label": "Social Media",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_social_media",
+            "label": "Social Media Links",
+            "name": "social_media_links",
+            "type": "repeater",
+            "instructions": "Add your social media profiles",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "Add Social Media",
+            "sub_fields": [
+                {
+                    "key": "field_social_platform",
+                    "label": "Platform",
+                    "name": "platform",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "fab fa-facebook": "Facebook",
+                        "fab fa-twitter": "Twitter",
+                        "fab fa-instagram": "Instagram",
+                        "fab fa-linkedin": "LinkedIn",
+                        "fab fa-youtube": "YouTube",
+                        "fab fa-pinterest": "Pinterest",
+                        "fab fa-tiktok": "TikTok",
+                        "fab fa-github": "GitHub",
+                        "fab fa-dribbble": "Dribbble",
+                        "fab fa-behance": "Behance",
+                        "fab fa-medium": "Medium",
+                        "fab fa-reddit": "Reddit",
+                        "fab fa-snapchat": "Snapchat",
+                        "fab fa-whatsapp": "WhatsApp",
+                        "fab fa-telegram": "Telegram",
+                        "fab fa-discord": "Discord"
+                    },
+                    "default_value": false,
+                    "allow_null": 0,
+                    "multiple": 0,
+                    "ui": 1,
+                    "ajax": 0,
+                    "return_format": "value",
+                    "placeholder": ""
+                },
+                {
+                    "key": "field_social_url",
+                    "label": "Profile URL",
+                    "name": "url",
+                    "type": "url",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": ""
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "theme-options"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1736250718
+}

@@ -1,0 +1,80 @@
+@use 'variables' as v;
+
+/**
+ * Page Builder Customizations
+ */
+
+/* Hide Plugin and Theme Buttons from Editor */
+#ast-block-templates-button-wrap,
+#toolbar-edit_with_bricks,
+.kadence-toolbar-design-library,
+.components-button[aria-label="Spectra Page Settings"],
+.components-button[aria-label="Stackable Settings"],
+.components-button[aria-label="Kadence Blocks Controls"],
+.e19lxcc00 .components-panel__body:first-child {
+    display: none !important;
+}
+
+/* Block Editor Customizations */
+.block-editor {
+    &__container {
+        .wp-block {
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    &__toolbar {
+        background: v.$light;
+        border-bottom: 1px solid #ddd;
+        
+        .components-button {
+            color: #666;
+            
+            &:hover {
+                color: v.$primary;
+            }
+            
+            &.is-pressed {
+                background: v.$primary;
+                color: #fff;
+            }
+        }
+    }
+}
+
+/* Editor UI Elements */
+.edit-post-header {
+    background: v.$light;
+    border-bottom: 1px solid #ddd;
+}
+
+.edit-post-sidebar {
+    background: v.$light;
+    border-left: 1px solid #ddd;
+}
+
+/* Block Controls */
+.components-panel {
+    background: v.$light;
+    
+    &__body-title {
+        background: #fafafa;
+        
+        &:hover {
+            background: #f0f0f0;
+        }
+    }
+}
+
+/* Block Selection */
+.block-editor-block-list__block {
+    &.is-selected {
+        outline: 2px solid v.$primary;
+    }
+    
+    &.is-highlighted {
+        outline: 1px solid v.$secondary;
+    }
+}

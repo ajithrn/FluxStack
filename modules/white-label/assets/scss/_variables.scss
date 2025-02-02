@@ -1,0 +1,27 @@
+// Colors
+$dark: var(--fs-primary, #1e1e1e) !default;
+$primary: var(--fs-primary, #0073aa) !default;
+$secondary: var(--fs-secondary, #00a0d2) !default;
+$light: var(--fs-light, #f8f9fa) !default;
+
+// Menu Colors
+$menu-bg: #23282d !default;
+$menu-hover-bg: #32373c !default;
+$menu-text: #b4b9be !default;
+$menu-text-hover: #fff !default;
+
+// Notifications
+$success: #46b450 !default;
+$warning: #ffb900 !default;
+$error: #dc3232 !default;
+
+// Spacing
+$spacing-sm: 10px !default;
+$spacing-md: 15px !default;
+$spacing-lg: 20px !default;
+
+// Border Radius
+$border-radius: 3px !default;
+
+// Box Shadow
+$box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04) !default;

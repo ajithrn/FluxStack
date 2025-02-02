@@ -1,0 +1,42 @@
+@use 'variables' as v;
+
+/**
+ * Login Page Customization
+ */
+.login {
+    h1 a {
+        background-size: contain !important;
+        width: auto !important;
+        height: 100px !important;
+    }
+
+    form {
+        border-radius: v.$border-radius;
+        box-shadow: v.$box-shadow;
+    }
+
+    .button-primary {
+        background: v.$primary;
+        border-color: v.$primary;
+
+        &:hover {
+            background: v.$secondary;
+            border-color: v.$secondary;
+        }
+    }
+
+    #nav,
+    #backtoblog {
+        a {
+            color: v.$primary;
+
+            &:hover {
+                color: v.$secondary;
+            }
+        }
+    }
+
+    .message {
+        border-left-color: v.$primary;
+    }
+}

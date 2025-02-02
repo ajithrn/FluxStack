@@ -1,0 +1,6 @@
+# Dependencies
+node_modules/
+
+# Generated files
+assets/css/*.css
+assets/css/*.css.map

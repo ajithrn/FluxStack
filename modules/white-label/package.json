@@ -1,0 +1,15 @@
+{
+  "name": "fluxstack-white-label",
+  "version": "1.0.0",
+  "description": "FluxStack White Label Module",
+  "scripts": {
+    "build": "sass assets/scss/admin.scss:assets/css/admin.min.css --style=compressed --no-source-map",
+    "watch": "sass assets/scss/admin.scss:assets/css/admin.min.css --watch --style=compressed --no-source-map"
+  },
+  "devDependencies": {
+    "sass": "^1.70.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

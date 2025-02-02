@@ -1,0 +1,192 @@
+@use 'variables' as v;
+
+/**
+ * WordPress Admin Area Styles
+ */
+
+/* Admin Menu */
+#adminmenu, 
+#adminmenu .wp-submenu, 
+#adminmenuback, 
+#adminmenuwrap {
+    background: v.$dark;
+}
+
+/* Menu Items */
+#adminmenu {
+    a {
+        color: v.$menu-text;
+    }
+
+    div.wp-menu-image:before {
+        color: v.$menu-text;
+    }
+
+    // Hover States
+    li.menu-top:hover,
+    li.opensub > a.menu-top,
+    li > a.menu-top:focus {
+        background: v.$menu-hover-bg;
+    }
+
+    a:hover,
+    li.menu-top:hover > a,
+    li.opensub > a.menu-top {
+        color: v.$menu-text-hover;
+    }
+
+    li:hover div.wp-menu-image:before,
+    li.opensub div.wp-menu-image:before {
+        color: v.$menu-text-hover;
+    }
+
+    // Submenus
+    .wp-submenu {
+        background: v.$menu-bg !important;
+        z-index: 9999;
+
+        a {
+            color: v.$menu-text;
+
+            &:focus,
+            &:hover {
+                color: v.$menu-text-hover;
+                background: v.$menu-hover-bg;
+            }
+        }
+
+        li.current {
+            background: v.$menu-hover-bg;
+
+            a {
+                color: v.$menu-text-hover;
+            }
+        }
+    }
+
+    // Active/Current States
+    li.current,
+    li.wp-has-current-submenu {
+        a.menu-top,
+        a.wp-has-current-submenu {
+            background: v.$primary;
+            color: v.$menu-text-hover;
+        }
+
+        div.wp-menu-image:before {
+            color: v.$menu-text-hover;
+        }
+
+        .wp-submenu {
+            background: v.$menu-hover-bg !important;
+
+            a {
+                color: v.$menu-text;
+
+                &:focus,
+                &:hover {
+                    color: v.$menu-text-hover;
+                }
+            }
+
+            li.current a {
+                color: v.$menu-text-hover;
+            }
+        }
+    }
+}
+
+/* Admin Bar */
+#wpadminbar {
+    background: v.$dark;
+
+    .ab-item {
+        color: v.$menu-text-hover !important;
+    }
+}
+
+/* Admin Footer */
+#wpfooter {
+    background: v.$light;
+    padding: v.$spacing-md v.$spacing-lg;
+    color: #666;
+
+    a {
+        color: v.$primary;
+        text-decoration: none;
+
+        &:hover {
+            color: v.$secondary;
+        }
+    }
+}
+
+/* Admin Forms and Buttons */
+.wp-core-ui .button-primary {
+    background: v.$primary;
+    border-color: v.$primary;
+
+    &:hover {
+        background: v.$secondary;
+        border-color: v.$secondary;
+    }
+}
+
+/* Admin Notices */
+.notice {
+    border-left-color: v.$primary;
+
+    &-success {
+        border-left-color: v.$success;
+    }
+
+    &-warning {
+        border-left-color: v.$warning;
+    }
+
+    &-error {
+        border-left-color: v.$error;
+    }
+}
+
+/* Admin Cards and Boxes */
+.postbox {
+    border-radius: v.$border-radius;
+    border: 1px solid v.$light;
+    box-shadow: v.$box-shadow;
+
+    .hndle {
+        border-bottom: 1px solid v.$light;
+        background: v.$light;
+    }
+}
+
+/* Admin Tables */
+.wp-list-table {
+    thead tr th,
+    tfoot tr th {
+        background: v.$light;
+    }
+
+    tbody tr:hover {
+        background: v.$light;
+    }
+}
+
+/* Admin Links */
+.wrap .page-title-action {
+    background: v.$primary;
+    color: v.$menu-text-hover;
+    border-color: v.$primary;
+
+    &:hover {
+        background: v.$secondary;
+        border-color: v.$secondary;
+        color: v.$menu-text-hover;
+    }
+}
+
+/* Admin Menu Arrow */
+#adminmenu li.wp-has-submenu.wp-not-current-submenu:hover:after {
+    border-right-color: v.$menu-bg !important;
+}

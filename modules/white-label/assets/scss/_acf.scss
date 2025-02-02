@@ -1,0 +1,133 @@
+@use 'variables' as v;
+
+/**
+ * ACF UI Customizations
+ */
+
+/* Field Group Styling */
+.acf-field-group {
+    margin-left: v.$spacing-lg;
+    margin-right: v.$spacing-lg;
+}
+
+/* Tab Navigation */
+.acf-tab-wrap {
+    overflow: hidden!important;
+    background: #eeeeef;
+
+    ul {
+        padding: 0;
+    }
+
+    .acf-tab-group {
+        border-bottom: none;
+
+        li {
+            margin: 0;
+
+            a {
+                background: transparent;
+                border: none;
+                padding: v.$spacing-md v.$spacing-lg !important;
+                color: #666;
+
+                &:hover {
+                    color: v.$primary;
+                }
+            }
+
+            &.active a {
+                background: #fafafa!important;
+                color: v.$primary;
+            }
+        }
+    }
+}
+
+/* Field Group Container */
+[id^="acf-group_"] {
+    padding: 0;
+    border-radius: v.$border-radius;
+    margin-top: v.$spacing-lg;
+
+    // Specific group styling
+    &#acf-group_stores_info {
+        background: #fafafa!important;
+        padding: 0;
+        border-radius: 5px;
+
+        .acf-tab-wrap {
+            overflow: hidden;
+            background: #eeeeef;
+
+            ul {
+                padding: 0;
+            }
+        }
+
+        .acf-field-group {
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+    }
+}
+
+/* Field Labels */
+.acf-label {
+    label {
+        font-weight: 600;
+        color: #23282d;
+    }
+
+    .description {
+        color: #666;
+    }
+}
+
+/* Field Input Styling */
+.acf-input {
+    input[type="text"],
+    input[type="password"],
+    input[type="number"],
+    input[type="search"],
+    input[type="email"],
+    input[type="url"],
+    textarea,
+    select {
+        border: 1px solid #ddd;
+        border-radius: v.$border-radius;
+        padding: 8px;
+        
+        &:focus {
+            border-color: v.$primary;
+            box-shadow: 0 0 0 1px v.$primary;
+        }
+    }
+}
+
+/* Repeater Fields */
+.acf-repeater {
+    .acf-row-handle {
+        background: #f5f5f5;
+    }
+
+    .acf-row:hover {
+        .acf-row-handle {
+            background: #eee;
+        }
+    }
+}
+
+/* Flexible Content */
+.acf-flexible-content {
+    .layout {
+        margin: v.$spacing-md 0;
+        border: 1px solid #ddd;
+        border-radius: v.$border-radius;
+
+        .acf-fc-layout-handle {
+            background: #f5f5f5;
+            padding: v.$spacing-md;
+        }
+    }
+}
