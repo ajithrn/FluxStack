@@ -8,6 +8,7 @@
 class FS_Theme_Options {
     const GENERAL_SETTINGS_GROUP_ID = 'group_fluxstack_general_settings';
     const FOOTER_SETTINGS_GROUP_ID = 'group_fluxstack_footer_settings';
+    const HOME_SETTINGS_GROUP_ID = 'group_fluxstack_home_settings';
     private static $acf_json_path;
 
     public static function init() {
@@ -47,6 +48,12 @@ class FS_Theme_Options {
             'menu_title'    => __('Footer', 'fluxstack'),
             'parent_slug'   => 'theme-options',
         ));
+
+        acf_add_options_sub_page(array(
+            'page_title'    => __('Home Page Settings', 'fluxstack'),
+            'menu_title'    => __('Home Page', 'fluxstack'),
+            'parent_slug'   => 'theme-options',
+        ));
     }
 
     /**
@@ -67,7 +74,8 @@ class FS_Theme_Options {
      */
     public static function update_field_group($group) {
         if ($group['key'] === self::GENERAL_SETTINGS_GROUP_ID || 
-            $group['key'] === self::FOOTER_SETTINGS_GROUP_ID) {
+            $group['key'] === self::FOOTER_SETTINGS_GROUP_ID ||
+            $group['key'] === self::HOME_SETTINGS_GROUP_ID) {
             add_filter('acf/settings/save_json', function() {
                 return self::$acf_json_path;
             });
@@ -105,6 +113,15 @@ class FS_Theme_Options {
      */
     public static function get_payroll_button() {
         return self::get_option('footer_button');
+    }
+
+    /**
+     * Get home slider items
+     *
+     * @return array|false Slider items or false if not set
+     */
+    public static function get_home_slider() {
+        return self::get_option('home_slider');
     }
 }
 
