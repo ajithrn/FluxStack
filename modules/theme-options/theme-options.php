@@ -7,6 +7,7 @@
 
 class FS_Theme_Options {
     const GENERAL_SETTINGS_GROUP_ID = 'group_fluxstack_general_settings';
+    const FOOTER_SETTINGS_GROUP_ID = 'group_fluxstack_footer_settings';
     private static $acf_json_path;
 
     public static function init() {
@@ -65,7 +66,8 @@ class FS_Theme_Options {
      * @param array $group The field group being updated
      */
     public static function update_field_group($group) {
-        if ($group['key'] === self::GENERAL_SETTINGS_GROUP_ID) {
+        if ($group['key'] === self::GENERAL_SETTINGS_GROUP_ID || 
+            $group['key'] === self::FOOTER_SETTINGS_GROUP_ID) {
             add_filter('acf/settings/save_json', function() {
                 return self::$acf_json_path;
             });
@@ -84,6 +86,25 @@ class FS_Theme_Options {
             return get_field($option_name, 'option') ?? $default;
         }
         return $default;
+    }
+
+    /**
+     * Get copyright text with year placeholder replaced
+     *
+     * @return string Formatted copyright text
+     */
+    public static function get_copyright_text() {
+        $copyright = self::get_option('copyright_text', '© {year} Your Company. All rights reserved.');
+        return str_replace('{year}', date('Y'), $copyright);
+    }
+
+    /**
+     * Get payroll button settings
+     *
+     * @return array|false Button settings or false if not set
+     */
+    public static function get_payroll_button() {
+        return self::get_option('footer_button');
     }
 }
 

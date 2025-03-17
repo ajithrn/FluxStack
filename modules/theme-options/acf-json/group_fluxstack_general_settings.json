@@ -139,6 +139,7 @@
                         "id": ""
                     },
                     "choices": {
+                        "fas fa-envelope": "Newsletter",
                         "fab fa-facebook": "Facebook",
                         "fab fa-twitter": "Twitter",
                         "fab fa-instagram": "Instagram",

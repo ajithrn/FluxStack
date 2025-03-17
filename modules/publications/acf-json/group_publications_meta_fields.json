@@ -1,0 +1,484 @@
+{
+    "key": "group_publications_meta_fields",
+    "title": "Publication Details",
+    "fields": [
+        {
+            "key": "field_publication_type",
+            "label": "Publication Type",
+            "name": "publication_type",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Select the type of publication.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "newsletters": "Newsletters",
+                "benefits-handbook": "Benefits Handbook",
+                "informational-pamphlets": "Informational Pamphlets",
+                "actuarial-valuations": "Actuarial Valuations",
+                "annual-reports": "Annual Reports"
+            },
+            "default_value": "",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 1,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_publication_file",
+            "label": "Publication File",
+            "name": "publication_file",
+            "aria-label": "",
+            "type": "file",
+            "instructions": "Upload the PDF file for this publication.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": "pdf"
+        },
+        {
+            "key": "field_publication_date",
+            "label": "Publication Date",
+            "name": "publication_date",
+            "aria-label": "",
+            "type": "date_picker",
+            "instructions": "Select the publication date.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "F j, Y",
+            "return_format": "Y-m-d",
+            "first_day": 1
+        },
+        {
+            "key": "field_publication_description",
+            "label": "Description",
+            "name": "publication_description",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Enter a brief description of this publication.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 4,
+            "new_lines": "wpautop"
+        },
+        {
+            "key": "field_newsletter_details",
+            "label": "Newsletter Details",
+            "name": "newsletter_details",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_publication_type",
+                        "operator": "==",
+                        "value": "newsletters"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_newsletter_season",
+                    "label": "Season",
+                    "name": "season",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "Select the season for this newsletter.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "spring": "Spring",
+                        "summer": "Summer",
+                        "fall": "Fall",
+                        "winter": "Winter"
+                    },
+                    "default_value": "spring",
+                    "allow_null": 0,
+                    "multiple": 0,
+                    "ui": 1,
+                    "return_format": "value",
+                    "ajax": 0,
+                    "placeholder": ""
+                },
+                {
+                    "key": "field_newsletter_year",
+                    "label": "Year",
+                    "name": "year",
+                    "aria-label": "",
+                    "type": "number",
+                    "instructions": "Enter the year for this newsletter.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "min": 1900,
+                    "max": 2100,
+                    "step": 1
+                }
+            ]
+        },
+        {
+            "key": "field_benefits_handbook_details",
+            "label": "Benefits Handbook Details",
+            "name": "benefits_handbook_details",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_publication_type",
+                        "operator": "==",
+                        "value": "benefits-handbook"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_handbook_version",
+                    "label": "Version/Year",
+                    "name": "version",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "Enter the version or year for this handbook.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "e.g., 2023 or July 2023",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                }
+            ]
+        },
+        {
+            "key": "field_pamphlet_details",
+            "label": "Informational Pamphlet Details",
+            "name": "pamphlet_details",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_publication_type",
+                        "operator": "==",
+                        "value": "informational-pamphlets"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_pamphlet_topic",
+                    "label": "Topic Category",
+                    "name": "topic",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "Select the topic category for this pamphlet.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "benefits": "Benefits",
+                        "retirement": "Retirement",
+                        "financial": "Financial",
+                        "health": "Health",
+                        "legal": "Legal",
+                        "other": "Other"
+                    },
+                    "default_value": "benefits",
+                    "allow_null": 0,
+                    "multiple": 0,
+                    "ui": 1,
+                    "return_format": "value",
+                    "ajax": 0,
+                    "placeholder": ""
+                }
+            ]
+        },
+        {
+            "key": "field_actuarial_details",
+            "label": "Actuarial Valuation Details",
+            "name": "actuarial_details",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_publication_type",
+                        "operator": "==",
+                        "value": "actuarial-valuations"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_valuation_period",
+                    "label": "Valuation Period",
+                    "name": "period",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "Enter the valuation period (e.g., 'Year Beginning July 1, 2023').",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "Year Beginning July 1,",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_valuation_type",
+                    "label": "Valuation Type",
+                    "name": "type",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "Select the type of actuarial document.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "valuation": "Actuarial Valuation",
+                        "experience": "Experience Study",
+                        "other": "Other"
+                    },
+                    "default_value": "valuation",
+                    "allow_null": 0,
+                    "multiple": 0,
+                    "ui": 1,
+                    "return_format": "value",
+                    "ajax": 0,
+                    "placeholder": ""
+                }
+            ]
+        },
+        {
+            "key": "field_annual_report_details",
+            "label": "Annual Report Details",
+            "name": "annual_report_details",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_publication_type",
+                        "operator": "==",
+                        "value": "annual-reports"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_report_fiscal_year",
+                    "label": "Fiscal Year",
+                    "name": "fiscal_year",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "Enter the fiscal year for this report (e.g., 'Year Ended June 30, 2023').",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "Year Ended June 30,",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_report_sections",
+                    "label": "Report Sections",
+                    "name": "sections",
+                    "aria-label": "",
+                    "type": "repeater",
+                    "instructions": "Add sections of the annual report (if applicable).",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "collapsed": "field_section_title",
+                    "min": 0,
+                    "max": 0,
+                    "layout": "table",
+                    "button_label": "Add Section",
+                    "sub_fields": [
+                        {
+                            "key": "field_section_title",
+                            "label": "Section Title",
+                            "name": "title",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "e.g., Financial Section",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_section_file",
+                            "label": "Section File",
+                            "name": "file",
+                            "aria-label": "",
+                            "type": "file",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "return_format": "array",
+                            "library": "all",
+                            "min_size": "",
+                            "max_size": "",
+                            "mime_types": "pdf"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "publication"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "the_content",
+        "excerpt",
+        "discussion",
+        "comments",
+        "revisions",
+        "slug",
+        "author",
+        "format",
+        "page_attributes",
+        "categories",
+        "tags",
+        "send-trackbacks"
+    ],
+    "active": true,
+    "description": "Custom fields for publications",
+    "show_in_rest": 0,
+    "modified": 1735544632
+}

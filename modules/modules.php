@@ -26,6 +26,15 @@ require_once dirname( __FILE__ ) . '/image-gallery/image-gallery.php';
 // White label module
 require_once dirname(__FILE__) . '/white-label/white-label.php';
 
+// Teams module
+require_once dirname(__FILE__) . '/teams/teams.php';
+
+// Publications module
+require_once dirname(__FILE__) . '/publications/publications.php';
+
+// News Archives module
+require_once dirname(__FILE__) . '/news-archives/news-archives.php';
+
 // Initialize modules
 FS_Bricks::init();
 FS_Utils::init();
@@ -34,3 +43,6 @@ FS_Dynamic_Snippets::init();
 FS_Image_Gallery::init();
 FS_Testimonials::init();
 FS_White_Label::init();
+FS_Teams::init();
+FS_Publications::init();
+FS_News_Archives::init();
