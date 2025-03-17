@@ -8,6 +8,7 @@
 class FS_Publications {
     const ACF_GROUP_ID = 'group_publications_meta_fields';
     private static $acf_json_path;
+    const TAXONOMY_NAME = 'publication_type';
     
     // Publication type options
     public static $publication_types = array(
@@ -22,6 +23,7 @@ class FS_Publications {
         self::$acf_json_path = get_stylesheet_directory() . '/modules/publications/acf-json';
         
         add_action('init', array(__CLASS__, 'register_post_type'), 0);
+        add_action('init', array(__CLASS__, 'register_taxonomy'), 0);
         add_filter('acf/settings/load_json', array(__CLASS__, 'add_acf_json_load_point'));
         add_action('acf/update_field_group', array(__CLASS__, 'update_field_group'), 1, 1);
         
@@ -36,8 +38,80 @@ class FS_Publications {
         
         // Set default sort order
         add_action('pre_get_posts', array(__CLASS__, 'set_default_sort_order'));
+        
+        // Sync ACF field with taxonomy
+        add_action('acf/save_post', array(__CLASS__, 'sync_acf_with_taxonomy'), 20);
+        
+        // Hide taxonomy metabox
+        add_action('admin_menu', array(__CLASS__, 'remove_taxonomy_metabox'));
+        
+        // Dynamically populate ACF field choices from taxonomy terms
+        add_filter('acf/load_field/key=field_publication_type', array(__CLASS__, 'load_publication_type_choices'));
     }
 
+    /**
+     * Register the publication_type taxonomy
+     */
+    public static function register_taxonomy() {
+        $labels = array(
+            'name'              => _x('Publication Types', 'taxonomy general name', 'fluxstack'),
+            'singular_name'     => _x('Publication Type', 'taxonomy singular name', 'fluxstack'),
+            'search_items'      => __('Search Publication Types', 'fluxstack'),
+            'all_items'         => __('All Publication Types', 'fluxstack'),
+            'parent_item'       => __('Parent Publication Type', 'fluxstack'),
+            'parent_item_colon' => __('Parent Publication Type:', 'fluxstack'),
+            'edit_item'         => __('Edit Publication Type', 'fluxstack'),
+            'update_item'       => __('Update Publication Type', 'fluxstack'),
+            'add_new_item'      => __('Add New Publication Type', 'fluxstack'),
+            'new_item_name'     => __('New Publication Type Name', 'fluxstack'),
+            'menu_name'         => __('Publication Types', 'fluxstack'),
+        );
+
+        $args = array(
+            'hierarchical'      => true,
+            'labels'            => $labels,
+            'show_ui'           => true,
+            'show_admin_column' => false, // We'll use our custom column instead
+            'query_var'         => true,
+            'rewrite'           => array('slug' => 'publication-type'),
+            'show_in_rest'      => false,
+        );
+
+        register_taxonomy(self::TAXONOMY_NAME, array('publication'), $args);
+        
+        // Register the taxonomy terms based on our publication types
+        foreach (self::$publication_types as $slug => $name) {
+            if (!term_exists($slug, self::TAXONOMY_NAME)) {
+                wp_insert_term($name, self::TAXONOMY_NAME, array('slug' => $slug));
+            }
+        }
+    }
+    
+    /**
+     * Sync the ACF field value with the taxonomy term
+     */
+    public static function sync_acf_with_taxonomy($post_id) {
+        // Only run on publication post type
+        if (get_post_type($post_id) !== 'publication') {
+            return;
+        }
+        
+        // Get the ACF field value
+        $publication_type = get_field('publication_type', $post_id);
+        
+        if (!empty($publication_type)) {
+            // Set the taxonomy term based on the ACF field value
+            wp_set_object_terms($post_id, $publication_type, self::TAXONOMY_NAME);
+        }
+    }
+    
+    /**
+     * Remove the taxonomy metabox from the edit screen
+     */
+    public static function remove_taxonomy_metabox() {
+        remove_meta_box(self::TAXONOMY_NAME . 'div', 'publication', 'side');
+    }
+    
     /**
      * Set default sort order for publications in admin
      */
@@ -55,6 +129,32 @@ class FS_Publications {
     }
 
     /**
+     * Dynamically populate ACF field choices from taxonomy terms
+     *
+     * @param array $field The ACF field being loaded
+     * @return array The modified field with updated choices
+     */
+    public static function load_publication_type_choices($field) {
+        // Start with an empty choices array
+        $field['choices'] = array();
+        
+        // Get all terms from the taxonomy
+        $terms = get_terms(array(
+            'taxonomy' => self::TAXONOMY_NAME,
+            'hide_empty' => false,
+        ));
+        
+        // Add each term to the choices array
+        if (!empty($terms) && !is_wp_error($terms)) {
+            foreach ($terms as $term) {
+                $field['choices'][$term->slug] = $term->name;
+            }
+        }
+        
+        return $field;
+    }
+    
+    /**
      * Add filters to the admin list view
      */
     public static function add_admin_filters($post_type) {
@@ -67,13 +167,22 @@ class FS_Publications {
         echo '<select name="publication_type">';
         echo '<option value="">' . __('All Publication Types', 'fluxstack') . '</option>';
         
-        foreach (self::$publication_types as $value => $label) {
-            printf(
-                '<option value="%s"%s>%s</option>',
-                esc_attr($value),
-                $selected === $value ? ' selected="selected"' : '',
-                esc_html($label)
-            );
+        // Get all terms from the taxonomy
+        $terms = get_terms(array(
+            'taxonomy' => self::TAXONOMY_NAME,
+            'hide_empty' => false,
+        ));
+        
+        // Add each term to the dropdown
+        if (!empty($terms) && !is_wp_error($terms)) {
+            foreach ($terms as $term) {
+                printf(
+                    '<option value="%s"%s>%s</option>',
+                    esc_attr($term->slug),
+                    $selected === $term->slug ? ' selected="selected"' : '',
+                    esc_html($term->name)
+                );
+            }
         }
         
         echo '</select>';
@@ -91,8 +200,14 @@ class FS_Publications {
             isset($_GET['publication_type']) && 
             !empty($_GET['publication_type'])) {
             
-            $query->query_vars['meta_key'] = 'publication_type';
-            $query->query_vars['meta_value'] = $_GET['publication_type'];
+            // Use taxonomy query instead of meta query
+            $query->query_vars['tax_query'] = array(
+                array(
+                    'taxonomy' => self::TAXONOMY_NAME,
+                    'field'    => 'slug',
+                    'terms'    => $_GET['publication_type'],
+                )
+            );
         }
     }
 
@@ -118,9 +233,15 @@ class FS_Publications {
         switch($column) {
             case 'publication_type':
                 $type = get_field('publication_type', $post_id);
-                if($type && isset(self::$publication_types[$type])) {
-                    echo '<a href="edit.php?post_type=publication&publication_type=' . esc_attr($type) . '">' . 
-                         esc_html(self::$publication_types[$type]) . '</a>';
+                if($type) {
+                    // Get the term name from the taxonomy
+                    $term = get_term_by('slug', $type, self::TAXONOMY_NAME);
+                    if ($term && !is_wp_error($term)) {
+                        echo '<a href="edit.php?post_type=publication&publication_type=' . esc_attr($type) . '">' . 
+                             esc_html($term->name) . '</a>';
+                    } else {
+                        echo esc_html($type);
+                    }
                 } else {
                     echo '—';
                 }
@@ -215,11 +336,11 @@ class FS_Publications {
         $args = array(
             'post_type' => 'publication',
             'posts_per_page' => $posts_per_page,
-            'meta_query' => array(
+            'tax_query' => array(
                 array(
-                    'key' => 'publication_type',
-                    'value' => $type,
-                    'compare' => '='
+                    'taxonomy' => self::TAXONOMY_NAME,
+                    'field'    => 'slug',
+                    'terms'    => $type,
                 )
             )
         );
@@ -262,10 +383,12 @@ class FS_Publications {
         );
         
         if (!empty($type)) {
-            $args['meta_query'][] = array(
-                'key' => 'publication_type',
-                'value' => $type,
-                'compare' => '='
+            $args['tax_query'] = array(
+                array(
+                    'taxonomy' => self::TAXONOMY_NAME,
+                    'field'    => 'slug',
+                    'terms'    => $type,
+                )
             );
         }
         
