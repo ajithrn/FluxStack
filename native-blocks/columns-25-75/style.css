@@ -1,0 +1,30 @@
+/**
+ * Columns 25/75 Block Styles
+ */
+
+.fluxstack-columns-25-75 {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 1.5em;
+}
+
+.fluxstack-columns-25-75 > .wp-block-column:first-child {
+    flex-basis: 25%;
+    flex-grow: 0;
+}
+
+.fluxstack-columns-25-75 > .wp-block-column:last-child {
+    flex-basis: 75%;
+    flex-grow: 0;
+}
+
+/* Responsive styles */
+@media (max-width: 781px) {
+    .fluxstack-columns-25-75 {
+        flex-wrap: wrap;
+    }
+    
+    .fluxstack-columns-25-75 > .wp-block-column {
+        flex-basis: 100% !important;
+    }
+}

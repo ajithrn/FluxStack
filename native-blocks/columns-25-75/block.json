@@ -1,0 +1,19 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "fluxstack/columns-25-75",
+  "version": "1.0.0",
+  "title": "Columns 25/75",
+  "category": "fluxstack",
+  "icon": "columns",
+  "description": "A two-column layout with 25/75 ratio and 1.5em gap",
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "align": ["wide", "full"]
+  },
+  "textdomain": "fluxstack",
+  "editorScript": "file:./build.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css"
+}

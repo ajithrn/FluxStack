@@ -5,18 +5,99 @@
  * @package FluxStack
  */
 
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
+/**
+ * Helper function to register block assets
+ *
+ * @param string $block_name Block name without prefix (e.g. 'columns-25-75').
+ * @param array  $args       Optional arguments.
+ */
+function fluxstack_register_block_assets( $block_name, $args = array() ) {
+    $defaults = array(
+        'has_script'    => true,
+        'has_style'     => true,
+        'has_editor'    => true,
+        'script_deps'   => array( 'wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-i18n', 'wp-block-editor' ),
+        'style_deps'    => array(),
+        'editor_deps'   => array( 'wp-edit-blocks' ),
+    );
+
+    $args = wp_parse_args( $args, $defaults );
+    $block_path = get_stylesheet_directory() . '/native-blocks/' . $block_name;
+    $block_url = get_stylesheet_directory_uri() . '/native-blocks/' . $block_name;
+
+    // Register script if it exists
+    if ( $args['has_script'] && file_exists( $block_path . '/build.js' ) ) {
+        wp_register_script(
+            'fluxstack-' . $block_name,
+            $block_url . '/build.js',
+            $args['script_deps'],
+            filemtime( $block_path . '/build.js' ),
+            true
+        );
+    }
+
+    // Register editor style if it exists
+    if ( $args['has_editor'] && file_exists( $block_path . '/editor.css' ) ) {
+        wp_register_style(
+            'fluxstack-' . $block_name . '-editor',
+            $block_url . '/editor.css',
+            $args['editor_deps'],
+            filemtime( $block_path . '/editor.css' )
+        );
+    }
+
+    // Register frontend style if it exists
+    if ( $args['has_style'] && file_exists( $block_path . '/style.css' ) ) {
+        wp_register_style(
+            'fluxstack-' . $block_name . '-style',
+            $block_url . '/style.css',
+            $args['style_deps'],
+            filemtime( $block_path . '/style.css' )
+        );
+    }
+}
+
+/**
+ * Auto-discover and load all blocks
+ */
+function fluxstack_load_blocks() {
+    // Make sure the register_block_type function exists
+    if ( ! function_exists( 'register_block_type' ) ) {
+        return;
+    }
+    
+    // Get all block directories
+    $blocks_dir = get_stylesheet_directory() . '/native-blocks';
+    $block_folders = array_filter( glob( $blocks_dir . '/*' ), 'is_dir' );
+    
+    // Load each block's register.php file
+    foreach ( $block_folders as $block_folder ) {
+        $register_file = $block_folder . '/register.php';
+        if ( file_exists( $register_file ) ) {
+            require_once $register_file;
+        }
+    }
+}
+add_action( 'init', 'fluxstack_load_blocks', 9 );
+
 /**
  * Initialize ACF Blocks
  */
-function fluxstack_init_blocks() {
+function fluxstack_init_acf_blocks() {
     // Check if ACF Pro is active
     if ( ! function_exists( 'acf_register_block_type' ) ) {
         return;
     }
 
-    // Blocks will be added here
+    // ACF blocks will be added here
+    // You can use a similar auto-discovery approach for ACF blocks if needed
 }
-add_action( 'acf/init', 'fluxstack_init_blocks' );
+add_action( 'acf/init', 'fluxstack_init_acf_blocks' );
 
 /**
  * Add custom block category
@@ -29,7 +110,7 @@ function fluxstack_block_category( $categories ) {
         array(
             array(
                 'slug'  => 'fluxstack',
-                'title' => __( 'FluxStack', 'fluxstack' ),
+                'title' => __( 'Theme Blocks', 'fluxstack' ),
             ),
         ),
         $categories

@@ -1,0 +1,14 @@
+/**
+ * Block Name Styles
+ */
+
+.fluxstack-block-name {
+    /* Add your block styles here */
+}
+
+/* Responsive styles */
+@media (max-width: 781px) {
+    .fluxstack-block-name {
+        /* Add responsive styles here */
+    }
+}

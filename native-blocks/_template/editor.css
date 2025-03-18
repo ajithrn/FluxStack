@@ -1,0 +1,29 @@
+/**
+ * Block Name Editor Styles
+ */
+
+.fluxstack-block-name {
+    /* Add editor-specific styles here */
+    border: 1px dashed #ccc;
+    padding: 10px;
+}
+
+/* Editor-only visual indicators */
+.fluxstack-block-name::before {
+    content: "Block Name";
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #f0f0f0;
+    padding: 2px 5px;
+    font-size: 10px;
+    border-radius: 3px;
+    opacity: 0.7;
+}
+
+/* Responsive styles */
+@media (max-width: 781px) {
+    .fluxstack-block-name {
+        /* Add responsive editor styles here */
+    }
+}
