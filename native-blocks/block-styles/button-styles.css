@@ -1,0 +1,37 @@
+/**
+ * Custom Button Styles This variables inherits from the bricks css variable.
+ */
+
+/* Primary Button Style */
+.wp-block-button.is-style-primary .wp-block-button__link {
+  background: var(--primary);
+  padding: var(--spacing-2) var(--spacing-4);
+  margin-bottom: var(--spacing-1);
+  border-radius: 4px;
+  color: var(--secondary) !important;
+  font-size: var(--font-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  text-decoration: none !important;
+  box-shadow: 1px 1px 3px 0px var(--secondary-t-2);
+  transition: all 0.2s ease-in-out;
+  border: none;
+}
+
+.wp-block-button.is-style-primary .wp-block-button__link:hover {
+  background: var(--primary-d-1);
+  box-shadow: 2px 2px 5px 0px var(--secondary-t-2);
+}
+
+/* Editor Styles */
+.editor-styles-wrapper .wp-block-button.is-style-primary .wp-block-button__link {
+  background: var(--primary);
+  padding: var(--spacing-2) var(--spacing-4);
+  border-radius: 4px;
+  color: var(--secondary) !important;
+  font-size: var(--font-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  text-decoration: none !important;
+  box-shadow: 1px 1px 3px 0px var(--secondary-t-2);
+}

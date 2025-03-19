@@ -77,6 +77,11 @@ function fluxstack_load_blocks() {
     
     // Load each block's register.php file
     foreach ( $block_folders as $block_folder ) {
+        // Skip the block-styles directory as it's handled separately
+        if ( basename( $block_folder ) === 'block-styles' ) {
+            continue;
+        }
+        
         $register_file = $block_folder . '/register.php';
         if ( file_exists( $register_file ) ) {
             require_once $register_file;
@@ -84,6 +89,37 @@ function fluxstack_load_blocks() {
     }
 }
 add_action( 'init', 'fluxstack_load_blocks', 9 );
+
+/**
+ * Register and enqueue block styles
+ */
+function fluxstack_register_block_styles() {
+    // Register block styles script
+    wp_register_script(
+        'fluxstack-block-styles',
+        get_stylesheet_directory_uri() . '/native-blocks/block-styles/button-styles.js',
+        array( 'wp-blocks', 'wp-dom-ready', 'wp-edit-post', 'wp-i18n' ),
+        filemtime( get_stylesheet_directory() . '/native-blocks/block-styles/button-styles.js' ),
+        true
+    );
+    
+    // Register block styles CSS
+    wp_register_style(
+        'fluxstack-block-styles',
+        get_stylesheet_directory_uri() . '/native-blocks/block-styles/button-styles.css',
+        array(),
+        filemtime( get_stylesheet_directory() . '/native-blocks/block-styles/button-styles.css' )
+    );
+    
+    // Enqueue for editor
+    if ( is_admin() ) {
+        wp_enqueue_script( 'fluxstack-block-styles' );
+    }
+    
+    // Enqueue for frontend and editor
+    wp_enqueue_style( 'fluxstack-block-styles' );
+}
+add_action( 'init', 'fluxstack_register_block_styles', 10 );
 
 /**
  * Initialize ACF Blocks

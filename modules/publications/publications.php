@@ -47,6 +47,9 @@ class FS_Publications {
         
         // Dynamically populate ACF field choices from taxonomy terms
         add_filter('acf/load_field/key=field_publication_type', array(__CLASS__, 'load_publication_type_choices'));
+        
+        // Redirect single publication posts to archive
+        add_action('template_redirect', array(__CLASS__, 'redirect_single_publication'));
     }
 
     /**
@@ -75,6 +78,8 @@ class FS_Publications {
             'query_var'         => true,
             'rewrite'           => array('slug' => 'publication-type'),
             'show_in_rest'      => false,
+            'public'            => true,
+            'publicly_queryable' => true,
         );
 
         register_taxonomy(self::TAXONOMY_NAME, array('publication'), $args);
@@ -305,7 +310,7 @@ class FS_Publications {
             'labels'              => $labels,
             'supports'            => array('title', 'thumbnail', 'custom-fields'),
             'hierarchical'        => false,
-            'public'              => true,
+            'public'              => false,
             'show_ui'             => true,
             'show_in_menu'        => true,
             'menu_position'       => 20,
@@ -315,7 +320,7 @@ class FS_Publications {
             'can_export'          => true,
             'has_archive'         => true,
             'exclude_from_search' => false,
-            'publicly_queryable'  => true,
+            'publicly_queryable'  => false,
             'capability_type'     => 'page',
             'show_in_rest'        => false,
             'rewrite'            => array('slug' => 'publication')
@@ -393,6 +398,30 @@ class FS_Publications {
         }
         
         return new WP_Query($args);
+    }
+
+    /**
+     * Redirect single publication posts to their publication type archive
+     */
+    public static function redirect_single_publication() {
+        if (is_singular('publication')) {
+            $post_id = get_the_ID();
+            $publication_type = get_field('publication_type', $post_id);
+            
+            if (!empty($publication_type)) {
+                // Redirect to the publication type archive
+                $term = get_term_by('slug', $publication_type, self::TAXONOMY_NAME);
+                if ($term && !is_wp_error($term)) {
+                    $redirect_url = get_term_link($term, self::TAXONOMY_NAME);
+                    wp_redirect($redirect_url, 301);
+                    exit;
+                }
+            }
+            
+            // Fallback to the main publications archive if no publication type is found
+            wp_redirect(get_post_type_archive_link('publication'), 301);
+            exit;
+        }
     }
 
     public static function add_acf_json_load_point($paths) {
