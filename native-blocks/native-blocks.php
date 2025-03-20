@@ -77,9 +77,19 @@ function fluxstack_load_blocks() {
     
     // Load each block's register.php file
     foreach ( $block_folders as $block_folder ) {
+        $block_name = basename( $block_folder );
+        
         // Skip the block-styles directory as it's handled separately
-        if ( basename( $block_folder ) === 'block-styles' ) {
+        if ( $block_name === 'block-styles' || $block_name === '_template' ) {
             continue;
+        }
+        
+        // Check if block is enabled in Module Manager
+        if ( class_exists( 'FS_Module_Manager' ) && method_exists( 'FS_Module_Manager', 'can_load_block' ) ) {
+            if ( ! FS_Module_Manager::can_load_block( $block_name ) ) {
+                // Skip disabled blocks
+                continue;
+            }
         }
         
         $register_file = $block_folder . '/register.php';
@@ -94,6 +104,14 @@ add_action( 'init', 'fluxstack_load_blocks', 9 );
  * Register and enqueue block styles
  */
 function fluxstack_register_block_styles() {
+    // Check if block styles are enabled in Module Manager
+    if ( class_exists( 'FS_Module_Manager' ) && method_exists( 'FS_Module_Manager', 'can_load_block' ) ) {
+        if ( ! FS_Module_Manager::can_load_block( 'button-styles' ) ) {
+            // Skip if block styles are disabled
+            return;
+        }
+    }
+    
     // Register block styles script
     wp_register_script(
         'fluxstack-block-styles',

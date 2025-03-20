@@ -5,6 +5,19 @@ All notable changes to the FluxStack theme will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2025-03-20
+### Added
+- Module Manager for enabling/disabling theme modules
+- Admin interface for toggling modules on/off
+- Block toggle system for enabling/disabling native blocks
+- Automatic dependency management between modules and blocks
+- Metadata-driven block dependency system
+- Documentation for block toggle system
+### Changed
+- Improved module loading system with dependency handling
+- Enhanced performance by conditionally loading only enabled modules and blocks
+- Updated native blocks to support dependency metadata
+
 ## [1.3.0] - 2025-03-20
 ### Added
 - Comprehensive documentation with detailed module descriptions

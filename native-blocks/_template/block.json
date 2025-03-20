@@ -5,8 +5,8 @@
   "version": "1.0.0",
   "title": "Block Title",
   "category": "fluxstack",
-  "icon": "block-default",
-  "description": "Block description goes here",
+  "icon": "block-icon",
+  "description": "Block description",
   "supports": {
     "html": false,
     "anchor": true,
@@ -15,5 +15,9 @@
   "textdomain": "fluxstack",
   "editorScript": "file:./build.js",
   "editorStyle": "file:./editor.css",
-  "style": "file:./style.css"
+  "style": "file:./style.css",
+  "fluxstack": {
+    "moduleDependencies": [],
+    "blockDependencies": []
+  }
 }

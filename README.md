@@ -42,6 +42,11 @@ fluxstack/
 │   ├── image-gallery/      # Image gallery module
 │   │   ├── acf-json/       # Gallery field configurations
 │   │   └── image-gallery.php # FS_Image_Gallery class
+│   ├── module-manager/     # Module manager for enabling/disabling modules
+│   │   ├── assets/         # Module assets
+│   │   │   ├── css/        # CSS styles
+│   │   │   └── js/         # JavaScript files
+│   │   └── module-manager.php # FS_Module_Manager class
 │   ├── news-archives/      # News archives by year
 │   │   └── news-archives.php # FS_News_Archives class
 │   ├── publications/       # Publications management
@@ -167,6 +172,14 @@ The theme follows a modular architecture with consistent patterns:
    - Widget for displaying year-based archives
    - Helper functions for retrieving posts by year
 
+### 11. Module Manager (`FS_Module_Manager`)
+   - Enable/disable modules through admin interface
+   - Automatic dependency management
+   - Performance optimization by disabling unused modules
+   - Organized module grouping by functionality
+   - Responsive settings interface with toggle switches
+   - Clear visual indicators for module dependencies
+
 ## Native Blocks
 
 FluxStack includes a system for creating and managing custom blocks for the WordPress block editor (Gutenberg).
@@ -176,6 +189,7 @@ FluxStack includes a system for creating and managing custom blocks for the Word
 - Extensible: New blocks can be added easily
 - Maintainable: Common functionality is centralized
 - Discoverable: Blocks are automatically registered
+- Configurable: Blocks can be enabled/disabled through the Module Manager
 
 ### Available Blocks
 
@@ -188,7 +202,8 @@ A two-column layout with a 25% width left column and a 75% width right column.
 1. Create a new directory in the `native-blocks` folder for your block
 2. Copy the template files from the `_template` directory
 3. Customize the files for your specific block
-4. The block will be automatically discovered and registered
+4. Add any dependencies in the `fluxstack` section of `block.json`
+5. The block will be automatically discovered and registered
 
 ### Block Structure
 Each block follows a consistent structure:
@@ -201,6 +216,34 @@ block-name/
 ├── register.php          # Block registration
 └── style.css             # Frontend styles
 ```
+
+### Block Dependencies
+Blocks can have dependencies on modules or other blocks. These dependencies are defined in the `block.json` file:
+
+```json
+"fluxstack": {
+  "moduleDependencies": ["module-name"],
+  "blockDependencies": ["other-block-name"]
+}
+```
+
+When a dependency is disabled, the block will be automatically disabled as well.
+
+### Enabling/Disabling Blocks
+Blocks can be enabled or disabled through the FluxStack Settings page:
+
+1. Navigate to **Appearance > FluxStack Settings** in the WordPress admin
+2. Scroll down to the **Theme Blocks** section
+3. Use the toggle switches to enable or disable specific blocks
+4. The system will automatically handle dependencies between blocks and modules
+5. Click "Save Changes" to apply your settings
+
+Disabled blocks won't be registered in the editor, improving performance and reducing clutter.
+
+### Content Module-Specific Blocks
+If you're creating blocks that depend on specific content modules (e.g., a Teams block that depends on the Teams module), make sure to add the module to the `moduleDependencies` array in the `block.json` file. This ensures that the block is automatically disabled if the required module is disabled.
+
+For more detailed information, see the [Native Blocks README](./native-blocks/README.md).
 
 ## Development
 
@@ -321,6 +364,14 @@ The White Label module allows for customization of the WordPress admin interface
 2. Edit the SCSS files to customize colors, branding, etc.
 3. Compile the SCSS files
 4. The changes will be applied to the admin interface
+
+### How do I enable or disable theme modules?
+The Module Manager allows you to control which modules are active:
+1. Navigate to **Appearance > FluxStack Settings** in the WordPress admin
+2. Use the toggle switches to enable or disable specific modules
+3. The system will automatically handle dependencies between modules
+4. Click "Save Changes" to apply your settings
+5. Disabled modules won't load, improving performance
 
 ## Changelog
 

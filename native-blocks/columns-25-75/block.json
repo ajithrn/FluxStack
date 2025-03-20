@@ -15,5 +15,9 @@
   "textdomain": "fluxstack",
   "editorScript": "file:./build.js",
   "editorStyle": "file:./editor.css",
-  "style": "file:./style.css"
+  "style": "file:./style.css",
+  "fluxstack": {
+    "moduleDependencies": [],
+    "blockDependencies": []
+  }
 }
