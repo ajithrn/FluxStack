@@ -180,7 +180,7 @@
             "class": "",
             "id": ""
           },
-          "default_value": "THE CHAIRMAN'S CORNER",
+          "default_value": "",
           "placeholder": "",
           "prepend": "",
           "append": "",
@@ -254,7 +254,7 @@
             "class": "",
             "id": ""
           },
-          "default_value": "EXPLORE HMEPS",
+          "default_value": "",
           "placeholder": "",
           "prepend": "",
           "append": "",
@@ -328,7 +328,7 @@
             "class": "",
             "id": ""
           },
-          "default_value": "MEMBERS ONLY",
+          "default_value": "",
           "placeholder": "",
           "prepend": "",
           "append": "",
