@@ -16,6 +16,7 @@ class FS_Module_Manager {
         'dynamic-snippets' => true,
         'image-gallery' => true,
         'news-archives' => true,
+        'portfolio' => true,
         'publications' => true,
         'teams' => true,
         'testimonials' => true,
@@ -32,7 +33,7 @@ class FS_Module_Manager {
         ),
         'content' => array(
             'title' => 'Content Modules',
-            'modules' => array('teams', 'publications', 'testimonials', 'image-gallery', 'news-archives')
+            'modules' => array('teams', 'publications', 'testimonials', 'image-gallery', 'news-archives', 'portfolio')
         ),
         'customization' => array(
             'title' => 'Customization Modules',
@@ -46,6 +47,7 @@ class FS_Module_Manager {
         'dynamic-snippets' => 'Reusable code snippets and components',
         'image-gallery' => 'Image gallery management with categories',
         'news-archives' => 'Year-based news organization and archives',
+        'portfolio' => 'Portfolio management system with project details and gallery',
         'publications' => 'Publication management system with types and PDF support',
         'teams' => 'Team member management with profiles and categories',
         'testimonials' => 'Testimonial management with ratings and categories',
@@ -64,6 +66,7 @@ class FS_Module_Manager {
         'dynamic-snippets' => array('utility-functions'),
         'image-gallery' => array('utility-functions'),
         'news-archives' => array('utility-functions'),
+        'portfolio' => array('utility-functions'),
         'publications' => array('utility-functions'),
         'teams' => array('utility-functions'),
         'testimonials' => array('utility-functions'),

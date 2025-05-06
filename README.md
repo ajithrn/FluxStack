@@ -49,6 +49,9 @@ fluxstack/
 │   │   └── module-manager.php # FS_Module_Manager class
 │   ├── news-archives/      # News archives by year
 │   │   └── news-archives.php # FS_News_Archives class
+│   ├── portfolio/          # Portfolio management
+│   │   ├── acf-json/       # Portfolio field configurations
+│   │   └── portfolio.php   # FS_Portfolio class
 │   ├── publications/       # Publications management
 │   │   ├── acf-json/       # Publication field configurations
 │   │   └── publications.php # FS_Publications class
@@ -172,7 +175,18 @@ The theme follows a modular architecture with consistent patterns:
    - Widget for displaying year-based archives
    - Helper functions for retrieving posts by year
 
-### 11. Module Manager (`FS_Module_Manager`)
+### 11. Portfolio (`FS_Portfolio`)
+   - Portfolio project management system
+   - Custom post type for portfolio items
+   - Portfolio type taxonomy for project categorization
+   - Client, location, year, and website metadata
+   - Project features and key details repeater fields
+   - Image gallery support for project showcases
+   - Custom admin columns for client, year, and type
+   - Sortable admin interface with filtering options
+   - Helper functions for retrieving portfolio items by type or year
+
+### 12. Module Manager (`FS_Module_Manager`)
    - Enable/disable modules through admin interface
    - Automatic dependency management
    - Performance optimization by disabling unused modules
@@ -357,6 +371,18 @@ FluxStack extends the Bricks Builder with custom elements and settings:
 6. Upload the PDF file
 7. Add a featured image for the publication thumbnail
 8. Publish the publication
+
+### How do I add a new portfolio project?
+1. Navigate to Portfolio in the WordPress admin menu
+2. Click "Add New"
+3. Enter the project title
+4. Fill in the basic information (client, location, year, website)
+5. Add a detailed project description
+6. Add project features and key details using the repeater fields
+7. Upload images to the portfolio gallery
+8. Add a featured image as the main project thumbnail
+9. Assign to a portfolio type if needed
+10. Publish the portfolio item
 
 ### How do I customize the admin interface?
 The White Label module allows for customization of the WordPress admin interface:

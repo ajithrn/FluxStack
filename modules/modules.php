@@ -55,6 +55,10 @@ if (FS_Module_Manager::can_load_module('news-archives')) {
     require_once dirname( __FILE__ ) . '/news-archives/news-archives.php';
 }
 
+if (FS_Module_Manager::can_load_module('portfolio')) {
+    require_once dirname( __FILE__ ) . '/portfolio/portfolio.php';
+}
+
 // Initialize modules that are enabled
 if (FS_Module_Manager::can_load_module('bricks')) {
     FS_Bricks::init();
@@ -94,4 +98,8 @@ if (FS_Module_Manager::can_load_module('publications')) {
 
 if (FS_Module_Manager::can_load_module('news-archives')) {
     FS_News_Archives::init();
+}
+
+if (FS_Module_Manager::can_load_module('portfolio')) {
+    FS_Portfolio::init();
 }

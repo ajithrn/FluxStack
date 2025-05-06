@@ -5,6 +5,17 @@ All notable changes to the FluxStack theme will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2025-06-05
+### Added
+- Portfolio module for project showcase management
+- Custom post type for portfolio items with portfolio_type taxonomy
+- ACF field groups for project details (including client, location, year, website)
+- Project features and key details repeater fields
+- Portfolio gallery support for project images
+- Admin interface with sortable columns for client, year, and type
+- Helper functions for retrieving portfolio items by type or year
+- Documentation for portfolio module in README.md
+
 ## [1.4.0] - 2025-03-20
 ### Added
 - Module Manager for enabling/disabling theme modules
