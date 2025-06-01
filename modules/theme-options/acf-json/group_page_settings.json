@@ -1,0 +1,42 @@
+{
+    "key": "group_page_settings",
+    "title": "Page Settings",
+    "fields": [
+        {
+            "key": "field_page_sub_heading",
+            "label": "Sub Heading",
+            "name": "page_sub_heading",
+            "type": "text",
+            "instructions": "Enter the sub-heading for the page.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Enter sub heading",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "page"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "side",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": ""
+}

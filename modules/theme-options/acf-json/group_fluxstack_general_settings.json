@@ -6,6 +6,7 @@
             "key": "field_branding_tab",
             "label": "Branding",
             "name": "",
+            "aria-label": "",
             "type": "tab",
             "instructions": "",
             "required": 0,
@@ -16,15 +17,15 @@
                 "id": ""
             },
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_site_logo",
             "label": "Site Logo",
             "name": "site_logo",
+            "aria-label": "",
             "type": "image",
-            "return_format": "array",
-            "preview_size": "medium",
             "instructions": "Upload your site logo",
             "required": 0,
             "conditional_logic": 0,
@@ -32,12 +33,23 @@
                 "width": "",
                 "class": "",
                 "id": ""
-            }
+            },
+            "return_format": "array",
+            "preview_size": "medium",
+            "library": "all",
+            "min_width": 0,
+            "min_height": 0,
+            "min_size": 0,
+            "max_width": 0,
+            "max_height": 0,
+            "max_size": 0,
+            "mime_types": ""
         },
         {
             "key": "field_contact_tab",
             "label": "Contact Info",
             "name": "",
+            "aria-label": "",
             "type": "tab",
             "instructions": "",
             "required": 0,
@@ -48,52 +60,73 @@
                 "id": ""
             },
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_contact_email",
             "label": "Email Address",
             "name": "contact_email",
+            "aria-label": "",
             "type": "email",
             "instructions": "Primary contact email address",
             "required": 0,
+            "conditional_logic": false,
             "wrapper": {
                 "width": "",
                 "class": "",
                 "id": ""
-            }
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
         },
         {
             "key": "field_contact_phone",
             "label": "Phone Number",
             "name": "contact_phone",
+            "aria-label": "",
             "type": "text",
             "instructions": "Primary contact phone number",
             "required": 0,
+            "conditional_logic": false,
             "wrapper": {
                 "width": "",
                 "class": "",
                 "id": ""
-            }
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
         },
         {
             "key": "field_contact_address",
             "label": "Address",
             "name": "contact_address",
+            "aria-label": "",
             "type": "textarea",
             "instructions": "Business address",
             "required": 0,
-            "rows": 4,
+            "conditional_logic": false,
             "wrapper": {
                 "width": "",
                 "class": "",
                 "id": ""
-            }
+            },
+            "rows": 4,
+            "default_value": "",
+            "new_lines": "",
+            "maxlength": "",
+            "placeholder": ""
         },
         {
             "key": "field_social_tab",
             "label": "Social Media",
             "name": "",
+            "aria-label": "",
             "type": "tab",
             "instructions": "",
             "required": 0,
@@ -104,12 +137,14 @@
                 "id": ""
             },
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_social_media",
             "label": "Social Media Links",
             "name": "social_media_links",
+            "aria-label": "",
             "type": "repeater",
             "instructions": "Add your social media profiles",
             "required": 0,
@@ -124,11 +159,13 @@
             "max": 0,
             "layout": "table",
             "button_label": "Add Social Media",
+            "rows_per_page": 20,
             "sub_fields": [
                 {
                     "key": "field_social_platform",
                     "label": "Platform",
                     "name": "platform",
+                    "aria-label": "",
                     "type": "select",
                     "instructions": "",
                     "required": 1,
@@ -139,7 +176,6 @@
                         "id": ""
                     },
                     "choices": {
-                        "fas fa-envelope": "Newsletter",
                         "fab fa-facebook": "Facebook",
                         "fab fa-twitter": "Twitter",
                         "fab fa-instagram": "Instagram",
@@ -155,20 +191,27 @@
                         "fab fa-snapchat": "Snapchat",
                         "fab fa-whatsapp": "WhatsApp",
                         "fab fa-telegram": "Telegram",
-                        "fab fa-discord": "Discord"
+                        "fab fa-discord": "Discord",
+                        "fab fa-yelp": "Yelp",
+                        "fas fa-envelope": "Newsletter"
                     },
                     "default_value": false,
-                    "allow_null": 0,
+                    "return_format": "value",
                     "multiple": 0,
+                    "allow_null": 0,
+                    "allow_in_bindings": 1,
                     "ui": 1,
                     "ajax": 0,
-                    "return_format": "value",
-                    "placeholder": ""
+                    "placeholder": "",
+                    "create_options": 0,
+                    "save_options": 0,
+                    "parent_repeater": "field_social_media"
                 },
                 {
                     "key": "field_social_url",
                     "label": "Profile URL",
                     "name": "url",
+                    "aria-label": "",
                     "type": "url",
                     "instructions": "",
                     "required": 1,
@@ -179,7 +222,8 @@
                         "id": ""
                     },
                     "default_value": "",
-                    "placeholder": ""
+                    "placeholder": "",
+                    "parent_repeater": "field_social_media"
                 }
             ]
         }
@@ -202,5 +246,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1736250718
+    "modified": 1748361850
 }
