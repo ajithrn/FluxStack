@@ -5,7 +5,12 @@ All notable changes to the FluxStack theme will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.6.0] - 2025-06-06
+## [1.6.1] - 2025-06-06
+### Changed
+- Set all content modules to be deactivated by default in module manager
+- Core modules (bricks, theme-options, utility-functions, dynamic-snippets, white-label) remain enabled by default
+
+## [1.6.0] - 2025-06-05
 ### Added
 - Services module for service management
 - Custom post type for services with featured image support
