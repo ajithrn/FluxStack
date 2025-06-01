@@ -55,6 +55,9 @@ fluxstack/
 │   ├── publications/       # Publications management
 │   │   ├── acf-json/       # Publication field configurations
 │   │   └── publications.php # FS_Publications class
+│   ├── services/           # Services management
+│   │   ├── acf-json/       # Service field configurations
+│   │   └── services.php    # FS_Services class
 │   ├── teams/              # Team members management
 │   │   ├── acf-json/       # Team field configurations
 │   │   └── teams.php       # FS_Teams class
@@ -186,7 +189,18 @@ The theme follows a modular architecture with consistent patterns:
    - Sortable admin interface with filtering options
    - Helper functions for retrieving portfolio items by type or year
 
-### 12. Module Manager (`FS_Module_Manager`)
+### 12. Services (`FS_Services`)
+   - Services management system
+   - Custom post type for services
+   - Featured image support for service visuals
+   - Intro text section for use in homepage widgets and listings
+   - Detailed content section for service descriptions
+   - Service features repeater field for highlighting key aspects
+   - Custom admin columns for better management
+   - Sortable admin interface with ordering options
+   - Helper functions for retrieving services
+
+### 13. Module Manager (`FS_Module_Manager`)
    - Enable/disable modules through admin interface
    - Automatic dependency management
    - Performance optimization by disabling unused modules
@@ -383,6 +397,17 @@ FluxStack extends the Bricks Builder with custom elements and settings:
 8. Add a featured image as the main project thumbnail
 9. Assign to a portfolio type if needed
 10. Publish the portfolio item
+
+### How do I add a new service?
+1. Navigate to Services in the WordPress admin menu
+2. Click "Add New"
+3. Enter the service title
+4. Add a featured image that represents the service
+5. Fill in the intro text for use in listings and homepage widgets
+6. Add detailed content in the content section
+7. Add service features using the repeater field
+8. Set the menu order for controlling the display order
+9. Publish the service
 
 ### How do I customize the admin interface?
 The White Label module allows for customization of the WordPress admin interface:

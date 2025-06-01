@@ -59,6 +59,10 @@ if (FS_Module_Manager::can_load_module('portfolio')) {
     require_once dirname( __FILE__ ) . '/portfolio/portfolio.php';
 }
 
+if (FS_Module_Manager::can_load_module('services')) {
+    require_once dirname( __FILE__ ) . '/services/services.php';
+}
+
 // Initialize modules that are enabled
 if (FS_Module_Manager::can_load_module('bricks')) {
     FS_Bricks::init();
@@ -102,4 +106,8 @@ if (FS_Module_Manager::can_load_module('news-archives')) {
 
 if (FS_Module_Manager::can_load_module('portfolio')) {
     FS_Portfolio::init();
+}
+
+if (FS_Module_Manager::can_load_module('services')) {
+    FS_Services::init();
 }

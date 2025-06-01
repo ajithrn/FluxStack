@@ -18,6 +18,7 @@ class FS_Module_Manager {
         'news-archives' => true,
         'portfolio' => true,
         'publications' => true,
+        'services' => true,
         'teams' => true,
         'testimonials' => true,
         'theme-options' => true,
@@ -33,7 +34,7 @@ class FS_Module_Manager {
         ),
         'content' => array(
             'title' => 'Content Modules',
-            'modules' => array('teams', 'publications', 'testimonials', 'image-gallery', 'news-archives', 'portfolio')
+            'modules' => array('teams', 'publications', 'testimonials', 'image-gallery', 'news-archives', 'portfolio', 'services')
         ),
         'customization' => array(
             'title' => 'Customization Modules',
@@ -49,6 +50,7 @@ class FS_Module_Manager {
         'news-archives' => 'Year-based news organization and archives',
         'portfolio' => 'Portfolio management system with project details and gallery',
         'publications' => 'Publication management system with types and PDF support',
+        'services' => 'Services management system with intro text and content sections',
         'teams' => 'Team member management with profiles and categories',
         'testimonials' => 'Testimonial management with ratings and categories',
         'theme-options' => 'Theme settings and customization options',
@@ -68,6 +70,7 @@ class FS_Module_Manager {
         'news-archives' => array('utility-functions'),
         'portfolio' => array('utility-functions'),
         'publications' => array('utility-functions'),
+        'services' => array('utility-functions'),
         'teams' => array('utility-functions'),
         'testimonials' => array('utility-functions'),
         'theme-options' => array('utility-functions'),

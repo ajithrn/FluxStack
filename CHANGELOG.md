@@ -5,6 +5,17 @@ All notable changes to the FluxStack theme will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] - 2025-06-06
+### Added
+- Services module for service management
+- Custom post type for services with featured image support
+- ACF field groups for service details (including intro text and content)
+- Service features repeater field for highlighting key aspects
+- Admin interface with sortable columns and ordering options
+- Helper functions for retrieving services
+- Documentation for services module in README.md
+- Updated main README.md with services module information
+
 ## [1.5.0] - 2025-06-05
 ### Added
 - Portfolio module for project showcase management
