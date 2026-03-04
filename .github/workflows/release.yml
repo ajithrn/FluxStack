@@ -1,0 +1,91 @@
+name: Auto Release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'style.css'
+
+permissions:
+  contents: write
+
+jobs:
+  check-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get Version from style.css
+        id: theme-version
+        run: |
+          VERSION=$(grep -i "^[ *]*Version:" style.css | head -1 | sed 's/.*Version:[ ]*//' | tr -d '[:space:]')
+          echo "Detected version: $VERSION"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Check if tag exists
+        id: check-tag
+        uses: mukunku/tag-exists-action@v1.4.0
+        with:
+          tag: 'v${{ steps.theme-version.outputs.version }}'
+
+      - name: Auto-Bump Version
+        if: steps.check-tag.outputs.exists == 'true'
+        run: |
+          CURRENT_VERSION="${{ steps.theme-version.outputs.version }}"
+          echo "Tag v$CURRENT_VERSION exists. Auto-bumping..."
+          
+          # Increment patch version
+          IFS='.' read -r -a parts <<< "$CURRENT_VERSION"
+          major="${parts[0]}"
+          minor="${parts[1]}"
+          patch="${parts[2]}"
+          new_patch=$((patch + 1))
+          NEW_VERSION="$major.$minor.$new_patch"
+          echo "New Version: $NEW_VERSION"
+          
+          # Update style.css version header
+          sed -i "s/Version:      $CURRENT_VERSION/Version:      $NEW_VERSION/" style.css
+          
+          # Commit and push
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add style.css
+          git commit -m "chore: auto-bump version to $NEW_VERSION"
+          git push origin main
+          
+          echo "Bumped to $NEW_VERSION and pushed. New workflow will trigger."
+
+      - name: Create Release ZIP
+        if: steps.check-tag.outputs.exists == 'false'
+        run: |
+          THEME_SLUG="fluxstack"
+          
+          # Create a clean temp directory
+          mkdir -p /tmp/release/$THEME_SLUG
+          
+          # Copy files, excluding items listed in .distignore
+          if [ -f .distignore ]; then
+            rsync -rc --exclude-from='.distignore' ./ /tmp/release/$THEME_SLUG/
+          else
+            rsync -rc --exclude='.git' --exclude='.github' --exclude='node_modules' ./ /tmp/release/$THEME_SLUG/
+          fi
+          
+          # Create zip with theme folder as root
+          cd /tmp/release
+          zip -r $GITHUB_WORKSPACE/$THEME_SLUG.zip $THEME_SLUG/
+          
+          echo "Created $THEME_SLUG.zip"
+          ls -lh $GITHUB_WORKSPACE/$THEME_SLUG.zip
+
+      - name: Create Release
+        if: steps.check-tag.outputs.exists == 'false'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.theme-version.outputs.version }}
+          name: v${{ steps.theme-version.outputs.version }}
+          files: fluxstack.zip
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

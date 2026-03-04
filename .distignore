@@ -1,0 +1,26 @@
+# Version control
+.git
+.github
+.gitignore
+.distignore
+
+# Dev documentation (README stays)
+DEVELOPMENT.md
+INSTALLATION.md
+ROADMAP.md
+CHANGELOG.md
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode
+.idea
+
+# Build
+node_modules
+*.zip
+
+# ACF custom directory placeholder
+modules/theme-options/acf-json/custom/.gitkeep

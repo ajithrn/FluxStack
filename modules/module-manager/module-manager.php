@@ -142,7 +142,7 @@ class FS_Module_Manager {
      */
     public static function add_admin_menu() {
         add_theme_page(
-            __('FluxStack Settings', 'fluxstack'),
+            __('Flux Stack Settings', 'fluxstack'),
             __('FluxStack Settings', 'fluxstack'),
             'manage_options',
             'fluxstack-settings',

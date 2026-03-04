@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Build artifacts
+*.zip
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log
+
+# IDE
+.vscode/
+.idea/

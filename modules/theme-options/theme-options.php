@@ -11,8 +11,9 @@
  * @package FluxStack
  */
 
-// Load ACF configuration helper
+// Load includes
 require_once dirname(__FILE__) . '/includes/acf-config.php';
+require_once dirname(__FILE__) . '/includes/github-updater.php';
 
 class FS_Theme_Options {
     const GENERAL_SETTINGS_GROUP_ID = 'group_fluxstack_general_settings';
@@ -55,6 +56,11 @@ class FS_Theme_Options {
         // Admin UI
         add_action('admin_enqueue_scripts', array(__CLASS__, 'enqueue_admin_styles'));
         add_filter('admin_body_class', array(__CLASS__, 'add_admin_body_class'));
+
+        // GitHub auto-updater (opt-in via constant)
+        if (defined('FLUXSTACK_GITHUB_REPO') && FLUXSTACK_GITHUB_REPO) {
+            new FS_GitHub_Updater(FLUXSTACK_GITHUB_REPO);
+        }
     }
 
     // =========================================================================
