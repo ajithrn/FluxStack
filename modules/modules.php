@@ -40,6 +40,11 @@ if (FS_Module_Manager::can_load_module('dynamic-snippets')) {
     FS_Dynamic_Snippets::init();
 }
 
+if (FS_Module_Manager::can_load_module('seo')) {
+    require_once dirname( __FILE__ ) . '/seo/seo.php';
+    FS_SEO::init();
+}
+
 if (FS_Module_Manager::can_load_module('white-label')) {
     require_once dirname( __FILE__ ) . '/white-label/white-label.php';
     FS_White_Label::init();

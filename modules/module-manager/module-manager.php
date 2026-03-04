@@ -19,6 +19,7 @@ class FS_Module_Manager {
         'news-archives' => false,
         'portfolio' => false,
         'publications' => false,
+        'seo' => true,
         'services' => false,
         'teams' => false,
         'testimonials' => false,
@@ -39,7 +40,7 @@ class FS_Module_Manager {
         ),
         'customization' => array(
             'title' => 'Customization Modules',
-            'modules' => array('dynamic-snippets', 'white-label')
+            'modules' => array('dynamic-snippets', 'seo', 'white-label')
         )
     );
     
@@ -54,6 +55,7 @@ class FS_Module_Manager {
         'services' => 'Services management system with intro text and content sections',
         'teams' => 'Team member management with profiles and categories',
         'testimonials' => 'Testimonial management with ratings and categories',
+        'seo' => 'Basic SEO: meta tags, OG image, Google Analytics/GTM, verification',
         'theme-options' => 'Theme settings and customization options',
         'utility-functions' => 'Helper functions used by other modules',
         'white-label' => 'Admin interface customization and branding'
@@ -71,6 +73,7 @@ class FS_Module_Manager {
         'news-archives' => array('utility-functions'),
         'portfolio' => array('utility-functions'),
         'publications' => array('utility-functions'),
+        'seo' => array('theme-options'),
         'services' => array('utility-functions'),
         'teams' => array('utility-functions'),
         'testimonials' => array('utility-functions'),
