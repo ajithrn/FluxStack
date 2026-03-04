@@ -1,0 +1,269 @@
+/**
+ * FluxStack Theme Options — Admin Styles
+ *
+ * Scoped to .fluxstack-options-page (added via admin_body_class filter)
+ * to avoid affecting other admin pages.
+ *
+ * ACF structure:
+ *   .acf-postbox.seamless > .inside.acf-fields.-top
+ *     > .acf-tab-wrap.-top > ul.acf-hl.acf-tab-group
+ *     > .acf-field.acf-field-{type}.acf-field-{name}
+ */
+
+/* ==============================
+   Page Background
+   ============================== */
+
+.fluxstack-options-page #wpbody-content {
+  background: #f0f2f5;
+}
+
+.fluxstack-options-page #poststuff {
+  padding-top: 12px;
+}
+
+/* ==============================
+   Main Postbox Card
+   ============================== */
+
+.fluxstack-options-page .acf-postbox.seamless {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.fluxstack-options-page .acf-postbox.seamless>.postbox-header {
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  padding: 16px 24px;
+}
+
+.fluxstack-options-page .acf-postbox.seamless>.postbox-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1d2327;
+}
+
+.fluxstack-options-page .acf-postbox.seamless>.inside.acf-fields {
+  padding: 0 24px 24px;
+}
+
+/* ==============================
+   Tab Navigation
+   ============================== */
+
+.fluxstack-options-page .acf-tab-wrap.-top {
+  margin: 0 -24px 20px;
+  padding: 0 24px;
+  background: #f8f9fa;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.fluxstack-options-page ul.acf-tab-group {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.fluxstack-options-page ul.acf-tab-group li a.acf-tab-button {
+  padding: 12px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #50575e;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s ease;
+  background: transparent;
+  text-decoration: none;
+}
+
+.fluxstack-options-page ul.acf-tab-group li a.acf-tab-button:hover {
+  color: #2271b1;
+  background: rgba(34, 113, 177, 0.04);
+}
+
+.fluxstack-options-page ul.acf-tab-group li.active a.acf-tab-button {
+  color: #2271b1;
+  border-bottom-color: #2271b1;
+  background: transparent;
+  font-weight: 600;
+}
+
+/* ==============================
+   Field Cards
+   ============================== */
+
+/* Each visible field gets a card treatment */
+.fluxstack-options-page .acf-fields.-top>.acf-field:not(.acf-field-tab):not(.acf-hidden) {
+  padding: 20px;
+  border: 1px solid #e8eaed;
+  border-radius: 8px;
+  margin-top: 16px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.2s ease;
+}
+
+.fluxstack-options-page .acf-fields.-top>.acf-field:not(.acf-field-tab):not(.acf-hidden):hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Side-by-side fields (50% width) get shared appearance */
+.fluxstack-options-page .acf-fields.-top>.acf-field[data-width="50"]:not(.acf-hidden) {
+  min-height: auto !important;
+}
+
+/* ==============================
+   Field Labels
+   ============================== */
+
+.fluxstack-options-page .acf-field .acf-label label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1d2327;
+  margin-bottom: 4px;
+}
+
+.fluxstack-options-page .acf-field .acf-label .description {
+  font-size: 12.5px;
+  color: #757575;
+  line-height: 1.5;
+  margin-top: 2px;
+  margin-bottom: 8px;
+}
+
+.fluxstack-options-page .acf-field .acf-label .description a {
+  color: #2271b1;
+}
+
+/* ==============================
+   Input Fields
+   ============================== */
+
+.fluxstack-options-page .acf-input-wrap input[type="text"],
+.fluxstack-options-page .acf-input-wrap input[type="email"],
+.fluxstack-options-page .acf-input-wrap input[type="url"],
+.fluxstack-options-page .acf-input-wrap input[type="number"],
+.fluxstack-options-page .acf-input textarea,
+.fluxstack-options-page .acf-input select {
+  border: 1px solid #d0d5dd;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: #1d2327;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background: #fff;
+}
+
+.fluxstack-options-page .acf-input-wrap input:focus,
+.fluxstack-options-page .acf-input textarea:focus,
+.fluxstack-options-page .acf-input select:focus {
+  border-color: #2271b1;
+  box-shadow: 0 0 0 2px rgba(34, 113, 177, 0.12);
+  outline: none;
+}
+
+.fluxstack-options-page .acf-input textarea {
+  min-height: 80px;
+}
+
+/* ==============================
+   Image Upload Fields
+   ============================== */
+
+.fluxstack-options-page .acf-image-uploader {
+  border: 2px dashed #d0d5dd;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  background: #fafbfc;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.fluxstack-options-page .acf-image-uploader:hover {
+  border-color: #2271b1;
+  background: #f0f6fc;
+}
+
+.fluxstack-options-page .acf-image-uploader .hide-if-value p {
+  margin: 0;
+  font-size: 13px;
+  color: #757575;
+}
+
+.fluxstack-options-page .acf-image-uploader .acf-button {
+  border-radius: 6px;
+  margin-left: 8px;
+}
+
+/* When image is selected */
+.fluxstack-options-page .acf-image-uploader .show-if-value {
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/* ==============================
+   Repeater Table
+   ============================== */
+
+.fluxstack-options-page .acf-repeater.-table .acf-table {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  border-spacing: 0;
+}
+
+.fluxstack-options-page .acf-repeater.-table .acf-table thead th {
+  background: #f6f7f7;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: #50575e;
+  padding: 10px 12px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.fluxstack-options-page .acf-repeater.-table .acf-table tbody tr:hover td {
+  background: #f8fafc;
+}
+
+.fluxstack-options-page .acf-repeater .acf-actions {
+  padding-top: 12px;
+}
+
+.fluxstack-options-page .acf-repeater .acf-actions .acf-button {
+  border-radius: 6px;
+}
+
+/* ==============================
+   Sidebar Publish Box
+   ============================== */
+
+.fluxstack-options-page #submitdiv {
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.fluxstack-options-page #submitdiv .postbox-header {
+  background: #fff;
+}
+
+.fluxstack-options-page #submitdiv #publish {
+  border-radius: 6px;
+  padding: 4px 20px;
+  font-size: 14px;
+}
+
+/* ==============================
+   Better spacing for columns layout
+   ============================== */
+
+.fluxstack-options-page #post-body.columns-2 #postbox-container-2 {
+  padding-right: 16px;
+}

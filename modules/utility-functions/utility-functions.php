@@ -135,9 +135,6 @@ class FS_Utils {
     }
 }
 
-// Initialize the utils module
-FS_Utils::init();
-
 // Function wrappers for backward compatibility
 function fluxstack_get_theme_option($option_name, $default = '') {
     return FS_Utils::get_theme_option($option_name, $default);

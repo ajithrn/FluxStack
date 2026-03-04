@@ -9,6 +9,7 @@ class FS_Module_Manager {
     // Option names for storing settings
     const OPTION_NAME = 'fluxstack_module_settings';
     const BLOCK_OPTION_NAME = 'fluxstack_block_settings';
+    const WHITE_LABEL_OPTION_NAME = 'fluxstack_white_label_settings';
     
     // Default modules configuration
     private static $default_modules = array(
@@ -162,6 +163,13 @@ class FS_Module_Manager {
             'fluxstack_settings',
             self::BLOCK_OPTION_NAME,
             array(__CLASS__, 'sanitize_block_settings')
+        );
+        
+        // Register white label settings
+        register_setting(
+            'fluxstack_white_label',
+            self::WHITE_LABEL_OPTION_NAME,
+            array(__CLASS__, 'sanitize_white_label_settings')
         );
     }
     
@@ -350,9 +358,32 @@ class FS_Module_Manager {
     }
     
     /**
-     * Render settings page
+     * Sanitize white label settings
+     */
+    public static function sanitize_white_label_settings($input) {
+        $sanitized = array();
+        $defaults = class_exists('FS_White_Label') ? FS_White_Label::get_defaults() : array();
+        
+        $text_fields = array('agency_name', 'platform_name', 'footer_text');
+        foreach ($text_fields as $field) {
+            $sanitized[$field] = isset($input[$field]) && $input[$field] !== '' 
+                ? sanitize_text_field($input[$field]) 
+                : (isset($defaults[$field]) ? $defaults[$field] : '');
+        }
+        
+        // URL fields
+        $sanitized['agency_url'] = isset($input['agency_url']) && $input['agency_url'] !== '' 
+            ? esc_url_raw($input['agency_url']) 
+            : (isset($defaults['agency_url']) ? $defaults['agency_url'] : '');
+        
+        return $sanitized;
+    }
+    
+    /**
+     * Render settings page with tabs
      */
     public static function render_settings_page() {
+        $active_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'modules';
         $module_settings = self::get_module_settings();
         $block_settings = self::get_block_settings();
         
@@ -377,44 +408,148 @@ class FS_Module_Manager {
                 </div>
             <?php endif; ?>
             
-            <form method="post" action="options.php">
-                <?php settings_fields('fluxstack_settings'); ?>
-                <?php // These hidden fields ensure the options are submitted even if all checkboxes are unchecked ?>
-                <input type="hidden" name="<?php echo esc_attr(self::OPTION_NAME); ?>_submitted" value="1">
-                <input type="hidden" name="<?php echo esc_attr(self::BLOCK_OPTION_NAME); ?>_submitted" value="1">
-                
-                <div class="fluxstack-settings-container">
-                    <?php foreach (self::$module_groups as $group_id => $group) : ?>
-                        <div class="fluxstack-settings-group">
-                            <h2><?php echo esc_html($group['title']); ?></h2>
-                            
-                            <table class="form-table">
-                                <?php foreach ($group['modules'] as $module) : ?>
-                                    <?php self::render_module_row($module, $module_settings); ?>
-                                <?php endforeach; ?>
-                            </table>
-                        </div>
-                    <?php endforeach; ?>
-                    
+            <nav class="nav-tab-wrapper fluxstack-nav-tabs">
+                <a href="<?php echo esc_url(add_query_arg('tab', 'modules', remove_query_arg('settings-updated'))); ?>" 
+                   class="nav-tab <?php echo $active_tab === 'modules' ? 'nav-tab-active' : ''; ?>">
+                    <?php _e('Modules', 'fluxstack'); ?>
+                </a>
+                <a href="<?php echo esc_url(add_query_arg('tab', 'white-label', remove_query_arg('settings-updated'))); ?>" 
+                   class="nav-tab <?php echo $active_tab === 'white-label' ? 'nav-tab-active' : ''; ?>">
+                    <?php _e('White Label', 'fluxstack'); ?>
+                </a>
+            </nav>
+            
+            <?php if ($active_tab === 'modules') : ?>
+                <?php self::render_modules_tab($module_settings, $block_settings); ?>
+            <?php elseif ($active_tab === 'white-label') : ?>
+                <?php self::render_white_label_tab(); ?>
+            <?php endif; ?>
+        </div>
+        <?php
+    }
+    
+    /**
+     * Render the Modules tab content
+     */
+    private static function render_modules_tab($module_settings, $block_settings) {
+        ?>
+        <form method="post" action="options.php">
+            <?php settings_fields('fluxstack_settings'); ?>
+            <input type="hidden" name="<?php echo esc_attr(self::OPTION_NAME); ?>_submitted" value="1">
+            <input type="hidden" name="<?php echo esc_attr(self::BLOCK_OPTION_NAME); ?>_submitted" value="1">
+            
+            <div class="fluxstack-settings-container">
+                <?php foreach (self::$module_groups as $group_id => $group) : ?>
                     <div class="fluxstack-settings-group">
-                        <h2><?php _e('Theme Blocks', 'fluxstack'); ?></h2>
+                        <h2><?php echo esc_html($group['title']); ?></h2>
                         
                         <table class="form-table">
-                            <?php foreach (self::$default_blocks as $block => $default) : ?>
-                                <?php self::render_block_row($block, $block_settings, $module_settings); ?>
+                            <?php foreach ($group['modules'] as $module) : ?>
+                                <?php self::render_module_row($module, $module_settings); ?>
                             <?php endforeach; ?>
                         </table>
                     </div>
-                </div>
+                <?php endforeach; ?>
                 
-                <div class="fluxstack-settings-actions">
-                    <?php submit_button(); ?>
-                    <a href="<?php echo esc_url(wp_nonce_url(add_query_arg('reset-defaults', '1'), 'reset-defaults')); ?>" class="button button-secondary">
-                        <?php _e('Reset to Defaults', 'fluxstack'); ?>
-                    </a>
+                <div class="fluxstack-settings-group">
+                    <h2><?php _e('Theme Blocks', 'fluxstack'); ?></h2>
+                    
+                    <table class="form-table">
+                        <?php foreach (self::$default_blocks as $block => $default) : ?>
+                            <?php self::render_block_row($block, $block_settings, $module_settings); ?>
+                        <?php endforeach; ?>
+                    </table>
                 </div>
-            </form>
-        </div>
+            </div>
+            
+            <div class="fluxstack-settings-actions">
+                <?php submit_button(); ?>
+                <a href="<?php echo esc_url(wp_nonce_url(add_query_arg('reset-defaults', '1'), 'reset-defaults')); ?>" class="button button-secondary">
+                    <?php _e('Reset to Defaults', 'fluxstack'); ?>
+                </a>
+            </div>
+        </form>
+        <?php
+    }
+    
+    /**
+     * Render the White Label tab content
+     */
+    private static function render_white_label_tab() {
+        $settings = class_exists('FS_White_Label') ? FS_White_Label::get_settings() : array();
+        $defaults = class_exists('FS_White_Label') ? FS_White_Label::get_defaults() : array();
+        ?>
+        <form method="post" action="options.php">
+            <?php settings_fields('fluxstack_white_label'); ?>
+            
+            <div class="fluxstack-settings-container">
+                <div class="fluxstack-settings-group fluxstack-settings-group--wide">
+                    <h2><?php _e('Branding', 'fluxstack'); ?></h2>
+                    <p class="description"><?php _e('Customize the WordPress admin branding for this site.', 'fluxstack'); ?></p>
+                    
+                    <table class="form-table">
+                        <tr>
+                            <th scope="row">
+                                <label for="wl-agency-name"><?php _e('Agency Name', 'fluxstack'); ?></label>
+                            </th>
+                            <td>
+                                <input type="text" id="wl-agency-name" 
+                                    name="<?php echo esc_attr(self::WHITE_LABEL_OPTION_NAME); ?>[agency_name]" 
+                                    value="<?php echo esc_attr($settings['agency_name']); ?>" 
+                                    class="regular-text"
+                                    placeholder="<?php echo esc_attr($defaults['agency_name']); ?>">
+                                <p class="description"><?php _e('Displayed in the admin footer and login page.', 'fluxstack'); ?></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <label for="wl-agency-url"><?php _e('Agency URL', 'fluxstack'); ?></label>
+                            </th>
+                            <td>
+                                <input type="url" id="wl-agency-url" 
+                                    name="<?php echo esc_attr(self::WHITE_LABEL_OPTION_NAME); ?>[agency_url]" 
+                                    value="<?php echo esc_url($settings['agency_url']); ?>" 
+                                    class="regular-text"
+                                    placeholder="<?php echo esc_attr($defaults['agency_url']); ?>">
+                                <p class="description"><?php _e('Link used in the admin footer and login page logo.', 'fluxstack'); ?></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <label for="wl-platform-name"><?php _e('Platform Name', 'fluxstack'); ?></label>
+                            </th>
+                            <td>
+                                <input type="text" id="wl-platform-name" 
+                                    name="<?php echo esc_attr(self::WHITE_LABEL_OPTION_NAME); ?>[platform_name]" 
+                                    value="<?php echo esc_attr($settings['platform_name']); ?>" 
+                                    class="regular-text"
+                                    placeholder="<?php echo esc_attr($defaults['platform_name']); ?>">
+                                <p class="description"><?php _e('The platform/product name shown in the footer text.', 'fluxstack'); ?></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <label for="wl-footer-text"><?php _e('Footer Text Template', 'fluxstack'); ?></label>
+                            </th>
+                            <td>
+                                <input type="text" id="wl-footer-text" 
+                                    name="<?php echo esc_attr(self::WHITE_LABEL_OPTION_NAME); ?>[footer_text]" 
+                                    value="<?php echo esc_attr($settings['footer_text']); ?>" 
+                                    class="large-text"
+                                    placeholder="<?php echo esc_attr($defaults['footer_text']); ?>">
+                                <p class="description">
+                                    <?php _e('Use <code>%s</code> placeholders: 1st = Platform Name, 2nd = Agency URL, 3rd = Agency Name.', 'fluxstack'); ?>
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="fluxstack-settings-actions">
+                <?php submit_button(); ?>
+            </div>
+        </form>
         <?php
     }
     
@@ -639,9 +774,9 @@ class FS_Module_Manager {
             return;
         }
         
-        // Enqueue CSS and JS for the settings page
-        wp_enqueue_style('fluxstack-admin', get_stylesheet_directory_uri() . '/modules/module-manager/assets/css/admin.css', array(), '1.0.0');
-        wp_enqueue_script('fluxstack-admin', get_stylesheet_directory_uri() . '/modules/module-manager/assets/js/admin.js', array('jquery'), '1.0.0', true);
+        $version = wp_get_theme()->get('Version');
+        wp_enqueue_style('fluxstack-admin', get_stylesheet_directory_uri() . '/modules/module-manager/assets/css/admin.css', array(), $version);
+        wp_enqueue_script('fluxstack-admin', get_stylesheet_directory_uri() . '/modules/module-manager/assets/js/admin.js', array('jquery'), $version, true);
     }
     
     /**
@@ -907,5 +1042,3 @@ class FS_Module_Manager {
     }
 }
 
-// Initialize the module manager
-FS_Module_Manager::init();

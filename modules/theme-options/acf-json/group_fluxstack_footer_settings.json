@@ -7,14 +7,6 @@
       "label": "Copyright Information",
       "name": "",
       "type": "tab",
-      "instructions": "",
-      "required": 0,
-      "conditional_logic": 0,
-      "wrapper": {
-        "width": "",
-        "class": "",
-        "id": ""
-      },
       "placement": "top",
       "endpoint": 0
     },
@@ -23,7 +15,7 @@
       "label": "Copyright Text",
       "name": "copyright_text",
       "type": "textarea",
-      "instructions": "Enter your copyright text. Use {year} to dynamically insert the current year. New lines will be converted to line breaks.",
+      "instructions": "Enter your copyright text. Use <code>{year}</code> for the current year and <code>{site_name}</code> for the site name. Available as {copyright} in Bricks.",
       "required": 0,
       "conditional_logic": 0,
       "wrapper": {
@@ -31,34 +23,26 @@
         "class": "",
         "id": ""
       },
-      "default_value": "© {year} Your Company. All rights reserved.",
+      "default_value": "© {year} {site_name}. All rights reserved.",
       "placeholder": "",
       "maxlength": "",
-      "rows": 4,
+      "rows": 3,
       "new_lines": "br"
     },
     {
       "key": "field_button_section",
-      "label": "Footer Button",
+      "label": "CTA Button",
       "name": "",
       "type": "tab",
-      "instructions": "",
-      "required": 0,
-      "conditional_logic": 0,
-      "wrapper": {
-        "width": "",
-        "class": "",
-        "id": ""
-      },
       "placement": "top",
       "endpoint": 0
     },
     {
       "key": "field_footer_button",
-      "label": "Footer Button",
+      "label": "Footer CTA Button",
       "name": "footer_button",
       "type": "group",
-      "instructions": "Configure the footer button",
+      "instructions": "A call-to-action button displayed in the footer. Available as {footer_button} in Bricks. Leave both fields empty to hide.",
       "required": 0,
       "conditional_logic": 0,
       "wrapper": {
@@ -73,7 +57,7 @@
           "label": "Button Text",
           "name": "text",
           "type": "text",
-          "instructions": "Enter the button text",
+          "instructions": "",
           "required": 0,
           "conditional_logic": 0,
           "wrapper": {
@@ -82,17 +66,14 @@
             "id": ""
           },
           "default_value": "Contact Us",
-          "placeholder": "",
-          "prepend": "",
-          "append": "",
-          "maxlength": ""
+          "placeholder": "e.g. Contact Us, Get Started"
         },
         {
           "key": "field_button_link",
           "label": "Button Link",
           "name": "link",
           "type": "url",
-          "instructions": "Enter the button URL",
+          "instructions": "",
           "required": 0,
           "conditional_logic": 0,
           "wrapper": {
@@ -110,7 +91,6 @@
     [
       {
         "param": "options_page",
-  "style": "seamless",
         "operator": "==",
         "value": "acf-options-footer"
       }
@@ -125,5 +105,5 @@
   "active": true,
   "description": "",
   "show_in_rest": 0,
-  "modified": 1736250718
+  "modified": 1709538156
 }

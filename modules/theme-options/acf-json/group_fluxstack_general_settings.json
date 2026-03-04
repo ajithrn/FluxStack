@@ -1,250 +1,330 @@
 {
-    "key": "group_fluxstack_general_settings",
-    "title": "Theme Settings",
-    "fields": [
+  "key": "group_fluxstack_general_settings",
+  "title": "Theme Settings",
+  "fields": [
+    {
+      "key": "field_branding_tab",
+      "label": "Branding",
+      "name": "",
+      "type": "tab",
+      "placement": "top",
+      "endpoint": 0,
+      "selected": 0
+    },
+    {
+      "key": "field_site_logo",
+      "label": "Site Logo",
+      "name": "site_logo",
+      "type": "image",
+      "instructions": "Upload your site logo. Recommended size: 300x100px. Used in the header, footer, and anywhere the {site_logo} dynamic tag is used in Bricks.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "50",
+        "class": "",
+        "id": ""
+      },
+      "return_format": "array",
+      "preview_size": "medium",
+      "library": "all",
+      "min_width": 0,
+      "min_height": 0,
+      "min_size": 0,
+      "max_width": 0,
+      "max_height": 0,
+      "max_size": 0,
+      "mime_types": "jpg,jpeg,png,svg,webp"
+    },
+    {
+      "key": "field_site_favicon",
+      "label": "Site Favicon",
+      "name": "site_favicon",
+      "type": "image",
+      "instructions": "Upload a favicon (browser tab icon). Recommended: 512x512px PNG or ICO.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "50",
+        "class": "",
+        "id": ""
+      },
+      "return_format": "array",
+      "preview_size": "thumbnail",
+      "library": "all",
+      "min_width": 0,
+      "min_height": 0,
+      "min_size": 0,
+      "max_width": 0,
+      "max_height": 0,
+      "max_size": 0,
+      "mime_types": "jpg,jpeg,png,ico,svg"
+    },
+    {
+      "key": "field_contact_tab",
+      "label": "Contact Info",
+      "name": "",
+      "type": "tab",
+      "placement": "top",
+      "endpoint": 0,
+      "selected": 0
+    },
+    {
+      "key": "field_contact_email",
+      "label": "Email Address",
+      "name": "contact_email",
+      "type": "email",
+      "instructions": "Primary contact email. Available as {contact_email} in Bricks.",
+      "required": 0,
+      "conditional_logic": false,
+      "wrapper": {
+        "width": "50",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "placeholder": "info@example.com"
+    },
+    {
+      "key": "field_contact_phone",
+      "label": "Phone Number",
+      "name": "contact_phone",
+      "type": "text",
+      "instructions": "Primary phone number. Available as {contact_phone} in Bricks.",
+      "required": 0,
+      "conditional_logic": false,
+      "wrapper": {
+        "width": "50",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "maxlength": "",
+      "placeholder": "+1 (555) 123-4567"
+    },
+    {
+      "key": "field_contact_address",
+      "label": "Address",
+      "name": "contact_address",
+      "type": "textarea",
+      "instructions": "Business address. Available as {contact_address} in Bricks.",
+      "required": 0,
+      "conditional_logic": false,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "rows": 3,
+      "default_value": "",
+      "new_lines": "br",
+      "maxlength": "",
+      "placeholder": "123 Main Street\nCity, State 12345"
+    },
+    {
+      "key": "field_social_tab",
+      "label": "Social Media",
+      "name": "",
+      "type": "tab",
+      "placement": "top",
+      "endpoint": 0,
+      "selected": 0
+    },
+    {
+      "key": "field_social_media",
+      "label": "Social Media Links",
+      "name": "social_media_links",
+      "type": "repeater",
+      "instructions": "Add your social media profiles. Available as {social_links} in Bricks.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "collapsed": "",
+      "min": 0,
+      "max": 0,
+      "layout": "table",
+      "button_label": "Add Social Media",
+      "rows_per_page": 20,
+      "sub_fields": [
         {
-            "key": "field_branding_tab",
-            "label": "Branding",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
+          "key": "field_social_platform",
+          "label": "Platform",
+          "name": "platform",
+          "type": "select",
+          "instructions": "",
+          "required": 1,
+          "conditional_logic": 0,
+          "wrapper": {
+            "width": "",
+            "class": "",
+            "id": ""
+          },
+          "choices": {
+            "fab fa-facebook": "Facebook",
+            "fab fa-twitter": "Twitter / X",
+            "fab fa-instagram": "Instagram",
+            "fab fa-linkedin": "LinkedIn",
+            "fab fa-youtube": "YouTube",
+            "fab fa-pinterest": "Pinterest",
+            "fab fa-tiktok": "TikTok",
+            "fab fa-github": "GitHub",
+            "fab fa-dribbble": "Dribbble",
+            "fab fa-behance": "Behance",
+            "fab fa-medium": "Medium",
+            "fab fa-reddit": "Reddit",
+            "fab fa-snapchat": "Snapchat",
+            "fab fa-whatsapp": "WhatsApp",
+            "fab fa-telegram": "Telegram",
+            "fab fa-discord": "Discord",
+            "fab fa-yelp": "Yelp",
+            "fab fa-threads": "Threads",
+            "fas fa-envelope": "Newsletter"
+          },
+          "default_value": false,
+          "return_format": "value",
+          "multiple": 0,
+          "allow_null": 0,
+          "ui": 1,
+          "ajax": 0,
+          "placeholder": "",
+          "parent_repeater": "field_social_media"
         },
         {
-            "key": "field_site_logo",
-            "label": "Site Logo",
-            "name": "site_logo",
-            "aria-label": "",
-            "type": "image",
-            "instructions": "Upload your site logo",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "array",
-            "preview_size": "medium",
-            "library": "all",
-            "min_width": 0,
-            "min_height": 0,
-            "min_size": 0,
-            "max_width": 0,
-            "max_height": 0,
-            "max_size": 0,
-            "mime_types": ""
-        },
-        {
-            "key": "field_contact_tab",
-            "label": "Contact Info",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_contact_email",
-            "label": "Email Address",
-            "name": "contact_email",
-            "aria-label": "",
-            "type": "email",
-            "instructions": "Primary contact email address",
-            "required": 0,
-            "conditional_logic": false,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_contact_phone",
-            "label": "Phone Number",
-            "name": "contact_phone",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "Primary contact phone number",
-            "required": 0,
-            "conditional_logic": false,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_contact_address",
-            "label": "Address",
-            "name": "contact_address",
-            "aria-label": "",
-            "type": "textarea",
-            "instructions": "Business address",
-            "required": 0,
-            "conditional_logic": false,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "rows": 4,
-            "default_value": "",
-            "new_lines": "",
-            "maxlength": "",
-            "placeholder": ""
-        },
-        {
-            "key": "field_social_tab",
-            "label": "Social Media",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_social_media",
-            "label": "Social Media Links",
-            "name": "social_media_links",
-            "aria-label": "",
-            "type": "repeater",
-            "instructions": "Add your social media profiles",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "collapsed": "",
-            "min": 0,
-            "max": 0,
-            "layout": "table",
-            "button_label": "Add Social Media",
-            "rows_per_page": 20,
-            "sub_fields": [
-                {
-                    "key": "field_social_platform",
-                    "label": "Platform",
-                    "name": "platform",
-                    "aria-label": "",
-                    "type": "select",
-                    "instructions": "",
-                    "required": 1,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "choices": {
-                        "fab fa-facebook": "Facebook",
-                        "fab fa-twitter": "Twitter",
-                        "fab fa-instagram": "Instagram",
-                        "fab fa-linkedin": "LinkedIn",
-                        "fab fa-youtube": "YouTube",
-                        "fab fa-pinterest": "Pinterest",
-                        "fab fa-tiktok": "TikTok",
-                        "fab fa-github": "GitHub",
-                        "fab fa-dribbble": "Dribbble",
-                        "fab fa-behance": "Behance",
-                        "fab fa-medium": "Medium",
-                        "fab fa-reddit": "Reddit",
-                        "fab fa-snapchat": "Snapchat",
-                        "fab fa-whatsapp": "WhatsApp",
-                        "fab fa-telegram": "Telegram",
-                        "fab fa-discord": "Discord",
-                        "fab fa-yelp": "Yelp",
-                        "fas fa-envelope": "Newsletter"
-                    },
-                    "default_value": false,
-                    "return_format": "value",
-                    "multiple": 0,
-                    "allow_null": 0,
-                    "allow_in_bindings": 1,
-                    "ui": 1,
-                    "ajax": 0,
-                    "placeholder": "",
-                    "create_options": 0,
-                    "save_options": 0,
-                    "parent_repeater": "field_social_media"
-                },
-                {
-                    "key": "field_social_url",
-                    "label": "Profile URL",
-                    "name": "url",
-                    "aria-label": "",
-                    "type": "url",
-                    "instructions": "",
-                    "required": 1,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "parent_repeater": "field_social_media"
-                }
-            ]
+          "key": "field_social_url",
+          "label": "Profile URL",
+          "name": "url",
+          "type": "url",
+          "instructions": "",
+          "required": 1,
+          "conditional_logic": 0,
+          "wrapper": {
+            "width": "",
+            "class": "",
+            "id": ""
+          },
+          "default_value": "",
+          "placeholder": "https://",
+          "parent_repeater": "field_social_media"
         }
-    ],
-    "location": [
-        [
-            {
-                "param": "options_page",
-                "operator": "==",
-                "value": "theme-options"
-            }
-        ]
-    ],
-    "menu_order": 0,
-    "position": "normal",
-    "style": "seamless",
-    "label_placement": "top",
-    "instruction_placement": "label",
-    "hide_on_screen": "",
-    "active": true,
-    "description": "",
-    "show_in_rest": 0,
-    "modified": 1748361850
+      ]
+    },
+    {
+      "key": "field_seo_tab",
+      "label": "SEO",
+      "name": "",
+      "type": "tab",
+      "placement": "top",
+      "endpoint": 0,
+      "selected": 0
+    },
+    {
+      "key": "field_seo_meta_description",
+      "label": "Default Meta Description",
+      "name": "seo_meta_description",
+      "type": "textarea",
+      "instructions": "Sitewide fallback meta description (used on non-singular pages like archives and the home page). Individual pages/posts can override this.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "rows": 2,
+      "default_value": "",
+      "new_lines": "",
+      "maxlength": 160,
+      "placeholder": "A brief description of your site for search engines (max 160 characters)"
+    },
+    {
+      "key": "field_seo_og_image",
+      "label": "Default OG Image",
+      "name": "seo_og_image",
+      "type": "image",
+      "instructions": "Fallback image for social media sharing. Used when a page has no featured image. Recommended: 1200x630px.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "50",
+        "class": "",
+        "id": ""
+      },
+      "return_format": "array",
+      "preview_size": "medium",
+      "library": "all",
+      "mime_types": "jpg,jpeg,png,webp"
+    },
+    {
+      "key": "field_seo_google_verification",
+      "label": "Google Site Verification",
+      "name": "seo_google_verification",
+      "type": "text",
+      "instructions": "Enter only the verification code (the content value), not the full meta tag. Get it from <a href=\"https://search.google.com/search-console\" target=\"_blank\">Google Search Console</a>.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "50",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "placeholder": "e.g. dGhpcyBpcyBub3QgYSByZWFs"
+    },
+    {
+      "key": "field_seo_analytics_id",
+      "label": "Google Analytics / GTM ID",
+      "name": "seo_analytics_id",
+      "type": "text",
+      "instructions": "Enter your Google Analytics (G-XXXXX), Universal Analytics (UA-XXXXX), or Google Tag Manager (GTM-XXXXX) ID. The correct tracking script will be generated automatically.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "50",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "placeholder": "G-XXXXXXXXXX or GTM-XXXXXXX"
+    },
+    {
+      "key": "field_seo_head_scripts",
+      "label": "Additional Head Scripts",
+      "name": "seo_head_scripts",
+      "type": "textarea",
+      "instructions": "Custom scripts to add in the &lt;head&gt; section (e.g., tracking pixels, verification tags). Include the full &lt;script&gt; or &lt;meta&gt; tags.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "rows": 5,
+      "default_value": "",
+      "new_lines": "",
+      "placeholder": "<!-- Paste your tracking scripts here -->"
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "options_page",
+        "operator": "==",
+        "value": "theme-options"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "seamless",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": "",
+  "show_in_rest": 0,
+  "modified": 1709538156
 }

@@ -320,5 +320,3 @@ class FS_News_Year_Widget extends WP_Widget {
     }
 }
 
-// Initialize the news archives module
-FS_News_Archives::init();

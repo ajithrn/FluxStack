@@ -2,53 +2,53 @@
 /**
  * Bricks Builder Customizations
  *
+ * Provides integration with Bricks Builder including custom element
+ * registration and utility methods for builder state detection.
+ *
  * @package FluxStack
  */
 
 class FS_Bricks {
     public static function init() {
-        add_filter('bricks/elements', array(__CLASS__, 'register_elements'));
-        add_filter('bricks/templates', array(__CLASS__, 'register_templates'));
-        add_filter('bricks/settings', array(__CLASS__, 'register_settings'));
+        // Register custom elements when Bricks is ready
+        add_action('init', array(__CLASS__, 'register_elements'), 11);
     }
 
     /**
-     * Add custom Bricks Builder elements
+     * Register custom Bricks Builder elements
      *
-     * @param array $elements Array of registered elements.
-     * @return array Modified elements array.
+     * Elements should be placed in modules/bricks/elements/ directory.
+     * Each element should be a PHP file containing a class that extends
+     * \Bricks\Element.
+     *
+     * @see https://academy.bricksbuilder.io/topic/create-your-own-elements/
      */
-    public static function register_elements($elements) {
-        // Add custom elements here
-        return $elements;
-    }
+    public static function register_elements() {
+        // Only register if Bricks is active and the Elements class exists
+        if (!defined('BRICKS_VERSION') || !class_exists('\Bricks\Elements')) {
+            return;
+        }
 
-    /**
-     * Add custom Bricks Builder templates
-     *
-     * @param array $templates Array of registered templates.
-     * @return array Modified templates array.
-     */
-    public static function register_templates($templates) {
-        // Add custom templates here
-        return $templates;
-    }
+        $elements_dir = get_stylesheet_directory() . '/modules/bricks/elements';
 
-    /**
-     * Add custom Bricks Builder settings
-     *
-     * @param array $settings Array of settings.
-     * @return array Modified settings array.
-     */
-    public static function register_settings($settings) {
-        // Add custom settings here
-        return $settings;
+        if (!is_dir($elements_dir)) {
+            return;
+        }
+
+        // Auto-discover and register elements
+        $element_files = glob($elements_dir . '/*.php');
+
+        if ($element_files) {
+            foreach ($element_files as $element_file) {
+                \Bricks\Elements::register_element($element_file);
+            }
+        }
     }
 
     /**
      * Check if current page is using Bricks template
      *
-     * @return boolean True if using Bricks template.
+     * @return bool True if using Bricks template.
      */
     public static function is_bricks_template() {
         if (function_exists('bricks_is_builder_main')) {
@@ -76,9 +76,9 @@ class FS_Bricks {
     }
 
     /**
-     * Check if Bricks builder is active
+     * Check if Bricks builder is active (editing mode)
      *
-     * @return boolean True if Bricks builder is active.
+     * @return bool True if Bricks builder is active.
      */
     public static function is_builder_active() {
         if (function_exists('bricks_is_builder_main') && function_exists('bricks_is_builder_iframe')) {
@@ -87,6 +87,3 @@ class FS_Bricks {
         return false;
     }
 }
-
-// Initialize the Bricks module
-FS_Bricks::init();
