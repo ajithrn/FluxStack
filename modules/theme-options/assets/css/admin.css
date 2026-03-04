@@ -19,7 +19,7 @@
 }
 
 .fluxstack-options-page #poststuff {
-  padding-top: 12px;
+  padding-top: 16px;
 }
 
 /* ==============================
@@ -35,9 +35,7 @@
 }
 
 .fluxstack-options-page .acf-postbox.seamless>.postbox-header {
-  background: #fff;
-  border-bottom: 1px solid #eee;
-  padding: 16px 24px;
+  display: none;
 }
 
 .fluxstack-options-page .acf-postbox.seamless>.postbox-header h2 {
@@ -47,7 +45,7 @@
 }
 
 .fluxstack-options-page .acf-postbox.seamless>.inside.acf-fields {
-  padding: 0 24px 24px;
+  padding: 8px 24px 28px;
 }
 
 /* ==============================
@@ -55,7 +53,7 @@
    ============================== */
 
 .fluxstack-options-page .acf-tab-wrap.-top {
-  margin: 0 -24px 20px;
+  margin: 0 -24px 24px;
   padding: 0 24px;
   background: #f8f9fa;
   border-bottom: 2px solid #e0e0e0;
@@ -67,17 +65,29 @@
   border: none;
 }
 
+.fluxstack-options-page ul.acf-tab-group li {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 .fluxstack-options-page ul.acf-tab-group li a.acf-tab-button {
-  padding: 12px 20px;
+  padding: 12px 18px;
+  margin: 0 !important;
   font-size: 13px;
   font-weight: 500;
   color: #50575e;
   border: none;
   border-bottom: 2px solid transparent;
-  margin-bottom: -2px;
   transition: all 0.2s ease;
   background: transparent;
   text-decoration: none;
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+/* Force padding on the first tab to override ACF's negative margin trick */
+.fluxstack-options-page ul.acf-tab-group li:first-child a.acf-tab-button {
+  padding-left: 32px !important;
 }
 
 .fluxstack-options-page ul.acf-tab-group li a.acf-tab-button:hover {
@@ -98,10 +108,11 @@
 
 /* Each visible field gets a card treatment */
 .fluxstack-options-page .acf-fields.-top>.acf-field:not(.acf-field-tab):not(.acf-hidden) {
-  padding: 20px;
+  box-sizing: border-box;
+  padding: 24px;
   border: 1px solid #e8eaed;
   border-radius: 8px;
-  margin-top: 16px;
+  margin-top: 20px;
   background: #fff;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
   transition: box-shadow 0.2s ease;
@@ -111,9 +122,15 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-/* Side-by-side fields (50% width) get shared appearance */
+/* Side-by-side fields (50% width) */
 .fluxstack-options-page .acf-fields.-top>.acf-field[data-width="50"]:not(.acf-hidden) {
   min-height: auto !important;
+  width: calc(50% - 12px) !important;
+  clear: none;
+}
+
+.fluxstack-options-page .acf-fields.-top>.acf-field[data-width="50"]:nth-of-type(odd) {
+  margin-right: 24px;
 }
 
 /* ==============================
@@ -149,9 +166,11 @@
 .fluxstack-options-page .acf-input-wrap input[type="number"],
 .fluxstack-options-page .acf-input textarea,
 .fluxstack-options-page .acf-input select {
+  box-sizing: border-box;
+  width: 100%;
   border: 1px solid #d0d5dd;
   border-radius: 6px;
-  padding: 8px 12px;
+  padding: 10px 14px;
   font-size: 14px;
   color: #1d2327;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
