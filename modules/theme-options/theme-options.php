@@ -210,4 +210,13 @@ class FS_Theme_Options {
     public static function get_footer_button() {
         return self::get_option('footer_button');
     }
+
+    /**
+     * Check if admin link should be shown in footer
+     *
+     * @return bool
+     */
+    public static function get_show_admin_link() {
+        return (bool) self::get_option('show_admin_link', true);
+    }
 }

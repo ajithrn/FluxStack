@@ -1,0 +1,64 @@
+{
+  "key": "group_resources_meta_fields",
+  "title": "Resource Details",
+  "fields": [
+    {
+      "key": "field_resource_file",
+      "label": "File",
+      "name": "resource_file",
+      "type": "file",
+      "instructions": "Upload the downloadable document (PDF, DOC, etc.).",
+      "required": 1,
+      "return_format": "array",
+      "library": "all",
+      "mime_types": "pdf,doc,docx,xls,xlsx"
+    },
+    {
+      "key": "field_resource_description",
+      "label": "Description",
+      "name": "resource_description",
+      "type": "textarea",
+      "instructions": "Brief summary of this resource.",
+      "required": 0,
+      "rows": 3,
+      "new_lines": "br"
+    },
+    {
+      "key": "field_resource_access_level",
+      "label": "Access Level",
+      "name": "resource_access_level",
+      "type": "select",
+      "instructions": "Who can access this resource?",
+      "required": 1,
+      "choices": {
+        "public": "Public (anyone can download)",
+        "members-only": "Members Only (login required)"
+      },
+      "default_value": "public",
+      "return_format": "value"
+    },
+    {
+      "key": "field_resource_year",
+      "label": "Document Year",
+      "name": "resource_year",
+      "type": "text",
+      "instructions": "Year this document applies to (e.g., 2024). Used for filtering.",
+      "required": 0,
+      "placeholder": "2024"
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "resource"
+      }
+    ]
+  ],
+  "style": "seamless",
+  "position": "normal",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "active": true
+}

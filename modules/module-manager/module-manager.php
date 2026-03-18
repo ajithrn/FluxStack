@@ -16,9 +16,11 @@ class FS_Module_Manager {
         'bricks' => true,
         'dynamic-snippets' => true,
         'image-gallery' => false,
+        'member-directory' => false,
         'news-archives' => false,
         'portfolio' => false,
         'publications' => false,
+        'resources' => false,
         'seo' => true,
         'services' => false,
         'teams' => false,
@@ -36,7 +38,7 @@ class FS_Module_Manager {
         ),
         'content' => array(
             'title' => 'Content Modules',
-            'modules' => array('teams', 'publications', 'testimonials', 'image-gallery', 'news-archives', 'portfolio', 'services')
+            'modules' => array('teams', 'publications', 'testimonials', 'image-gallery', 'news-archives', 'portfolio', 'services', 'resources', 'member-directory')
         ),
         'customization' => array(
             'title' => 'Customization Modules',
@@ -49,6 +51,7 @@ class FS_Module_Manager {
         'bricks' => 'Bricks Builder customizations and extensions',
         'dynamic-snippets' => 'Reusable code snippets and components',
         'image-gallery' => 'Image gallery management with categories',
+        'member-directory' => 'Member directory system for mechanical contractors',
         'news-archives' => 'Year-based news organization and archives',
         'portfolio' => 'Portfolio management system with project details and gallery',
         'publications' => 'Publication management system with types and PDF support',
@@ -56,6 +59,7 @@ class FS_Module_Manager {
         'teams' => 'Team member management with profiles and categories',
         'testimonials' => 'Testimonial management with ratings and categories',
         'seo' => 'Basic SEO: meta tags, OG image, Google Analytics/GTM, verification',
+        'resources' => 'Downloadable documents library with trade, type, and location taxonomies',
         'theme-options' => 'Theme settings and customization options',
         'utility-functions' => 'Helper functions used by other modules',
         'white-label' => 'Admin interface customization and branding'
@@ -70,10 +74,12 @@ class FS_Module_Manager {
         'bricks' => array(),  // No dependencies
         'dynamic-snippets' => array('utility-functions'),
         'image-gallery' => array('utility-functions'),
+        'member-directory' => array('utility-functions'),
         'news-archives' => array('utility-functions'),
         'portfolio' => array('utility-functions'),
         'publications' => array('utility-functions'),
         'seo' => array('theme-options'),
+        'resources' => array('utility-functions'),
         'services' => array('utility-functions'),
         'teams' => array('utility-functions'),
         'testimonials' => array('utility-functions'),
@@ -367,12 +373,17 @@ class FS_Module_Manager {
         $sanitized = array();
         $defaults = class_exists('FS_White_Label') ? FS_White_Label::get_defaults() : array();
         
-        $text_fields = array('agency_name', 'platform_name', 'footer_text');
+        $text_fields = array('agency_name', 'platform_name');
         foreach ($text_fields as $field) {
             $sanitized[$field] = isset($input[$field]) && $input[$field] !== '' 
                 ? sanitize_text_field($input[$field]) 
                 : (isset($defaults[$field]) ? $defaults[$field] : '');
         }
+
+        // Footer text needs wp_kses_post to preserve HTML (e.g. <a> tags)
+        $sanitized['footer_text'] = isset($input['footer_text']) && $input['footer_text'] !== ''
+            ? wp_kses_post($input['footer_text'])
+            : (isset($defaults['footer_text']) ? $defaults['footer_text'] : '');
         
         // URL fields
         $sanitized['agency_url'] = isset($input['agency_url']) && $input['agency_url'] !== '' 

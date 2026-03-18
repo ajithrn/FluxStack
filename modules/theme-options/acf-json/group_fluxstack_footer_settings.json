@@ -23,11 +23,21 @@
         "class": "",
         "id": ""
       },
-      "default_value": "© {year} {site_name}. All rights reserved.",
+      "default_value": "\u00a9 {year} {site_name}. All rights reserved.",
       "placeholder": "",
       "maxlength": "",
       "rows": 3,
       "new_lines": "br"
+    },
+    {
+      "key": "field_show_admin_link",
+      "label": "Show Admin Link",
+      "name": "show_admin_link",
+      "type": "true_false",
+      "instructions": "Show the 'ADMIN' login link below the copyright text.",
+      "required": 0,
+      "default_value": 1,
+      "ui": 1
     },
     {
       "key": "field_button_section",

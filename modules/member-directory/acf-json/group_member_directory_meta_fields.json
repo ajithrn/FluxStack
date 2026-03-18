@@ -1,0 +1,108 @@
+{
+  "key": "group_member_directory_meta_fields",
+  "title": "Member Details",
+  "fields": [
+    {
+      "key": "field_member_address",
+      "label": "Address",
+      "name": "member_address",
+      "type": "textarea",
+      "instructions": "Enter the company address.",
+      "required": 0,
+      "rows": 3,
+      "new_lines": "br"
+    },
+    {
+      "key": "field_member_phone",
+      "label": "Phone",
+      "name": "member_phone",
+      "type": "text",
+      "required": 0,
+      "wrapper": {
+        "width": "50"
+      }
+    },
+    {
+      "key": "field_member_fax",
+      "label": "Fax",
+      "name": "member_fax",
+      "type": "text",
+      "required": 0,
+      "wrapper": {
+        "width": "50"
+      }
+    },
+    {
+      "key": "field_member_contacts",
+      "label": "Contacts",
+      "name": "member_contacts",
+      "type": "repeater",
+      "instructions": "Add the main contacts for this member.",
+      "required": 0,
+      "layout": "table",
+      "button_label": "Add Contact",
+      "sub_fields": [
+        {
+          "key": "field_member_contact_person",
+          "label": "Contact Person",
+          "name": "person",
+          "type": "text",
+          "required": 1
+        },
+        {
+          "key": "field_member_contact_title",
+          "label": "Title",
+          "name": "title",
+          "type": "text",
+          "required": 0
+        },
+        {
+          "key": "field_member_contact_email",
+          "label": "Email",
+          "name": "email",
+          "type": "email",
+          "required": 0
+        }
+      ]
+    },
+    {
+      "key": "field_member_website",
+      "label": "Website",
+      "name": "member_website",
+      "type": "url",
+      "required": 0
+    },
+    {
+      "key": "field_member_services_summary",
+      "label": "Services Summary (Short)",
+      "name": "member_services_summary",
+      "type": "text",
+      "instructions": "Appears underneath the member name on the main list. E.g. \"Plumbing, Heating, Cooling\"",
+      "required": 0
+    },
+    {
+      "key": "field_member_types_of_service",
+      "label": "Types of Service (Detailed)",
+      "name": "member_types_of_service",
+      "type": "textarea",
+      "instructions": "Full list of services the member provides. Displays in the dropdown details.",
+      "required": 0,
+      "rows": 3,
+      "new_lines": "br"
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "member"
+      }
+    ]
+  ],
+  "style": "seamless",
+  "position": "normal",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "active": true
+}

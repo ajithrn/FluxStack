@@ -85,6 +85,16 @@ if (FS_Module_Manager::can_load_module('image-gallery')) {
     FS_Image_Gallery::init();
 }
 
+if (FS_Module_Manager::can_load_module('resources')) {
+    require_once dirname( __FILE__ ) . '/resources/resources.php';
+    FS_Resources::init();
+}
+
+if (FS_Module_Manager::can_load_module('member-directory')) {
+    require_once dirname( __FILE__ ) . '/member-directory/member-directory.php';
+    FS_Member_Directory::init();
+}
+
 /**
  * Standalone Modules
  * These have unique functionality not based on CPTs.
