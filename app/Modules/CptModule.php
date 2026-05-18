@@ -50,9 +50,9 @@ abstract class CptModule extends BaseModule
             'public' => true,
             'show_ui' => true,
             'show_in_menu' => true,
-            'show_in_rest' => true,
+            'show_in_rest' => false,
             'has_archive' => true,
-            'supports' => ['title', 'editor', 'thumbnail', 'excerpt'],
+            'supports' => ['title', 'thumbnail', 'excerpt', 'custom-fields'],
             'menu_position' => 20,
             'capability_type' => 'post',
         ];

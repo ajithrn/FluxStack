@@ -1,0 +1,115 @@
+{
+    "key": "group_testimonials_meta_fields",
+    "title": "Post: Testimonial Details",
+    "fields": [
+        {
+            "key": "field_testimonial_author",
+            "label": "Reviewer / Author",
+            "name": "testimonial_author",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "What is the name of the review author?",
+            "required": 1,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Enter Author Name",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_testimonial_author_title",
+            "label": "Reviewer Title",
+            "name": "testimonial_author_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "What is the title of the review author? (Optional.)",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Enter Author Title",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_testimonial_summary",
+            "label": "Review Summary",
+            "name": "testimonial_summary",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Enter a short sentence describing the reviewer's experience.",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Enter Review Summary",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_testimonial_rating",
+            "label": "Rating Value",
+            "name": "testimonial_rating",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Select the appropriate star-rating to reflect on the review.",
+            "required": 1,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "5": "5 Stars",
+                "4": "4 Stars",
+                "3": "3 Stars",
+                "2": "2 Stars",
+                "1": "1 Star",
+                "0": "0 Stars"
+            },
+            "default_value": 5,
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 1,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "testimonial"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1735544632
+}

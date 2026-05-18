@@ -1,0 +1,207 @@
+{
+    "key": "group_teams_meta_fields",
+    "title": "Post: Team Member Details",
+    "fields": [
+        {
+            "key": "field_team_name",
+            "label": "Full Name",
+            "name": "team_name",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Enter the team member's full name.",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Enter Full Name",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_team_position",
+            "label": "Position",
+            "name": "team_position",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Enter the team member's job title or position.",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Enter Position",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_team_email",
+            "label": "Email Address",
+            "name": "team_email",
+            "aria-label": "",
+            "type": "email",
+            "instructions": "Enter the team member's email address.",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Enter Email Address",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_team_phone",
+            "label": "Phone Number",
+            "name": "team_phone",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Enter the team member's phone number.",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Enter Phone Number",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_team_about",
+            "label": "About",
+            "name": "team_about",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Enter a brief biography or description of the team member.",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Enter Biography",
+            "maxlength": "",
+            "rows": 6,
+            "new_lines": "wpautop"
+        },
+        {
+            "key": "field_team_social_media",
+            "label": "Social Media Links",
+            "name": "team_social_media",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Add social media links for the team member.",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "field_team_social_platform",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "Add Social Media Link",
+            "sub_fields": [
+                {
+                    "key": "field_team_social_platform",
+                    "label": "Platform",
+                    "name": "platform",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "30",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "facebook": "Facebook",
+                        "twitter": "Twitter",
+                        "linkedin": "LinkedIn",
+                        "instagram": "Instagram",
+                        "youtube": "YouTube",
+                        "pinterest": "Pinterest",
+                        "github": "GitHub",
+                        "other": "Other"
+                    },
+                    "default_value": "linkedin",
+                    "allow_null": 0,
+                    "multiple": 0,
+                    "ui": 1,
+                    "return_format": "value",
+                    "ajax": 0,
+                    "placeholder": ""
+                },
+                {
+                    "key": "field_team_social_url",
+                    "label": "URL",
+                    "name": "url",
+                    "aria-label": "",
+                    "type": "url",
+                    "instructions": "",
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "70",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "https://"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "team"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "acf_after_title",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "the_content",
+        "excerpt",
+        "discussion",
+        "comments",
+        "revisions",
+        "slug",
+        "author",
+        "format",
+        "page_attributes",
+        "categories",
+        "tags",
+        "send-trackbacks"
+    ],
+    "active": true,
+    "description": "Custom fields for team members",
+    "show_in_rest": 0,
+    "modified": 1735544632
+}
