@@ -18,6 +18,7 @@ return [
     */
     'core' => [
         'module-manager',
+        'site-settings',
     ],
 
     /*

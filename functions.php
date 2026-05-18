@@ -61,3 +61,43 @@ collect(['setup', 'filters', 'helpers'])
             );
         }
     });
+
+/*
+|--------------------------------------------------------------------------
+| Boot Module System (Fallback)
+|--------------------------------------------------------------------------
+|
+| If Acorn's service container doesn't boot the modules (e.g. missing
+| mu-plugin or environment issue), this ensures modules still load.
+|
+*/
+
+add_action('after_setup_theme', function () {
+    // Skip if ModuleServiceProvider already booted via Acorn
+    if (function_exists('app') && app()->bound(\App\Modules\ModuleManager::class)) {
+        return;
+    }
+
+    $manager = new \App\Modules\ModuleManager();
+    $modulesPath = get_theme_file_path('modules');
+    $manager->discover($modulesPath);
+    $manager->boot();
+
+    // Make manager accessible globally and via container
+    $GLOBALS['fluxstack_manager'] = $manager;
+    if (function_exists('app')) {
+        try {
+            app()->instance(\App\Modules\ModuleManager::class, $manager);
+        } catch (\Throwable $e) {
+            // Container not ready yet, global fallback is fine
+        }
+    }
+
+    // Register block category
+    add_filter('block_categories_all', function ($categories) {
+        return array_merge(
+            [['slug' => 'fluxstack', 'title' => __('FluxStack Blocks', 'fluxstack')]],
+            $categories
+        );
+    });
+}, 5);

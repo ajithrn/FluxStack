@@ -1,0 +1,65 @@
+{
+    "apiVersion": 3,
+    "name": "fluxstack/hero",
+    "title": "Hero Section",
+    "category": "fluxstack",
+    "icon": "cover-image",
+    "description": "Full-width hero section with background image, heading, and CTAs.",
+    "supports": {
+        "align": [
+            "full",
+            "wide"
+        ],
+        "html": false,
+        "color": {
+            "background": true,
+            "text": true
+        }
+    },
+    "attributes": {
+        "heading": {
+            "type": "string",
+            "default": ""
+        },
+        "subheading": {
+            "type": "string",
+            "default": ""
+        },
+        "backgroundImage": {
+            "type": "object",
+            "default": {}
+        },
+        "overlayOpacity": {
+            "type": "number",
+            "default": 50
+        },
+        "ctaText": {
+            "type": "string",
+            "default": ""
+        },
+        "ctaUrl": {
+            "type": "string",
+            "default": ""
+        },
+        "ctaSecondaryText": {
+            "type": "string",
+            "default": ""
+        },
+        "ctaSecondaryUrl": {
+            "type": "string",
+            "default": ""
+        },
+        "minHeight": {
+            "type": "string",
+            "default": "60vh"
+        },
+        "textAlign": {
+            "type": "string",
+            "default": "center"
+        }
+    },
+    "textdomain": "fluxstack",
+    "render": "file:./render.php",
+    "style": "file:./style.css",
+    "editorScript": "file:../../public/blocks/hero-block/editor.js"
+}

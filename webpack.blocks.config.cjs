@@ -3,7 +3,6 @@ const path = require('path');
 const fs = require('fs');
 
 // Auto-discover block editor.js entry points from modules directory.
-// Outputs compiled files to a build subfolder within each block module.
 function getBlockEntries() {
     const entries = {};
     const modulesDir = path.resolve(__dirname, 'modules');
@@ -21,7 +20,7 @@ function getBlockEntries() {
         // Top-level editor.js (standalone block modules)
         const editorFile = path.join(modulePath, 'editor.js');
         if (fs.existsSync(editorFile)) {
-            entries[moduleDir.name + '/build/editor'] = editorFile;
+            entries[moduleDir.name + '/editor'] = editorFile;
         }
 
         // Nested blocks inside CPT modules
@@ -33,7 +32,7 @@ function getBlockEntries() {
             for (const blockDir of blockDirs) {
                 const blockEditorFile = path.join(blocksDir, blockDir.name, 'editor.js');
                 if (fs.existsSync(blockEditorFile)) {
-                    entries[moduleDir.name + '/blocks/' + blockDir.name + '/build/editor'] = blockEditorFile;
+                    entries[moduleDir.name + '/blocks/' + blockDir.name + '/editor'] = blockEditorFile;
                 }
             }
         }
@@ -48,8 +47,8 @@ module.exports = {
     ...defaultConfig,
     entry: entries,
     output: {
-        ...defaultConfig.output,
-        path: path.resolve(__dirname, 'modules'),
+        path: path.resolve(__dirname, 'public/blocks'),
         filename: '[name].js',
+        clean: true,
     },
 };
