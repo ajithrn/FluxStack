@@ -1,0 +1,10 @@
+/node_modules
+/vendor
+/public/*
+!/public/.gitkeep
+.env
+npm-debug.log
+
+# Compiled block assets
+modules/*/build/
+modules/*/blocks/*/build/
