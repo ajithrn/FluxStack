@@ -1,0 +1,8 @@
+.fluxstack-accordion { display: flex; flex-direction: column; gap: 0.5rem; }
+.fluxstack-accordion__item { border: 1px solid rgba(0,0,0,0.08); border-radius: 0.5rem; overflow: hidden; }
+.fluxstack-accordion__item[open] { border-color: rgba(0,0,0,0.12); }
+.fluxstack-accordion__question { padding: 1.25rem 1.5rem; font-weight: 600; font-size: 1rem; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; color: inherit; }
+.fluxstack-accordion__question::-webkit-details-marker { display: none; }
+.fluxstack-accordion__question::after { content: "+"; font-size: 1.25rem; font-weight: 300; transition: transform 0.2s; }
+.fluxstack-accordion__item[open] .fluxstack-accordion__question::after { content: "-"; }
+.fluxstack-accordion__answer { padding: 0 1.5rem 1.25rem; font-size: 0.9rem; line-height: 1.7; opacity: 0.8; color: inherit; }

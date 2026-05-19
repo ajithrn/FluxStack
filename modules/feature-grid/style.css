@@ -1,0 +1,9 @@
+.fluxstack-feature-grid { display: grid; gap: 1.5rem; }
+.fluxstack-feature-grid--cols-2 { grid-template-columns: repeat(2, 1fr); }
+.fluxstack-feature-grid--cols-3 { grid-template-columns: repeat(3, 1fr); }
+.fluxstack-feature-grid--cols-4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 768px) { .fluxstack-feature-grid { grid-template-columns: 1fr; } }
+.fluxstack-feature-grid__card { padding: 2rem; border-radius: 0.5rem; background: rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.05); text-align: center; }
+.fluxstack-feature-grid__icon { font-size: 2rem; width: 2rem; height: 2rem; margin-bottom: 1rem; opacity: 0.8; }
+.fluxstack-feature-grid__title { font-size: 1.1rem; font-weight: 600; margin: 0 0 0.5rem; color: inherit; }
+.fluxstack-feature-grid__desc { font-size: 0.9rem; margin: 0; opacity: 0.75; line-height: 1.5; color: inherit; }

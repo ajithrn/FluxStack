@@ -1,0 +1,7 @@
+.fluxstack-icon-box { padding: 1.5rem; }
+.fluxstack-icon-box--stacked { text-align: center; }
+.fluxstack-icon-box--horizontal { display: flex; gap: 1.25rem; align-items: flex-start; }
+.fluxstack-icon-box__icon { font-size: 2.5rem; width: 2.5rem; height: 2.5rem; color: var(--color-primary-600, #2563eb); margin-bottom: 1rem; }
+.fluxstack-icon-box--horizontal .fluxstack-icon-box__icon { margin-bottom: 0; flex-shrink: 0; }
+.fluxstack-icon-box__heading { font-size: 1.1rem; font-weight: 600; margin: 0 0 0.5rem; color: inherit; }
+.fluxstack-icon-box__text { font-size: 0.9rem; margin: 0; opacity: 0.75; line-height: 1.6; color: inherit; }

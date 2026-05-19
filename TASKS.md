@@ -89,15 +89,15 @@
 - [x] Document block creation workflow (README in _template)
 
 ### 2.2 Layout Blocks
-- [x] `modules/hero-block/` — full-width hero with background, heading, CTAs
-- [x] `modules/cta-block/` — call-to-action banner
-- [ ] `modules/section-wrapper/` — generic section with background options
+- [x] `modules/hero-block/` — full-width hero with background, heading, CTAs (PHP-only)
+- [x] `modules/cta-block/` — call-to-action banner (PHP-only)
+- [x] `modules/section-wrapper/` — generic section with background options (PHP-only)
 
 ### 2.3 Content Blocks
-- [ ] `modules/feature-grid/` — grid of feature cards with icons
-- [ ] `modules/icon-box/` — single icon + text block
-- [ ] `modules/accordion-block/` — FAQ/accordion component
-- [ ] `modules/stats-counter/` — animated number counters
+- [x] `modules/feature-grid/` — grid of feature cards with icons (PHP-only)
+- [x] `modules/icon-box/` — single icon + text block (PHP-only)
+- [x] `modules/accordion-block/` — FAQ/accordion component (PHP-only + vanilla JS)
+- [x] `modules/stats-counter/` — animated number counters (PHP-only + vanilla JS)
 
 ### 2.4 Media Blocks
 - [ ] `modules/image-gallery/` — filterable image gallery (port from FluxStack)
