@@ -14,6 +14,7 @@ export default defineConfig({
     tailwindcss(),
     react({
       include: ['**/*.jsx'],
+      jsxRuntime: 'classic',
     }),
     laravel({
       input: [
@@ -60,6 +61,9 @@ export default defineConfig({
         '@wordpress/data',
         '@wordpress/compose',
         '@wordpress/hooks',
+        'react',
+        'react/jsx-runtime',
+        'react-dom',
       ],
       output: {
         globals: {
@@ -72,6 +76,9 @@ export default defineConfig({
           '@wordpress/data': 'wp.data',
           '@wordpress/compose': 'wp.compose',
           '@wordpress/hooks': 'wp.hooks',
+          'react': 'React',
+          'react/jsx-runtime': 'ReactJSXRuntime',
+          'react-dom': 'ReactDOM',
         },
       },
     },

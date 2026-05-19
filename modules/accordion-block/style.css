@@ -1,8 +1,83 @@
-.fluxstack-accordion { display: flex; flex-direction: column; gap: 0.5rem; }
-.fluxstack-accordion__item { border: 1px solid rgba(0,0,0,0.08); border-radius: 0.5rem; overflow: hidden; }
-.fluxstack-accordion__item[open] { border-color: rgba(0,0,0,0.12); }
-.fluxstack-accordion__question { padding: 1.25rem 1.5rem; font-weight: 600; font-size: 1rem; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; color: inherit; }
+/* Base */
+.fluxstack-accordion { display: flex; flex-direction: column; }
+
+/* Gap variants */
+.fluxstack-accordion--gap-compact { gap: 0.5rem; }
+.fluxstack-accordion--gap-comfortable { gap: 0.75rem; }
+.fluxstack-accordion--gap-spacious { gap: 1.25rem; }
+
+/* Default variant (bordered) */
+.fluxstack-accordion--default .fluxstack-accordion__item { border: 1px solid rgba(0,0,0,0.08); border-radius: 0.5rem; overflow: hidden; }
+.fluxstack-accordion--default .fluxstack-accordion__item[open] { border-color: rgba(0,0,0,0.12); }
+
+/* Separated variant (cards) */
+.fluxstack-accordion--separated .fluxstack-accordion__item { border: 1px solid rgba(0,0,0,0.08); border-radius: 0.5rem; overflow: hidden; background: rgba(0,0,0,0.01); }
+.fluxstack-accordion--separated .fluxstack-accordion__item[open] { border-color: rgba(0,0,0,0.12); background: rgba(0,0,0,0.02); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+
+/* Minimal variant (no border, just dividers) */
+.fluxstack-accordion--minimal .fluxstack-accordion__item { border: none; border-bottom: 1px solid rgba(0,0,0,0.06); border-radius: 0; }
+.fluxstack-accordion--minimal .fluxstack-accordion__item:last-child { border-bottom: none; }
+
+/* Question (summary) */
+.fluxstack-accordion__question { padding: 1.25rem 1.5rem; font-weight: 600; font-size: 1rem; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; color: inherit; transition: background 0.15s; }
+.fluxstack-accordion__question:hover { background: rgba(0,0,0,0.02); }
 .fluxstack-accordion__question::-webkit-details-marker { display: none; }
-.fluxstack-accordion__question::after { content: "+"; font-size: 1.25rem; font-weight: 300; transition: transform 0.2s; }
-.fluxstack-accordion__item[open] .fluxstack-accordion__question::after { content: "-"; }
+
+/* Icon: Plus/Minus (default) */
+.fluxstack-accordion--icon-plus .fluxstack-accordion__question::after { content: "+"; font-size: 1.25rem; font-weight: 300; transition: transform 0.2s; }
+.fluxstack-accordion--icon-plus .fluxstack-accordion__item[open] .fluxstack-accordion__question::after { content: "\2212"; }
+
+/* Icon: Chevron */
+.fluxstack-accordion--icon-chevron .fluxstack-accordion__question::after { content: "\25BE"; font-size: 1.25rem; font-weight: 300; transition: transform 0.2s; }
+.fluxstack-accordion--icon-chevron .fluxstack-accordion__item[open] .fluxstack-accordion__question::after { transform: rotate(180deg); }
+
+/* Icon: None */
+.fluxstack-accordion--icon-none .fluxstack-accordion__question::after { content: none; }
+
+/* Answer */
 .fluxstack-accordion__answer { padding: 0 1.5rem 1.25rem; font-size: 0.9rem; line-height: 1.7; opacity: 0.8; color: inherit; }
+
+/* ============================================
+   Editor-only styles (canvas preview)
+   ============================================ */
+
+/* Editor item wrapper */
+.fluxstack-accordion__editor-item { overflow: hidden; border-radius: 0.5rem; border: 1px solid rgba(0,0,0,0.08); transition: border-color 0.15s; }
+.fluxstack-accordion__editor-item--expanded { border-color: rgba(56,88,233,0.25); }
+
+/* Separated variant in editor */
+.fluxstack-accordion--separated .fluxstack-accordion__editor-item { background: rgba(0,0,0,0.01); }
+.fluxstack-accordion--separated .fluxstack-accordion__editor-item--expanded { background: rgba(56,88,233,0.02); }
+
+/* Minimal variant in editor */
+.fluxstack-accordion--minimal .fluxstack-accordion__editor-item { border: none; border-bottom: 1px solid rgba(0,0,0,0.06); border-radius: 0; }
+
+/* Item toolbar */
+.fluxstack-accordion__toolbar { display: flex; align-items: center; gap: 2px; padding: 0.25rem 0.5rem; background: #f1f5f9; border-bottom: 1px solid rgba(0,0,0,0.05); font-size: 12px; }
+.fluxstack-accordion__toolbar-num { font-size: 10px; color: #94a3b8; font-weight: 500; margin-right: 0.25rem; }
+.fluxstack-accordion__toolbar-btn { border: none; background: transparent; cursor: pointer; padding: 2px 6px; border-radius: 3px; font-size: 12px; line-height: 1; color: #64748b; }
+.fluxstack-accordion__toolbar-btn:hover { background: rgba(0,0,0,0.05); color: #334155; }
+.fluxstack-accordion__toolbar-btn:disabled { opacity: 0.3; cursor: default; }
+.fluxstack-accordion__toolbar-btn--delete { color: #d63638; margin-left: auto; }
+.fluxstack-accordion__toolbar-btn--delete:hover { background: rgba(214,54,56,0.08); }
+
+/* Editor question row */
+.fluxstack-accordion__editor-question { padding: 1rem 1.25rem; font-weight: 600; font-size: 1rem; display: flex; justify-content: space-between; align-items: center; color: inherit; }
+.fluxstack-accordion__editor-question--collapsed { cursor: pointer; }
+.fluxstack-accordion__editor-question--collapsed:hover { background: rgba(0,0,0,0.02); }
+
+/* Editor answer */
+.fluxstack-accordion__editor-answer { padding: 0 1.25rem 1rem; font-size: 0.9rem; line-height: 1.7; opacity: 0.8; color: inherit; }
+
+/* Editor icon */
+.fluxstack-accordion__editor-icon { font-size: 1rem; font-weight: 300; flex-shrink: 0; margin-left: 0.75rem; transition: transform 0.2s; color: #94a3b8; }
+.fluxstack-accordion__editor-icon--expanded { transform: rotate(180deg); }
+
+/* Add item button */
+.fluxstack-accordion__add-btn { display: block; width: 100%; padding: 0.6rem 1rem; margin-top: 0.75rem; border: 1px dashed rgba(0,0,0,0.15); border-radius: 0.375rem; background: #f8fafc; color: #3858e9; font-weight: 500; font-size: 0.85rem; cursor: pointer; text-align: center; transition: background 0.15s, border-color 0.15s; }
+.fluxstack-accordion__add-btn:hover { background: rgba(56,88,233,0.04); border-color: rgba(56,88,233,0.3); }
+
+/* Empty placeholder */
+.fluxstack-accordion__placeholder { border: 2px dashed #3858e9; border-radius: 0.5rem; background: rgba(56,88,233,0.04); padding: 2rem; text-align: center; }
+.fluxstack-accordion__placeholder-title { font-weight: 600; color: #3858e9; margin: 0 0 0.25rem; }
+.fluxstack-accordion__placeholder-desc { font-size: 0.85rem; opacity: 0.7; margin: 0 0 0.75rem; }

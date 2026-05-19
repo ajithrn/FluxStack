@@ -18,7 +18,7 @@ npm run build
 | `npm run dev` | Vite dev server with HMR |
 | `npm run build` | Production build (Vite only) |
 
-That's it. PHP-only blocks need no compilation. JSX blocks (if any) are compiled as part of the Vite build via `resources/js/editor.js` imports.
+That's it. PHP-only blocks need no compilation. JSX blocks are compiled as part of the Vite build via `resources/js/editor.js` imports. React uses classic JSX runtime (`React.createElement`) — externalized to WP globals along with all `@wordpress/*` packages.
 
 ## Creating Modules
 
@@ -153,16 +153,17 @@ return new class extends BaseModule {
 
 ### JSX Block (for complex editor UI)
 
-Only use when you need MediaUpload, InnerBlocks, or custom React components.
+Only use when you need MediaUpload, InnerBlocks, repeater fields, inline RichText editing, or custom React components.
 
 ```
 modules/my-complex-block/
-├── module.php       ← BlockModule class
-├── block.json       ← Block metadata (no editorScript field)
+├── module.php       ← BlockModule class (with render_callback)
+├── block.json       ← Block metadata (attributes, supports)
 ├── editor.jsx       ← JSX editor UI
-├── render.php       ← Server-side render
-└── style.css
+└── style.css        ← Shared styles (frontend + editor)
 ```
+
+`module.php` extends `BlockModule` and registers via `register_block_type($this->path(), ['render_callback' => ...])`.
 
 Import the JSX in `resources/js/editor.js`:
 
@@ -170,7 +171,14 @@ Import the JSX in `resources/js/editor.js`:
 import '../../modules/my-complex-block/editor.jsx';
 ```
 
-Vite compiles it with `@vitejs/plugin-react`. WordPress packages are externalized (loaded from WP globals).
+Vite compiles it with `@vitejs/plugin-react` (classic JSX runtime). WordPress packages are externalized (loaded from WP globals).
+
+**Key notes for JSX blocks:**
+- Use `InspectorControls` with `group="styles"` to add controls to the Styles tab
+- Use plain HTML `<button>` with Unicode characters for canvas actions (dashicons don't load in editor iframe)
+- Use `useState` from `@wordpress/element` for editor-only UI state
+- Enqueue `style.css` via `enqueue_block_editor_assets` for editor canvas styling
+- The `render_callback` in `module.php` handles frontend output (no `render.php` needed)
 
 ## Site Settings Sub-Pages
 

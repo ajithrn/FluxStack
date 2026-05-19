@@ -1,0 +1,49 @@
+{
+    "apiVersion": 3,
+    "name": "fluxstack/accordion",
+    "title": "Accordion",
+    "category": "fluxstack",
+    "icon": "list-view",
+    "description": "Expandable accordion items for FAQs and collapsible content.",
+    "keywords": ["faq", "accordion", "toggle", "collapse"],
+    "textdomain": "fluxstack",
+    "attributes": {
+        "items": {
+            "type": "array",
+            "default": [],
+            "items": {
+                "type": "object"
+            }
+        },
+        "openFirst": {
+            "type": "boolean",
+            "default": true
+        },
+        "variant": {
+            "type": "string",
+            "default": "default"
+        },
+        "iconStyle": {
+            "type": "string",
+            "default": "plus"
+        },
+        "gap": {
+            "type": "string",
+            "default": "compact"
+        }
+    },
+    "supports": {
+        "align": false,
+        "color": {
+            "text": true,
+            "background": true
+        },
+        "spacing": {
+            "padding": true
+        },
+        "border": {
+            "radius": true
+        }
+    },
+    "editorStyle": "fluxstack-accordion-editor"
+}

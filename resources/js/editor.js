@@ -12,6 +12,7 @@ import domReady from '@wordpress/dom-ready';
 
 // Import JSX blocks (only blocks that need media upload, InnerBlocks, etc.)
 // Example: import '../../modules/hero-block/editor.jsx';
+import '../../modules/accordion-block/editor.jsx';
 
 domReady(() => {
   // Block styles, unregister unwanted blocks, etc.

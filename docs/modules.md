@@ -96,8 +96,14 @@
 ### Accordion / FAQ
 - **ID:** `accordion-block`
 - **Block:** `fluxstack/accordion`
-- **Method:** PHP-only (autoRegister) + vanilla JS
-- Up to 5 expandable FAQ items using native `<details>` element. Exclusive toggle (one open at a time). Frontend JS lazy-loaded.
+- **Method:** JSX (Vite-compiled) + vanilla JS frontend
+- **Default:** Enabled
+- Dynamic repeater — add/remove/reorder FAQ items in the editor
+- Inline `RichText` editing for questions and answers directly in the canvas
+- Collapsible items in editor (expand/collapse toggle per item)
+- Style options: variant (bordered, cards, minimal), toggle icon (plus/chevron/none), item spacing
+- Frontend uses native `<details>` element with vanilla JS lazy-loaded
+- Sidebar: Manage Items panel (reorder/delete/edit), Behavior panel, Styles tab
 
 ### Stats Counter
 - **ID:** `stats-counter`

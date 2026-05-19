@@ -172,18 +172,64 @@ $wrapper = get_block_wrapper_attributes(['style' => $style]);
 ## Method 2: Full JSX Blocks
 
 **Requires:** Vite build
-**Files:** `module.php` + `block.json` + `editor.jsx` + `render.php` + `style.css`
+**Files:** `module.php` + `block.json` + `editor.jsx` + `style.css`
 
 ### File Structure
 
 ```
 modules/my-block/
-├── module.php       ← BlockModule class (registers block.json path)
-├── block.json       ← Block metadata (no editorScript field)
+├── module.php       ← BlockModule class (registers block.json path + render_callback)
+├── block.json       ← Block metadata (attributes, supports)
 ├── editor.jsx       ← React edit() component
-├── render.php       ← Server-side frontend render
-└── style.css        ← Styles
+└── style.css        ← Styles (shared between frontend and editor)
 ```
+
+### When to Use JSX
+
+- Repeater fields (dynamic add/remove items)
+- MediaUpload, InnerBlocks, drag-drop
+- Inline `RichText` editing in the canvas
+- Custom React components or complex editor interactions
+- Blocks needing expand/collapse or tabbed UI in the editor
+
+### Real Example: Accordion Block
+
+The accordion block demonstrates the full JSX pattern with:
+- Dynamic repeater (add/remove/reorder items)
+- Inline `RichText` editing for questions and answers
+- Expand/collapse toggle per item in the editor
+- Custom style controls in the Styles tab (`InspectorControls` with `group="styles"`)
+- `useState` for editor-only UI state (expanded items)
+- Plain HTML buttons for canvas actions (avoids dashicon dependency in iframe)
+
+**Key patterns used:**
+
+```jsx
+// Styles tab (half-moon icon in sidebar)
+<InspectorControls group="styles">
+    <PanelBody title="Accordion Style">
+        <SelectControl ... />
+    </PanelBody>
+</InspectorControls>
+
+// Settings tab (gear icon in sidebar)
+<InspectorControls>
+    <PanelBody title="Manage Items">
+        {/* Repeater UI with WP Button components */}
+    </PanelBody>
+</InspectorControls>
+
+// Canvas with inline editing
+<RichText
+    tagName="span"
+    value={item.question}
+    onChange={(val) => updateItem(index, 'question', val)}
+    placeholder="Type your question..."
+    allowedFormats={[]}
+/>
+```
+
+**Canvas buttons:** Use plain `<button>` elements with Unicode characters (▲ ▼ × etc.) instead of WP `Button` with `icon` prop — dashicons may not load in the editor iframe.
 
 ### module.php
 
@@ -197,6 +243,31 @@ return new class extends BlockModule {
     public function description(): string { return 'A complex block.'; }
     public function blockName(): string { return 'fluxstack/my-block'; }
     public function enabledByDefault(): bool { return true; }
+
+    public function register(): void
+    {
+        add_action('init', [$this, 'registerBlock']);
+        add_action('enqueue_block_editor_assets', [$this, 'editorStyles']);
+    }
+
+    public function registerBlock(): void
+    {
+        register_block_type($this->path(), [
+            'render_callback' => [$this, 'render'],
+        ]);
+    }
+
+    public function render(array $attributes): string
+    {
+        // Server-side render for frontend
+        $wrapper = get_block_wrapper_attributes(['class' => 'my-block']);
+        return sprintf('<div %s>...</div>', $wrapper);
+    }
+
+    public function editorStyles(): void
+    {
+        wp_enqueue_style('fluxstack-my-block-editor', get_theme_file_uri('modules/my-block/style.css'));
+    }
 };
 ```
 

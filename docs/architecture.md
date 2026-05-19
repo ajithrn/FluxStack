@@ -118,18 +118,18 @@ For blocks with simple controls (text, select, toggle, number). No JavaScript, n
 
 ### JSX Blocks (for complex editor UI)
 
-For blocks needing MediaUpload, InnerBlocks, drag-drop, or custom React components.
+For blocks needing MediaUpload, InnerBlocks, drag-drop, repeater fields, inline RichText editing, or custom React components.
 
-**Files needed:** `module.php` + `editor.jsx` + `render.php` + `style.css`
+**Files needed:** `module.php` + `block.json` + `editor.jsx` + `style.css`
 
-The `editor.jsx` is imported in `resources/js/editor.js` and compiled by Vite with `@vitejs/plugin-react`. WordPress packages (`@wordpress/blocks`, etc.) are externalized — they load from WP globals, not bundled.
+The `editor.jsx` is imported in `resources/js/editor.js` and compiled by Vite with `@vitejs/plugin-react` (classic JSX runtime). WordPress packages (`@wordpress/blocks`, etc.) are externalized — they load from WP globals, not bundled.
 
-**When to use:** Image galleries, hero with media picker, blocks with nested content, sliders.
+**When to use:** Image galleries, hero with media picker, blocks with nested content, sliders, accordion/FAQ with dynamic items, any block needing repeater or inline editing.
 
 ### Decision Rule
 
 > If a block only needs TextControl, SelectControl, ToggleControl, or NumberControl → use PHP-only.
-> If it needs MediaUpload, InnerBlocks, RichText inline editing, or custom React → use JSX.
+> If it needs MediaUpload, InnerBlocks, RichText inline editing, repeater fields, or custom React → use JSX.
 
 ### Limitations of PHP-Only Blocks
 
@@ -138,6 +138,7 @@ The `editor.jsx` is imported in `resources/js/editor.js` and compiled by Vite wi
 | No InnerBlocks | Use JSX for nested content |
 | No media/file upload controls | Use JSX or accept URL as text field |
 | No inline rich-text editing | Editor shows form controls, not WYSIWYG |
+| No repeater/dynamic fields | Use JSX for add/remove item patterns |
 | Preview not live-reactive | Changes trigger server round-trip |
 | Reserved attribute names | Never use: `style`, `className`, `textColor`, `backgroundColor`, `fontSize`, `fontFamily`, `align`, `anchor` |
 
