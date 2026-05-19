@@ -20,6 +20,50 @@ npm run build
 
 That's it. PHP-only blocks need no compilation. JSX blocks are compiled as part of the Vite build via `resources/js/editor.js` imports. React uses classic JSX runtime (`React.createElement`) — externalized to WP globals along with all `@wordpress/*` packages.
 
+## Environment & Blade Templates
+
+### How Blade compilation works
+
+Blade templates (`.blade.php`) are **not** compiled by `npm run build`. They compile automatically at runtime:
+
+1. First page request → Acorn compiles `.blade.php` → PHP and caches in `wp-content/cache/acorn/framework/views/`
+2. Subsequent requests → serves cached version if source file hasn't changed
+3. If source file is newer → recompiles automatically
+
+### Environment file
+
+The `.env` file in the theme root controls the environment:
+
+```
+WP_ENV=development
+APP_URL=http://your-site.local
+```
+
+Set `WP_ENV=development` for local dev — this ensures Blade always checks for template changes.
+
+### Clearing the view cache
+
+If templates appear stale (raw Blade syntax showing in browser), clear the compiled views:
+
+```bash
+# Option 1: WP-CLI (if available)
+wp acorn view:clear
+
+# Option 2: Manual delete
+rm -f wp-content/cache/acorn/framework/views/*.php
+```
+
+This is common in Docker-based environments (DevKinsta, Local, etc.) where file timestamps may not propagate correctly.
+
+### Production
+
+For production, pre-compile views for performance:
+
+```bash
+wp acorn view:cache
+wp acorn optimize
+```
+
 ## Creating Modules
 
 ### Feature Module
@@ -68,6 +112,42 @@ return new class extends CptModule {
 ```
 
 CPT defaults: no block editor (`show_in_rest => false`), no content area (supports: title, thumbnail, excerpt, custom-fields). Override in `postTypeArgs()` if needed.
+
+### CPT Templates
+
+CPT modules can include their own Blade templates in a `views/` directory. These auto-load when the module is active:
+
+```
+modules/my-cpt/
+├── module.php
+├── acf-json/
+├── views/
+│   ├── archive.blade.php    ← CPT archive page
+│   └── single.blade.php     ← CPT single page
+└── blocks/
+```
+
+Templates use `@extends('layouts.app')` and have access to all theme views/partials. They're loaded via `template_include` filter — if the view file doesn't exist, WordPress falls back to the theme's default templates.
+
+**Example archive template:**
+
+```blade
+@extends('layouts.app')
+
+@section('content')
+  <div class="page-header container">
+    <h1 class="page-header__title">{{ post_type_archive_title('', false) }}</h1>
+  </div>
+
+  <div class="post-grid container">
+    @while(have_posts()) @php(the_post())
+      <article @php(post_class('post-card'))>
+        {{-- Card content --}}
+      </article>
+    @endwhile
+  </div>
+@endsection
+```
 
 ## Creating Blocks
 

@@ -122,4 +122,58 @@ abstract class CptModule extends BaseModule
     {
         // Override in child modules to save specific groups to module's acf-json
     }
+
+    /**
+     * Boot the module — scaffold view templates if they don't exist.
+     *
+     * Copies skeleton templates from modules/{id}/views/ to resources/views/
+     * on first activation. Templates in resources/views/ are the ones Sage
+     * uses — customize them per project. The module's views/ folder holds
+     * the defaults/skeletons only.
+     */
+    public function boot(): void
+    {
+        $this->scaffoldViews();
+    }
+
+    /**
+     * Copy skeleton templates from module to theme views if not already present.
+     */
+    protected function scaffoldViews(): void
+    {
+        $skeletonsDir = $this->path() . '/views';
+
+        if (! is_dir($skeletonsDir)) {
+            return;
+        }
+
+        $themeViewsDir = get_theme_file_path('resources/views');
+        $files = glob($skeletonsDir . '/*.blade.php');
+
+        foreach ($files as $file) {
+            $filename = basename($file);
+            $destination = $themeViewsDir . '/' . $filename;
+
+            // Only copy if the theme doesn't already have this template
+            if (! file_exists($destination)) {
+                copy($file, $destination);
+            }
+        }
+
+        // Also scaffold partials
+        $partialsDir = $skeletonsDir . '/partials';
+        if (is_dir($partialsDir)) {
+            $themePartialsDir = $themeViewsDir . '/partials';
+            $partials = glob($partialsDir . '/*.blade.php');
+
+            foreach ($partials as $file) {
+                $filename = basename($file);
+                $destination = $themePartialsDir . '/' . $filename;
+
+                if (! file_exists($destination)) {
+                    copy($file, $destination);
+                }
+            }
+        }
+    }
 }

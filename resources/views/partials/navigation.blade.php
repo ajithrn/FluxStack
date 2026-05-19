@@ -17,12 +17,12 @@
       </nav>
     @endif
 
-    @php
+    <?php
       $cta_text = \App\site_setting('header_cta_text');
       $cta_url = \App\site_setting('header_cta_url');
-    @endphp
+    ?>
 
-    @if ($cta_text && $cta_url)
+    @if (!empty($cta_text) && !empty($cta_url))
       <div class="mobile-nav__cta">
         <a href="{{ $cta_url }}" class="mobile-nav__btn">{{ $cta_text }}</a>
       </div>

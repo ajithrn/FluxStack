@@ -5,7 +5,7 @@
 
   @if (! have_posts())
     <div class="container">
-      <p class="no-results">{{ __('Sorry, no posts were found.', 'fluxstack') }}</p>
+      <p>{{ __('No posts found.', 'fluxstack') }}</p>
     </div>
   @endif
 

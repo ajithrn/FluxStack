@@ -164,14 +164,76 @@ PHP-only blocks show a styled placeholder with sample content when first inserte
 6. Module state stored in `wp_options` as `fluxstack_modules`
 7. Site settings stored in `wp_options` as `fluxstack_site_settings`
 
+### CPT Module View Scaffolding
+
+CPT modules ship skeleton Blade templates in `modules/{id}/views/`. On `boot()`, these are auto-copied to `resources/views/` if they don't already exist:
+
+```
+modules/portfolio/views/               ← Skeletons (shipped with module)
+├── archive-portfolio.blade.php
+└── single-portfolio.blade.php
+
+resources/views/                       ← Active templates (Sage uses these)
+├── archive-portfolio.blade.php        ← Copied on first boot, customize per project
+└── single-portfolio.blade.php
+```
+
+- Only copies if the file doesn't exist in `resources/views/` (won't overwrite customizations)
+- Templates use `@extends('layouts.app')` and follow WP template hierarchy naming
+- Sage auto-discovers them by name (e.g. `single-portfolio` for the `portfolio` CPT)
+
 ### Module Types
 
 | Type | Base Class | Purpose |
 |------|-----------|---------|
 | Feature | `BaseModule` | General functionality |
-| CPT | `CptModule` | Custom post types + taxonomies + ACF fields |
+| CPT | `CptModule` | Custom post types + taxonomies + ACF fields + view scaffolding |
 | Block (PHP) | `BaseModule` | PHP-only registered blocks |
 | Block (JSX) | `BlockModule` | Blocks needing JSX editor UI |
+
+## Frontend Template System
+
+### Layout Structure
+
+```
+layouts/app.blade.php              ← Main layout (Sage renders all theme templates through this)
+├── sections/header.blade.php      ← Site header (logo, nav, CTA, mobile toggle)
+├── sections/footer.blade.php      ← Site footer (brand, nav, contact, copyright)
+└── partials/navigation.blade.php  ← Mobile nav slide-in panel
+```
+
+### Plugin Compatibility (header.php / footer.php)
+
+Plugins that call `get_header()` / `get_footer()` bypass Sage's Blade rendering. Bridge files handle this:
+
+```
+header.php → renders sections/header-compat.blade.php (full <html>, <head>, @vite, header)
+footer.php → renders sections/footer-compat.blade.php (footer, </html>)
+```
+
+The compat files `@include` the real header/footer sections, so changes to `sections/header.blade.php` apply everywhere — both Sage templates and plugin templates.
+
+### Template Hierarchy
+
+| File | Purpose |
+|------|---------|
+| `index.blade.php` | Blog home / fallback |
+| `archive.blade.php` | Post archives (category, tag, date) |
+| `single.blade.php` | Single posts |
+| `page.blade.php` | Pages |
+| `search.blade.php` | Search results |
+| `404.blade.php` | Not found |
+| `archive-{cpt}.blade.php` | CPT archive (scaffolded from module) |
+| `single-{cpt}.blade.php` | CPT single (scaffolded from module) |
+| `template-full-width.blade.php` | Full-width page template |
+
+### Blade Syntax Notes
+
+- Use `<?php $var = ...; ?>` for variable assignments (not `@php($var = ...)`)
+- Use `@php(function_call())` for void function calls (e.g. `the_post()`, `the_content()`)
+- Use `{!! !!}` for unescaped HTML output (e.g. `get_the_category_list()`)
+- Use `{{ }}` for escaped output
+- Clear view cache after template changes: `rm -f wp-content/cache/acorn/framework/views/*.php`
 
 ## Site Settings Architecture
 

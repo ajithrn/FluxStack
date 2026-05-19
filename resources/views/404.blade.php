@@ -1,13 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-  @include('partials.page-header')
-
-  @if (! have_posts())
-    <x-alert type="warning">
-      {!! __('Sorry, but the page you are trying to view does not exist.', 'sage') !!}
-    </x-alert>
-
-    {!! get_search_form(false) !!}
-  @endif
+  <div class="error-404 container--narrow">
+    <h1 class="error-404__title">404</h1>
+    <p class="error-404__message">{{ __('The page you are looking for does not exist or has been moved.', 'fluxstack') }}</p>
+    <a href="{{ home_url('/') }}" class="error-404__link">
+      &larr; {{ __('Back to home', 'fluxstack') }}
+    </a>
+  </div>
 @endsection
