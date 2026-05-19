@@ -46,13 +46,13 @@
 - [x] Update `resources/views/layouts/app.blade.php` — base layout with header/footer
 - [x] Update `resources/views/sections/header.blade.php`
 - [x] Update `resources/views/sections/footer.blade.php`
-- [ ] Create `resources/views/partials/navigation.blade.php` (mobile menu)
+- [x] Create `resources/views/partials/navigation.blade.php` (mobile menu)
 - [x] Existing: `resources/views/page.blade.php`
 - [x] Existing: `resources/views/single.blade.php`
 - [x] Existing: `resources/views/index.blade.php` (archive)
 - [x] Existing: `resources/views/404.blade.php`
 - [x] Existing: `resources/views/search.blade.php`
-- [ ] Create `resources/views/template-full-width.blade.php`
+- [x] Create `resources/views/template-full-width.blade.php`
 
 ### 1.4 Design Token System
 - [x] Set up Tailwind 4 theme config in `resources/css/app.css` (CSS variables)
@@ -69,14 +69,14 @@
 - [ ] Verify HMR works with Blade templates
 
 ### 1.6 Core Utility Modules
-- [x] Create `modules/theme-options/module.php` — ACF options pages (header, footer, general)
+- [x] Create `modules/theme-options/module.php` — replaced by site-settings module
 - [x] Create `modules/white-label/module.php` — admin branding, login page customization
-- [ ] Create `modules/seo/module.php` — meta tags, schema markup basics
+- [x] Create `modules/seo/module.php` — meta tags, Open Graph, schema markup
 
 ### 1.7 GitHub Release System
-- [ ] Create `.github/workflows/release.yml` — auto-release on version tag
 - [x] Create `.distignore` — files to exclude from release zip
-- [ ] Add update checker in theme (check GitHub releases for new versions)
+- ~~Create `.github/workflows/release.yml`~~ — not needed (manual deploys)
+- ~~Add update checker~~ — not needed
 
 ---
 
@@ -144,30 +144,30 @@ Port from FluxStack with refactoring to use BaseModule pattern:
 - Sage 11 scaffolded in `wp-content/themes/fluxstack/`
 - Composer dependencies installed
 - npm dependencies installed (Vite, Tailwind 4)
-- Vite build passes ✓
+- Vite build passes
 - Module system core classes (BaseModule, BlockModule, CptModule, ModuleManager, BlockRenderer)
 - ModuleServiceProvider wired into Sage container
 - Module config (`config/modules.php`)
-- Module Manager admin UI (settings page with toggle cards)
-- Theme Options module (ACF options pages)
-- White Label module (login branding, admin cleanup)
-- All CPT modules ported (testimonials, teams, services, portfolio, publications, news-archives)
-- Blade templates updated (layout, header, footer)
+- Module Manager admin UI (modern tabbed interface, AJAX save, toast notifications)
+- Site Settings module with sub-pages (General, Header, Footer, Home Page)
+- White Label module (admin colors, login branding, cleanup, custom CSS)
+- SEO module (meta tags, Open Graph, JSON-LD schema, head cleanup)
+- All CPT modules ported with ACF JSON (testimonials, teams, services, portfolio, publications, news-archives)
+- Blade templates (layout, header with mobile toggle, footer, mobile nav, full-width template)
 - Design tokens set up (Tailwind 4 @theme)
-- Helpers file (theme_option, get_excerpt, get_thumbnail_url)
+- Helpers file (theme_option, site_setting, get_excerpt, get_thumbnail_url)
 - .distignore for release builds
-- Block infrastructure (BlockRenderer, block category, _template scaffold)
-- Hero Block (full-width hero with background, overlay, CTAs)
-- CTA Block (call-to-action banner, horizontal/stacked layouts)
-- theme.json with wideSize for block alignment
+- Block infrastructure (BlockRenderer, block category, webpack config)
+- Hero Block and CTA Block with compiled editor scripts
+- Documentation (README, docs/architecture, docs/development, docs/deployment, docs/modules)
+- CHANGELOG with full version history
 
 **Next up:**
 - Section Wrapper block
 - Content blocks (feature-grid, icon-box, accordion)
-- SEO module
-- GitHub Actions release workflow
-- Mobile navigation
-- Full-width page template
+- CPT archive/single Blade templates
+- CPT-related blocks (testimonial-card, team-grid, etc.)
+- Block patterns library
 
 ---
 

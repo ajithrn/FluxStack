@@ -2,38 +2,47 @@
 
 ## Overview
 
-FluxStack v2 is a standalone WordPress theme built on Roots Sage 11. It replaces the previous Bricks Builder child theme with a native block editor approach while keeping the same modular architecture.
+FluxStack v2 is a standalone WordPress theme built on Roots Sage 11. It uses a modular architecture where features, blocks, and CPTs are self-contained modules that can be toggled on/off per project.
 
 ## Stack
 
 | Layer | Technology |
 |-------|-----------|
-| Framework | Sage 11 (Acorn 6) |
+| Theme Framework | Sage 11 (Acorn 6) |
 | Templates | Blade |
-| Build | Vite |
+| Build | Vite (single command) |
 | CSS | Tailwind CSS 4 |
-| Blocks | WordPress Block API + wp-scripts |
+| Blocks (simple) | PHP-only `autoRegister` (WP 7.0+) |
+| Blocks (complex) | JSX via Vite + @vitejs/plugin-react |
 | Container | Laravel Service Container (via Acorn) |
 
 ## Sage 11 Foundation
 
-FluxStack is built on [Roots Sage](https://roots.io/sage/) — a WordPress starter theme that brings modern development tooling to WordPress.
+FluxStack is built on [Roots Sage](https://roots.io/sage/) — a WordPress starter theme with modern tooling.
 
-**Key features Sage provides:**
+**What Sage provides:**
 
-- **Blade templating** — Laravel's templating engine for clean, reusable views
-- **Acorn** — Integrates Laravel's service container, config system, and view composers into WordPress
+- **Blade templating** — Laravel's template engine for views
+- **Acorn** — Laravel service container, config, and view composers in WordPress
 - **Vite** — Fast dev server with HMR, optimized production builds
-- **Tailwind CSS** — Utility-first CSS with automatic theme.json generation for the block editor
-- **PSR-4 autoloading** — Namespaced PHP classes via Composer
-- **View Composers** — Attach data to Blade views without polluting templates
+- **Tailwind CSS** — Utility-first CSS with auto-generated `theme.json` for the block editor
+- **PSR-4 autoloading** — Namespaced PHP via Composer
+- **View Composers** — Attach data to Blade views cleanly
+
+**Key Sage conventions:**
+
+- `app/setup.php` — theme support, menus, sidebars, asset enqueueing
+- `resources/js/editor.js` — block editor scripts (styles, variants, JSX block imports)
+- `resources/css/editor.css` — block editor styles
+- `theme.json` — auto-generated from Tailwind config on build (don't edit manually)
+- `public/` — compiled output (gitignored, never edit)
 
 **Resources:**
 
 - [Sage Documentation](https://roots.io/sage/docs/)
-- [Sage GitHub Repository](https://github.com/roots/sage)
+- [Sage GitHub](https://github.com/roots/sage)
 - [Acorn Documentation](https://roots.io/acorn/docs/)
-- [Roots Discourse (Community)](https://discourse.roots.io/)
+- [Roots Community](https://discourse.roots.io/)
 
 ## Directory Structure
 
@@ -42,7 +51,7 @@ fluxstack/
 ├── app/
 │   ├── Modules/                # Module system core
 │   │   ├── BaseModule.php      # Abstract base for all modules
-│   │   ├── BlockModule.php     # Base for block modules
+│   │   ├── BlockModule.php     # Base for JSX block modules
 │   │   ├── CptModule.php       # Base for CPT modules
 │   │   ├── ModuleManager.php   # Discovery, toggle, boot
 │   │   └── BlockRenderer.php   # Blade-compatible block rendering
@@ -50,11 +59,11 @@ fluxstack/
 │   │   ├── ThemeServiceProvider.php
 │   │   └── ModuleServiceProvider.php
 │   ├── View/Composers/        # Blade view composers
-│   ├── helpers.php            # Global helper functions
+│   ├── helpers.php            # Global helpers (site_setting, get_excerpt, etc.)
 │   ├── setup.php              # Theme support, menus, sidebars
 │   └── filters.php            # WordPress filters
 ├── config/
-│   └── modules.php            # Core modules, defaults
+│   └── modules.php            # Core modules list
 ├── modules/                   # All feature modules
 │   ├── module-manager/        # Admin UI for toggling modules
 │   ├── site-settings/         # Site settings with sub-pages
@@ -63,90 +72,129 @@ fluxstack/
 │   │   ├── footer/            # Footer layout and options
 │   │   └── home/              # Home page sections
 │   ├── white-label/           # Admin branding and cleanup
-│   ├── hero-block/            # Hero section block
-│   ├── cta-block/             # CTA banner block
-│   ├── testimonials/          # Testimonials CPT
+│   ├── seo/                   # Meta tags, Open Graph, schema
+│   ├── hero-block/            # Hero section (PHP-only block)
+│   ├── cta-block/             # CTA banner (PHP-only block)
+│   ├── testimonials/          # Testimonials CPT + ACF fields
 │   ├── teams/                 # Team members CPT
 │   ├── services/              # Services CPT
 │   ├── portfolio/             # Portfolio CPT
 │   ├── publications/          # Publications CPT
 │   └── news-archives/         # Year-based post taxonomy
 ├── resources/
-│   ├── views/                 # Blade templates
-│   ├── css/                   # Tailwind source
-│   ├── js/                    # App + editor scripts
+│   ├── views/                 # Blade templates (WP template hierarchy)
+│   ├── css/                   # Tailwind source (app.css, editor.css)
+│   ├── js/                    # Scripts (app.js, editor.js)
 │   ├── fonts/
 │   └── images/
-├── public/                    # Compiled assets (gitignored)
-│   ├── build/                 # Vite output
-│   └── blocks/                # wp-scripts block output
-├── functions.php              # Entry point
-├── style.css                  # Theme header
-├── theme.json                 # Block editor config
-├── vite.config.js             # Vite build config
-└── webpack.blocks.config.cjs  # Block compilation config
+├── public/build/              # Compiled assets (gitignored)
+├── docs/                      # Documentation
+├── functions.php              # Entry point (Acorn boot + module fallback)
+├── style.css                  # Theme header metadata
+├── theme.json                 # Auto-generated from Tailwind (don't edit)
+└── vite.config.js             # Build configuration
 ```
+
+## Block Strategy (Hybrid)
+
+FluxStack uses two approaches for blocks, chosen based on complexity:
+
+### PHP-Only Blocks (primary method, WP 7.0+)
+
+For blocks with simple controls (text, select, toggle, number). No JavaScript, no build step.
+
+| What you get | How |
+|---|---|
+| Auto-generated sidebar controls | WordPress reads your `attributes` array |
+| Server-side render in editor | Via `ServerSideRender` + REST API |
+| Native color/spacing/typography panels | Via `supports` array |
+| Frontend render | Your `render_callback` PHP function |
+
+**Files needed:** `module.php` + `style.css`
+
+**When to use:** CTA banners, notices, headings, cards, counters, author boxes — anything with text/select/toggle/number inputs only.
+
+**Reference:** [WP Core Trac #64639](https://core.trac.wordpress.org/ticket/64639), [Dev Note](https://make.wordpress.org/core/2026/03/03/php-only-block-registration/)
+
+### JSX Blocks (for complex editor UI)
+
+For blocks needing MediaUpload, InnerBlocks, drag-drop, or custom React components.
+
+**Files needed:** `module.php` + `editor.jsx` + `render.php` + `style.css`
+
+The `editor.jsx` is imported in `resources/js/editor.js` and compiled by Vite with `@vitejs/plugin-react`. WordPress packages (`@wordpress/blocks`, etc.) are externalized — they load from WP globals, not bundled.
+
+**When to use:** Image galleries, hero with media picker, blocks with nested content, sliders.
+
+### Decision Rule
+
+> If a block only needs TextControl, SelectControl, ToggleControl, or NumberControl → use PHP-only.
+> If it needs MediaUpload, InnerBlocks, RichText inline editing, or custom React → use JSX.
+
+### Limitations of PHP-Only Blocks
+
+| Limitation | Notes |
+|---|---|
+| No InnerBlocks | Use JSX for nested content |
+| No media/file upload controls | Use JSX or accept URL as text field |
+| No inline rich-text editing | Editor shows form controls, not WYSIWYG |
+| Preview not live-reactive | Changes trigger server round-trip |
+| Reserved attribute names | Never use: `style`, `className`, `textColor`, `backgroundColor`, `fontSize`, `fontFamily`, `align`, `anchor` |
 
 ## Module System
 
 ### How It Works
 
-1. `functions.php` boots Acorn and registers the `ModuleServiceProvider`
-2. A fallback in `functions.php` ensures modules load even without Acorn
-3. `ModuleManager::discover()` scans `modules/` for `module.php` files
-4. Each module returns a class extending `BaseModule`, `BlockModule`, or `CptModule`
+1. `functions.php` boots Acorn and registers `ModuleServiceProvider`
+2. Fallback in `functions.php` ensures modules load even without Acorn
+3. `ModuleManager::discover()` scans `modules/` for `module.php` files (skips `_` prefixed dirs)
+4. Each module returns an anonymous class extending `BaseModule`
 5. Enabled modules have `register()` called, then `boot()`
-6. Module state is stored in `wp_options` as `fluxstack_modules`
+6. Module state stored in `wp_options` as `fluxstack_modules`
+7. Site settings stored in `wp_options` as `fluxstack_site_settings`
 
 ### Module Types
 
 | Type | Base Class | Purpose |
 |------|-----------|---------|
-| Feature | `BaseModule` | General functionality (white-label, news-archives) |
-| CPT | `CptModule` | Custom post types with taxonomies |
-| Block | `BlockModule` | Gutenberg blocks |
-
-### Creating a Module
-
-```php
-<?php
-use App\Modules\BaseModule;
-
-return new class extends BaseModule {
-    public function id(): string { return 'my-module'; }
-    public function name(): string { return 'My Module'; }
-    public function description(): string { return 'What it does.'; }
-    public function category(): string { return 'feature'; }
-    public function register(): void { /* hooks, filters */ }
-};
-```
+| Feature | `BaseModule` | General functionality |
+| CPT | `CptModule` | Custom post types + taxonomies + ACF fields |
+| Block (PHP) | `BaseModule` | PHP-only registered blocks |
+| Block (JSX) | `BlockModule` | Blocks needing JSX editor UI |
 
 ## Site Settings Architecture
 
-Site Settings uses a sub-page pattern:
+```
+Site Settings (top-level admin menu)
+├── General (core, always on)
+├── Home Page (toggleable via Module Manager)
+├── Header (toggleable)
+└── Footer (toggleable)
+```
 
-- `site-settings/module.php` — Core module, registers parent menu
-- `site-settings/general/` — Always-on General page (branding, contact, social, analytics)
-- `site-settings/header/` — Toggleable Header settings
-- `site-settings/footer/` — Toggleable Footer settings
-- `site-settings/home/` — Toggleable Home Page settings
+- Sub-pages auto-discovered from `modules/site-settings/*/module.php`
+- Each returns a config array with `id`, `title`, `slug`, `priority`, `callback`
+- All save to single `fluxstack_site_settings` option with merge behavior
+- Modules can register additional sub-pages via `fluxstack_register_settings_pages` action
 
-Sub-pages return a config array and are auto-discovered. All save to a single `fluxstack_site_settings` option with merge behavior.
+## Build Pipeline
 
-## Block Architecture
+**Single command:** `npm run build`
 
-Standalone blocks live in `modules/` as top-level modules. CPT-related blocks live inside their parent module's `blocks/` subdirectory.
-
-Block compilation uses `@wordpress/scripts` (webpack) outputting to `public/blocks/`. Source `editor.js` files stay in the module folder.
+1. Vite processes `resources/css/` and `resources/js/`
+2. `@roots/vite-plugin` generates `theme.json` from Tailwind config
+3. `@vitejs/plugin-react` handles `.jsx` files (if any are imported in `editor.js`)
+4. Output goes to `public/build/`
+5. PHP-only blocks need no compilation at all
 
 ## Key Differences from v1
 
 | v1 (Bricks) | v2 (Sage) |
-|-------------|-----------|
+|---|---|
 | Bricks child theme | Standalone Sage 11 |
-| Bricks elements | Native Gutenberg blocks |
+| Bricks elements | Native Gutenberg blocks (PHP-only + JSX) |
 | Bricks templates | Blade templates |
-| No build system | Vite + wp-scripts |
-| ACF for all settings | Native settings pages + optional ACF for CPT fields |
+| No build system | Vite (single command) |
+| ACF for all settings | Native settings pages (ACF optional for CPT fields) |
 | Procedural module loader | OOP with service container |
-| Static class methods | Anonymous class instances |
+| wp-scripts for blocks | PHP-only for simple, Vite for complex |

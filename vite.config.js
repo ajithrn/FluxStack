@@ -1,9 +1,9 @@
 import { defineConfig } from 'vite'
 import tailwindcss from '@tailwindcss/vite';
+import react from '@vitejs/plugin-react';
 import laravel from 'laravel-vite-plugin'
 import { wordpressPlugin, wordpressThemeJson } from '@roots/vite-plugin';
 
-// Set APP_URL if it doesn't exist for Laravel Vite plugin
 if (! process.env.APP_URL) {
   process.env.APP_URL = 'http://example.test';
 }
@@ -12,6 +12,9 @@ export default defineConfig({
   base: '/app/themes/fluxstack/public/build/',
   plugins: [
     tailwindcss(),
+    react({
+      include: ['**/*.jsx'],
+    }),
     laravel({
       input: [
         'resources/css/app.css',
@@ -29,8 +32,6 @@ export default defineConfig({
 
     wordpressPlugin(),
 
-    // Generate the theme.json file in the public/build/assets directory
-    // based on the Tailwind config and the theme.json file from base theme folder
     wordpressThemeJson({
       disableTailwindColors: false,
       disableTailwindFonts: false,
@@ -45,6 +46,34 @@ export default defineConfig({
       '@fonts': '/resources/fonts',
       '@images': '/resources/images',
       '@modules': '/modules',
+    },
+  },
+  build: {
+    rollupOptions: {
+      external: [
+        '@wordpress/blocks',
+        '@wordpress/block-editor',
+        '@wordpress/components',
+        '@wordpress/element',
+        '@wordpress/i18n',
+        '@wordpress/dom-ready',
+        '@wordpress/data',
+        '@wordpress/compose',
+        '@wordpress/hooks',
+      ],
+      output: {
+        globals: {
+          '@wordpress/blocks': 'wp.blocks',
+          '@wordpress/block-editor': 'wp.blockEditor',
+          '@wordpress/components': 'wp.components',
+          '@wordpress/element': 'wp.element',
+          '@wordpress/i18n': 'wp.i18n',
+          '@wordpress/dom-ready': 'wp.domReady',
+          '@wordpress/data': 'wp.data',
+          '@wordpress/compose': 'wp.compose',
+          '@wordpress/hooks': 'wp.hooks',
+        },
+      },
     },
   },
 })

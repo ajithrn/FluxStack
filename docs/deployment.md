@@ -6,27 +6,26 @@
 npm run build
 ```
 
-This runs both Vite (theme CSS/JS) and wp-scripts (block editor scripts). Output goes to `public/build/` and `public/blocks/`.
+Single command. Vite compiles theme CSS/JS to `public/build/`. PHP-only blocks need no compilation.
 
-## Release Workflow
+## What Gets Deployed
 
-FluxStack uses GitHub Releases for distribution and auto-updates.
+**Required on server:**
+- All theme files except `node_modules/`
+- `vendor/` directory (run `composer install --no-dev` on server, or include in deploy)
+- `public/build/` directory (compiled assets)
 
-### Creating a Release
+**Not needed on server:**
+- `node_modules/`
+- `resources/css/`, `resources/js/` (source files — compiled output is in `public/build/`)
+- `docs/`, `TASKS.md`
 
-1. Update version in `style.css`
-2. Update `CHANGELOG.md`
-3. Commit and push to `main`
-4. Create a GitHub release with a version tag (e.g., `v2.0.0`)
-5. The `.distignore` file controls what's excluded from the release zip
+## .distignore
 
-### .distignore
-
-Files excluded from the distribution zip:
+Controls what's excluded from release zips:
 
 ```
 .git
-.github
 .gitignore
 .editorconfig
 .env
@@ -40,42 +39,63 @@ package-lock.json
 composer.json
 composer.lock
 vite.config.js
-webpack.blocks.config.cjs
 TASKS.md
 docs/
 ```
 
-## Auto-Updates
+## Per-Project Workflow
 
-To enable auto-updates from GitHub releases, add an update checker to the theme. This checks the GitHub API for new releases and prompts WordPress to update.
+FluxStack is forked per project:
 
-## Per-Project Deployment
+1. Fork/clone the repo
+2. `composer install && npm install && npm run build`
+3. Activate theme in WordPress admin
+4. Enable needed modules in Appearance → FluxStack
+5. Enable Site Settings sub-pages (Header, Footer, Home)
+6. Customize design tokens in `resources/css/app.css`
+7. Add project-specific modules as needed
+8. Deploy
 
-FluxStack is designed to be forked per project:
+## Server Requirements
 
-1. Fork/clone the repo for the new project
-2. Enable needed modules in Module Manager
-3. Enable needed Site Settings sub-pages
-4. Customize design tokens in `resources/css/app.css`
-5. Add project-specific modules as needed
-6. Deploy to hosting
+- WordPress 7.0+ (for PHP-only blocks with `autoRegister`)
+- PHP 8.3+
+- HTTPS recommended
+- Composer must be run (vendor is gitignored)
 
-## Environment
+## Optimization
+
+After deployment, run:
+
+```bash
+wp acorn optimize    # Cache config and views
+wp acorn view:cache  # Pre-compile Blade templates
+```
+
+## Security
+
+Blade templates should not be publicly accessible. Add to your server config:
+
+**Nginx:**
+```nginx
+location ~* \.(blade\.php)$ {
+    deny all;
+}
+```
+
+**Apache:**
+```apache
+<FilesMatch ".+\.(blade\.php)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+</FilesMatch>
+```
+
+## Environment Notes
 
 ### DevKinsta (Local)
+Works out of the box. Set `APP_URL` in environment or update `vite.config.js` for HMR.
 
-The theme works with DevKinsta out of the box. Set `APP_URL` in your environment or let Vite auto-detect.
-
-### Staging / Production
-
-1. Run `npm run build` before deploying
-2. Ensure `vendor/` is included (or run `composer install --no-dev` on server)
-3. The `public/build/` and `public/blocks/` directories must be present
-4. Activate the theme in WordPress admin
-
-### Server Requirements
-
-- PHP 8.3+
-- WordPress 6.4+
-- HTTPS recommended
-- `composer install` must be run (vendor is gitignored)
+### Kinsta (Production)
+Supports Bedrock/Trellis deployments. Standard WordPress hosting works — just ensure PHP 8.3+ and `vendor/` is present.
