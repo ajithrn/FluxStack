@@ -141,33 +141,28 @@ Port from FluxStack with refactoring to use BaseModule pattern:
 ## Current Status
 
 **Completed:**
-- Sage 11 scaffolded in `wp-content/themes/fluxstack/`
-- Composer dependencies installed
-- npm dependencies installed (Vite, Tailwind 4)
-- Vite build passes
-- Module system core classes (BaseModule, BlockModule, CptModule, ModuleManager, BlockRenderer)
-- ModuleServiceProvider wired into Sage container
-- Module config (`config/modules.php`)
-- Module Manager admin UI (modern tabbed interface, AJAX save, toast notifications)
+- Sage 11 scaffolded with Vite + Tailwind CSS 4
+- Single build command (`npm run build` — Vite only, no webpack)
+- Module system (BaseModule, BlockModule, CptModule, ModuleManager)
+- Module Manager admin UI (modern tabbed interface, AJAX save)
 - Site Settings module with sub-pages (General, Header, Footer, Home Page)
-- White Label module (admin colors, login branding, cleanup, custom CSS)
-- SEO module (meta tags, Open Graph, JSON-LD schema, head cleanup)
+- White Label module (admin colors, login branding, cleanup)
+- SEO module (meta tags, Open Graph, JSON-LD schema)
 - All CPT modules ported with ACF JSON (testimonials, teams, services, portfolio, publications, news-archives)
-- Blade templates (layout, header with mobile toggle, footer, mobile nav, full-width template)
-- Design tokens set up (Tailwind 4 @theme)
-- Helpers file (theme_option, site_setting, get_excerpt, get_thumbnail_url)
-- .distignore for release builds
-- Block infrastructure (BlockRenderer, block category, webpack config)
-- Hero Block and CTA Block with compiled editor scripts
-- Documentation (README, docs/architecture, docs/development, docs/deployment, docs/modules)
-- CHANGELOG with full version history
+- Blade templates (layout, header, footer, mobile nav, full-width template)
+- Design tokens (Tailwind 4 @theme)
+- Helpers (site_setting, theme_option, get_excerpt, get_thumbnail_url)
+- PHP-only blocks using autoRegister (WP 7.0): hero, cta, section-wrapper, feature-grid, icon-box, accordion, stats-counter
+- Vite configured for JSX blocks (React plugin + WP externals) — ready for complex blocks
+- Documentation (README, docs/architecture, docs/development, docs/deployment, docs/blocks, docs/modules)
+- CHANGELOG, .distignore, .gitignore
 
 **Next up:**
-- Section Wrapper block
-- Content blocks (feature-grid, icon-box, accordion)
 - CPT archive/single Blade templates
-- CPT-related blocks (testimonial-card, team-grid, etc.)
+- CPT-related blocks (testimonial-card, team-grid, portfolio-grid, etc.)
+- Image gallery block (JSX — needs MediaUpload)
 - Block patterns library
+- Update WordPress to 7.0 and test autoRegister blocks
 
 ---
 

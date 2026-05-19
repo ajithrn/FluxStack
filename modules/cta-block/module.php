@@ -83,6 +83,12 @@ return new class extends BaseModule
 
     public function render(array $attributes): string
     {
+        // Show placeholder in editor when block is empty
+        if ($this->isEditorPreview() && empty($attributes['heading']) && empty($attributes['text'])) {
+            $sample = '<div class="fluxstack-cta fluxstack-cta--horizontal" style="background:#f1f5f9;border-radius:0.5rem;padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;"><div><h2 style="font-size:1.1rem;font-weight:700;margin:0 0 0.25rem;">Ready to get started?</h2><p style="margin:0;opacity:0.7;font-size:0.9rem;">Add your call-to-action message here.</p></div><span style="background:#2563eb;color:#fff;padding:0.5rem 1.25rem;border-radius:0.375rem;font-size:0.85rem;white-space:nowrap;">Button Text</span></div>';
+            return $this->renderPlaceholder('fluxstack-cta', 'CTA Banner', 'Add a heading, description, and button to create your call-to-action.', $sample);
+        }
+
         $layout = strtolower($attributes['layout'] ?? 'horizontal');
         $wrapper = get_block_wrapper_attributes([
             'class' => 'fluxstack-cta fluxstack-cta--' . esc_attr($layout),

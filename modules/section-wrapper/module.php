@@ -45,6 +45,12 @@ return new class extends BaseModule {
     }
 
     public function render(array $attributes): string {
+        // Show placeholder in editor when block is empty
+        if ($this->isEditorPreview() && empty($attributes['heading']) && empty($attributes['subheading'])) {
+            $sample = '<div style="text-align:center;padding:1rem 0;"><h2 style="font-size:1.25rem;font-weight:700;margin:0 0 0.25rem;">Section Title</h2><p style="font-size:0.9rem;opacity:0.6;margin:0;">Optional subheading for this section.</p></div>';
+            return $this->renderPlaceholder('fluxstack-section', 'Section Wrapper', 'Add a heading and subheading. Use width and padding controls to adjust layout.', $sample);
+        }
+
         $padding = match($attributes['paddingSize'] ?? 'Medium') {
             'Small' => '2rem 0', 'Large' => '6rem 0', 'Extra Large' => '8rem 0', default => '4rem 0',
         };

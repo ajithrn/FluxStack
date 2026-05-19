@@ -58,6 +58,17 @@ return new class extends BaseModule {
     }
 
     public function render(array $attributes): string {
+        // Show placeholder in editor when block is empty
+        $hasStats = false;
+        for ($i = 1; $i <= 4; $i++) {
+            if (!empty($attributes["stat{$i}Value"])) { $hasStats = true; break; }
+        }
+
+        if ($this->isEditorPreview() && !$hasStats) {
+            $sample = '<div class="fluxstack-stats fluxstack-stats--cols-4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;text-align:center;"><div><span style="font-size:2rem;font-weight:800;display:block;">150</span><span style="font-size:0.85rem;opacity:0.6;">Projects</span></div><div><span style="font-size:2rem;font-weight:800;display:block;">12K+</span><span style="font-size:0.85rem;opacity:0.6;">Users</span></div><div><span style="font-size:2rem;font-weight:800;display:block;">99%</span><span style="font-size:0.85rem;opacity:0.6;">Uptime</span></div><div><span style="font-size:2rem;font-weight:800;display:block;">24/7</span><span style="font-size:0.85rem;opacity:0.6;">Support</span></div></div>';
+            return $this->renderPlaceholder('fluxstack-stats', 'Stats Counter', 'Add numbers and labels to showcase your key metrics.', $sample);
+        }
+
         wp_enqueue_script('fluxstack-stats-counter');
 
         $cols = $attributes['columns'] ?? '4';

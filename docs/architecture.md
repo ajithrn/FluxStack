@@ -141,6 +141,16 @@ The `editor.jsx` is imported in `resources/js/editor.js` and compiled by Vite wi
 | Preview not live-reactive | Changes trigger server round-trip |
 | Reserved attribute names | Never use: `style`, `className`, `textColor`, `backgroundColor`, `fontSize`, `fontFamily`, `align`, `anchor` |
 
+### Editor Placeholder Previews
+
+PHP-only blocks show a styled placeholder with sample content when first inserted (attributes are empty). This helps users understand what the block will look like and directs them to the sidebar panel for editing.
+
+- Placeholders only appear in the editor (detected via `REST_REQUEST`)
+- They disappear automatically once the user fills in any content
+- Each block shows a contextual sample (e.g. stats show sample numbers, CTA shows a sample layout)
+- The shared placeholder CSS is in `resources/css/editor-placeholder.css`
+- Blocks use `$this->renderPlaceholder()` from `BaseModule` — no per-block CSS needed
+
 ## Module System
 
 ### How It Works

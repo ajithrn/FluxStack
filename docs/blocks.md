@@ -130,6 +130,27 @@ These unlock native Color, Typography, Spacing, and Border panels. `get_block_wr
 
 **Editor styles workaround:** `wp_enqueue_block_style()` doesn't reliably inject styles for autoRegister blocks in the editor. Always also enqueue via `enqueue_block_editor_assets`.
 
+**Editor placeholder previews:** When a block is inserted with empty attributes, show a placeholder with sample content so users know what to expect. Use the `renderPlaceholder()` helper from `BaseModule`:
+
+```php
+public function render(array $attributes): string {
+    // Show placeholder in editor when block is empty
+    if ($this->isEditorPreview() && empty($attributes['heading']) && empty($attributes['text'])) {
+        $sample = '<div style="...">Sample content showing what the block looks like</div>';
+        return $this->renderPlaceholder(
+            'my-block-class',           // Block's BEM base class
+            'Block Name',               // Title shown in placeholder
+            'Instructions for the user.', // Description
+            $sample                     // Optional sample HTML (rendered at 50% opacity)
+        );
+    }
+
+    // Normal render...
+}
+```
+
+The `isEditorPreview()` method detects `ServerSideRender` REST calls. The placeholder disappears once the user fills in any attribute via the sidebar.
+
 **Lazy frontend JS:** Register at `init`, enqueue from `render_callback`:
 ```php
 add_action('init', fn() => wp_register_script('my-block-js', get_theme_file_uri('modules/my-block/frontend.js'), [], '1.0', true));

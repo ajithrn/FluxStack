@@ -63,14 +63,47 @@
 ### Hero Block
 - **ID:** `hero-block`
 - **Block:** `fluxstack/hero`
+- **Method:** PHP-only (autoRegister)
 - **Default:** Enabled
-- Full-width hero with background image, overlay, heading, subheading, dual CTAs
+- Full-width hero with background image URL, overlay opacity, heading, subheading, dual CTAs, text alignment
 
 ### CTA Block
 - **ID:** `cta-block`
 - **Block:** `fluxstack/cta`
+- **Method:** PHP-only (autoRegister)
 - **Default:** Enabled
-- Call-to-action banner with horizontal or stacked layout
+- Call-to-action banner with heading, text, button, layout (horizontal/stacked), open-in-new-tab
+
+### Section Wrapper
+- **ID:** `section-wrapper`
+- **Block:** `fluxstack/section`
+- **Method:** PHP-only (autoRegister)
+- **Default:** Enabled
+- Generic section with heading, subheading, content width, vertical padding size
+
+### Feature Grid
+- **ID:** `feature-grid`
+- **Block:** `fluxstack/feature-grid`
+- **Method:** PHP-only (autoRegister)
+- Grid of up to 3 feature cards with dashicon, title, description. Column count selector.
+
+### Icon Box
+- **ID:** `icon-box`
+- **Block:** `fluxstack/icon-box`
+- **Method:** PHP-only (autoRegister)
+- Single icon + heading + text. Stacked or horizontal layout.
+
+### Accordion / FAQ
+- **ID:** `accordion-block`
+- **Block:** `fluxstack/accordion`
+- **Method:** PHP-only (autoRegister) + vanilla JS
+- Up to 5 expandable FAQ items using native `<details>` element. Exclusive toggle (one open at a time). Frontend JS lazy-loaded.
+
+### Stats Counter
+- **ID:** `stats-counter`
+- **Block:** `fluxstack/stats-counter`
+- **Method:** PHP-only (autoRegister) + vanilla JS
+- Up to 4 animated number counters with suffix and label. Animates on scroll into view. Column count selector.
 
 ## Site Settings Sub-Pages
 

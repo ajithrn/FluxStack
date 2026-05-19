@@ -102,6 +102,12 @@ return new class extends BaseModule
 
     public function render(array $attributes): string
     {
+        // Show placeholder in editor when block is empty
+        if ($this->isEditorPreview() && empty($attributes['heading']) && empty($attributes['subheading']) && empty($attributes['backgroundUrl'])) {
+            $sample = '<div class="fluxstack-hero fluxstack-hero--align-center" style="min-height:200px;background:#1e293b;border-radius:0.5rem;display:flex;align-items:center;justify-content:center;"><div class="fluxstack-hero__content"><h1 class="fluxstack-hero__heading" style="color:#fff;font-size:1.5rem;">Your Hero Heading</h1><p class="fluxstack-hero__subheading" style="color:rgba(255,255,255,0.7);">A compelling subheading goes here</p><div class="fluxstack-hero__actions"><span style="background:#2563eb;color:#fff;padding:0.5rem 1.25rem;border-radius:0.375rem;font-size:0.85rem;">Get Started</span></div></div></div>';
+            return $this->renderPlaceholder('fluxstack-hero', 'Hero Section', 'Add a heading, background image, and CTA buttons to create your hero.', $sample);
+        }
+
         $align = strtolower($attributes['textAlign'] ?? 'center');
         $bgUrl = $attributes['backgroundUrl'] ?? '';
         $opacity = ($attributes['overlayOpacity'] ?? 50) / 100;

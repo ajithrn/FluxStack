@@ -44,6 +44,12 @@ return new class extends BaseModule {
     }
 
     public function render(array $attributes): string {
+        // Show placeholder in editor when block is empty
+        if ($this->isEditorPreview() && empty($attributes['heading']) && empty($attributes['text'])) {
+            $sample = '<div style="text-align:center;padding:1rem;"><span class="dashicons dashicons-star-filled" style="font-size:2rem;color:#2563eb;opacity:0.6;"></span><h3 style="font-size:1rem;font-weight:600;margin:0.75rem 0 0.25rem;">Feature Title</h3><p style="font-size:0.85rem;opacity:0.6;margin:0;">A short description of this feature or service.</p></div>';
+            return $this->renderPlaceholder('fluxstack-icon-box', 'Icon Box', 'Add an icon name, heading, and description.', $sample);
+        }
+
         $layout = strtolower($attributes['layout'] ?? 'stacked');
         $wrapper = get_block_wrapper_attributes([
             'class' => 'fluxstack-icon-box fluxstack-icon-box--' . esc_attr($layout),

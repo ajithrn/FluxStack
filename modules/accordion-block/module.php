@@ -56,6 +56,17 @@ return new class extends BaseModule {
     }
 
     public function render(array $attributes): string {
+        // Show placeholder in editor when block is empty
+        $hasItems = false;
+        for ($i = 1; $i <= 5; $i++) {
+            if (!empty($attributes["item{$i}Question"])) { $hasItems = true; break; }
+        }
+
+        if ($this->isEditorPreview() && !$hasItems) {
+            $sample = '<div class="fluxstack-accordion" style="display:flex;flex-direction:column;gap:0.5rem;"><div style="border:1px solid rgba(0,0,0,0.08);border-radius:0.5rem;padding:1rem 1.25rem;"><strong>What is your return policy?</strong></div><div style="border:1px solid rgba(0,0,0,0.08);border-radius:0.5rem;padding:1rem 1.25rem;"><strong>How long does shipping take?</strong></div><div style="border:1px solid rgba(0,0,0,0.08);border-radius:0.5rem;padding:1rem 1.25rem;"><strong>Do you offer support?</strong></div></div>';
+            return $this->renderPlaceholder('fluxstack-accordion', 'Accordion / FAQ', 'Add questions and answers to create expandable FAQ items.', $sample);
+        }
+
         wp_enqueue_script('fluxstack-accordion');
 
         $wrapper = get_block_wrapper_attributes(['class' => 'fluxstack-accordion']);

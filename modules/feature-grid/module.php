@@ -50,6 +50,17 @@ return new class extends BaseModule {
     }
 
     public function render(array $attributes): string {
+        // Show placeholder in editor when block is empty
+        $hasFeatures = false;
+        for ($i = 1; $i <= 3; $i++) {
+            if (!empty($attributes["feature{$i}Title"])) { $hasFeatures = true; break; }
+        }
+
+        if ($this->isEditorPreview() && !$hasFeatures) {
+            $sample = '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;"><div style="padding:1.5rem;border-radius:0.5rem;background:rgba(0,0,0,0.02);border:1px solid rgba(0,0,0,0.05);text-align:center;"><span class="dashicons dashicons-performance" style="font-size:1.5rem;opacity:0.6;"></span><h3 style="font-size:0.95rem;font-weight:600;margin:0.75rem 0 0.25rem;">Fast Performance</h3><p style="font-size:0.8rem;opacity:0.6;margin:0;">Describe your feature here.</p></div><div style="padding:1.5rem;border-radius:0.5rem;background:rgba(0,0,0,0.02);border:1px solid rgba(0,0,0,0.05);text-align:center;"><span class="dashicons dashicons-shield" style="font-size:1.5rem;opacity:0.6;"></span><h3 style="font-size:0.95rem;font-weight:600;margin:0.75rem 0 0.25rem;">Secure & Reliable</h3><p style="font-size:0.8rem;opacity:0.6;margin:0;">Describe your feature here.</p></div><div style="padding:1.5rem;border-radius:0.5rem;background:rgba(0,0,0,0.02);border:1px solid rgba(0,0,0,0.05);text-align:center;"><span class="dashicons dashicons-admin-tools" style="font-size:1.5rem;opacity:0.6;"></span><h3 style="font-size:0.95rem;font-weight:600;margin:0.75rem 0 0.25rem;">Easy to Use</h3><p style="font-size:0.8rem;opacity:0.6;margin:0;">Describe your feature here.</p></div></div>';
+            return $this->renderPlaceholder('fluxstack-feature-grid', 'Feature Grid', 'Add titles, descriptions, and icons for each feature card.', $sample);
+        }
+
         $cols = $attributes['columns'] ?? '3';
         $wrapper = get_block_wrapper_attributes([
             'class' => 'fluxstack-feature-grid fluxstack-feature-grid--cols-' . esc_attr($cols),
