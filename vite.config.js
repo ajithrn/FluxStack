@@ -3,7 +3,7 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import laravel from 'laravel-vite-plugin'
 import { wordpressPlugin, wordpressThemeJson } from '@roots/vite-plugin';
-import { globSync } from 'node:fs';
+import { readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
 
 if (! process.env.APP_URL) {
@@ -12,7 +12,7 @@ if (! process.env.APP_URL) {
 
 /**
  * Resolve glob patterns in CSS @import statements.
- * Allows: @import "../../modules/* /style.css" (without space)
+ * Supports simple wildcards: @import "./modules/*.css"
  */
 function cssGlobImport() {
   return {
@@ -28,8 +28,17 @@ function cssGlobImport() {
       result = result.replace(globImportRegex, (match, pattern) => {
         hasGlob = true;
         const dir = path.dirname(id);
-        const resolvedPattern = path.resolve(dir, pattern);
-        const files = globSync(resolvedPattern);
+        const globDir = path.resolve(dir, path.dirname(pattern));
+        const ext = path.extname(pattern) || '.css';
+
+        let files = [];
+        try {
+          files = readdirSync(globDir)
+            .filter(f => f.endsWith(ext) && statSync(path.join(globDir, f)).isFile())
+            .map(f => path.join(globDir, f));
+        } catch (e) {
+          // Directory doesn't exist yet — no files to import
+        }
 
         if (files.length === 0) return '/* no files matched: ' + pattern + ' */';
 
@@ -44,7 +53,7 @@ function cssGlobImport() {
 }
 
 export default defineConfig({
-  base: '/app/themes/fluxstack/public/build/',
+  base: process.env.VITE_BASE || '/app/themes/fluxstack/public/build/',
   plugins: [
     cssGlobImport(),
     tailwindcss(),

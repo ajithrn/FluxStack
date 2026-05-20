@@ -6,6 +6,20 @@ class ModuleManager
 {
     private array $modules = [];
     private array $enabled = [];
+    private array $config = [];
+
+    public function __construct(array $config = [])
+    {
+        $this->config = $config;
+    }
+
+    /**
+     * Get core module IDs (cannot be disabled).
+     */
+    public function getCoreModules(): array
+    {
+        return $this->config['core'] ?? ['module-manager', 'site-settings'];
+    }
 
     /**
      * Register a module instance.
@@ -17,21 +31,61 @@ class ModuleManager
 
     /**
      * Boot all enabled modules (register then boot).
+     * Modules are sorted by dependencies before registration.
      */
     public function boot(): void
     {
+        // Sort modules so dependencies come first
+        $sorted = $this->sortByDependencies();
+
         // First pass: register enabled modules
-        foreach ($this->modules as $module) {
+        foreach ($sorted as $module) {
             if ($this->canLoad($module)) {
-                $module->register();
-                $this->enabled[] = $module->id();
+                try {
+                    $module->register();
+                    $this->enabled[] = $module->id();
+                } catch (\Throwable $e) {
+                    error_log(sprintf('[FluxStack] Module "%s" failed to register: %s', $module->id(), $e->getMessage()));
+                }
             }
         }
 
         // Second pass: boot enabled modules
         foreach ($this->enabled as $id) {
-            $this->modules[$id]->boot();
+            try {
+                $this->modules[$id]->boot();
+            } catch (\Throwable $e) {
+                error_log(sprintf('[FluxStack] Module "%s" failed to boot: %s', $id, $e->getMessage()));
+            }
         }
+    }
+
+    /**
+     * Sort modules so that dependencies are loaded before dependents.
+     */
+    private function sortByDependencies(): array
+    {
+        $sorted = [];
+        $visited = [];
+
+        $visit = function (BaseModule $module) use (&$visit, &$sorted, &$visited) {
+            if (isset($visited[$module->id()])) return;
+            $visited[$module->id()] = true;
+
+            foreach ($module->dependencies() as $depId) {
+                if (isset($this->modules[$depId])) {
+                    $visit($this->modules[$depId]);
+                }
+            }
+
+            $sorted[] = $module;
+        };
+
+        foreach ($this->modules as $module) {
+            $visit($module);
+        }
+
+        return $sorted;
     }
 
     /**
@@ -123,6 +177,11 @@ class ModuleManager
         $settings = get_option('fluxstack_modules', []);
         $settings[$id] = $enabled;
         update_option('fluxstack_modules', $settings);
+
+        // Reset scaffold flag so views/styles are re-checked on next boot
+        if ($enabled) {
+            delete_option('fluxstack_scaffolded_' . $id);
+        }
     }
 
     /**

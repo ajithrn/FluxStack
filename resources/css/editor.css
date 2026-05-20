@@ -1,18 +1,13 @@
 @import "tailwindcss";
+@import "./config.css";
 
 /*
 |--------------------------------------------------------------------------
 | Editor Styles
 |--------------------------------------------------------------------------
 | These styles are injected into the block editor to match frontend appearance.
+| Design tokens are shared from config.css — changes propagate to both.
 */
-
-@theme {
-    --color-primary-500: #3b82f6;
-    --color-primary-600: #2563eb;
-    --color-secondary-800: #1e293b;
-    --font-sans: "Inter", system-ui, -apple-system, sans-serif;
-}
 
 .editor-styles-wrapper {
     font-family: var(--font-sans);

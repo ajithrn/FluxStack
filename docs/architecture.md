@@ -158,11 +158,13 @@ PHP-only blocks show a styled placeholder with sample content when first inserte
 
 1. `functions.php` boots Acorn and registers `ModuleServiceProvider`
 2. Fallback in `functions.php` ensures modules load even without Acorn
-3. `ModuleManager::discover()` scans `modules/` for `module.php` files (skips `_` prefixed dirs)
-4. Each module returns an anonymous class extending `BaseModule`
-5. Enabled modules have `register()` called, then `boot()`
-6. Module state stored in `wp_options` as `fluxstack_modules`
-7. Site settings stored in `wp_options` as `fluxstack_site_settings`
+3. `ModuleManager` reads `config/modules.php` for core modules and defaults
+4. `ModuleManager::discover()` scans `modules/` for `module.php` files (skips `_` prefixed dirs)
+5. Modules are sorted by dependency graph before registration
+6. Each module's `register()` and `boot()` are wrapped in try/catch (broken modules don't crash the site)
+7. CPT modules scaffold views/CSS on first boot (cached via option flag, not repeated)
+8. Module state stored in `wp_options` as `fluxstack_modules`
+9. Site settings stored in `wp_options` as `fluxstack_site_settings` (cached per request)
 
 ### CPT Module View Scaffolding
 

@@ -54,4 +54,10 @@
     --transition-fast: 0.15s;
     --transition-base: 0.2s;
     --transition-slow: 0.3s;
+
+    /* ─── Dark Mode (reserved, unused by default) ─── */
+    --color-bg-dark: #0f172a;
+    --color-text-dark: #e2e8f0;
+    --color-surface-dark: #1e293b;
+    --color-border-dark: #334155;
 }

@@ -440,3 +440,79 @@ wp acorn make:component Name # Create Component
 {{-- In CSS --}}
 background-image: url("@images/hero.jpg");
 ```
+
+
+---
+
+## Maintenance Notes
+
+### Updating Sage/Acorn
+
+```bash
+composer update roots/acorn
+```
+
+This only updates `vendor/roots/acorn/`. Your code in `app/`, `modules/`, `resources/` is never touched. After updating:
+
+1. Verify `functions.php` boot process works (check if `Application::configure()` API changed)
+2. Verify `ThemeServiceProvider extends SageServiceProvider` still valid
+3. Test template resolution and Vite asset loading
+4. Clear view cache: `rm -f wp-content/cache/acorn/framework/views/*.php`
+
+### Module Error Isolation
+
+Modules are wrapped in try/catch during `register()` and `boot()`. If a module fails, it's skipped and an error is logged to PHP's error log. The rest of the site continues working.
+
+Check logs: `tail -f /path/to/error.log | grep FluxStack`
+
+### Scaffold Caching
+
+CPT module scaffolding (copying views/CSS) only runs once per module. The flag is stored as `fluxstack_scaffolded_{module-id}` in `wp_options`. To force re-scaffolding:
+
+```php
+// Delete the flag, then reload the page
+delete_option('fluxstack_scaffolded_portfolio');
+```
+
+Or toggle the module off/on in Module Manager (this resets the flag automatically).
+
+### Config Priority
+
+`config/modules.php` defines:
+- `core` — modules that can never be disabled (module-manager, site-settings)
+- `defaults` — modules enabled on fresh installations
+- `paths` — directories to scan for modules
+
+### Vite Base Path
+
+The `base` path in `vite.config.js` defaults to `/app/themes/fluxstack/public/build/`. Override via `.env`:
+
+```
+VITE_BASE=/wp-content/themes/fluxstack/public/build/
+```
+
+### CSS Module Glob Import
+
+`app.css` uses `@import "./modules/*.css"` which is resolved by the custom `cssGlobImport` Vite plugin. This plugin uses `readdirSync` (Node 20 compatible). If the `modules/` directory is empty, it outputs a comment and continues.
+
+### Design Tokens
+
+All visual customization starts in `resources/css/config.css`. This file defines:
+- Colors (primary + secondary palettes)
+- Typography (font families)
+- Layout (container widths, padding)
+- Borders (radius scale)
+- Transitions (speed scale)
+- Dark mode tokens (reserved, unused by default)
+
+Both `app.css` and `editor.css` import `config.css` so changes propagate everywhere.
+
+### Button Component
+
+Use `.btn` classes for consistent buttons:
+```html
+<a href="#" class="btn btn--primary">Primary</a>
+<a href="#" class="btn btn--outline btn--sm">Small Outline</a>
+```
+
+Available: `--primary`, `--secondary`, `--outline`, `--ghost`, `--sm`, `--lg`, `--block`

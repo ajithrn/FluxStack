@@ -25,6 +25,14 @@ abstract class BaseModule
     /** Check if module is enabled */
     public function isEnabled(): bool
     {
+        // Core modules are always enabled
+        $config = file_exists(get_theme_file_path('config/modules.php'))
+            ? require get_theme_file_path('config/modules.php')
+            : [];
+        if (in_array($this->id(), $config['core'] ?? [])) {
+            return true;
+        }
+
         $modules = get_option('fluxstack_modules', []);
         return $modules[$this->id()] ?? $this->enabledByDefault();
     }

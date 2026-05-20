@@ -67,10 +67,13 @@ function get_thumbnail_url(?int $postId = null, string $size = 'full'): string|f
  */
 function site_setting(string $key, mixed $default = ''): mixed
 {
-    $settings = get_option('fluxstack_site_settings', []);
+    static $settings = null;
 
-    if (!is_array($settings)) {
-        return $default;
+    if ($settings === null) {
+        $settings = get_option('fluxstack_site_settings', []);
+        if (!is_array($settings)) {
+            $settings = [];
+        }
     }
 
     return $settings[$key] ?? $default;

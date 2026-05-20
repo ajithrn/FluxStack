@@ -133,7 +133,12 @@ abstract class CptModule extends BaseModule
      */
     public function boot(): void
     {
-        $this->scaffoldViews();
+        // Only scaffold once per module — skip on subsequent requests
+        $flag = 'fluxstack_scaffolded_' . $this->id();
+        if (! get_option($flag)) {
+            $this->scaffoldViews();
+            update_option($flag, true, false);
+        }
     }
 
     /**

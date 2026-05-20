@@ -127,11 +127,21 @@ return new class extends BaseModule
         if (! current_user_can('manage_options')) wp_send_json_error();
 
         $settings = isset($_POST['settings']) ? (array) $_POST['settings'] : [];
-        $multiline = ['address', 'footer_text', 'footer_description', 'head_scripts', 'body_scripts', 'wl_custom_css', 'home_hero_subheading'];
+
+        // Fields that allow raw HTML/scripts (admin-only, capability-gated above)
+        $rawFields = ['head_scripts', 'body_scripts', 'wl_custom_css'];
+        // Fields that allow basic HTML (no scripts)
+        $multiline = ['address', 'footer_text', 'footer_description', 'home_hero_subheading'];
 
         $existing = get_option('fluxstack_site_settings', []);
         foreach ($settings as $key => $value) {
-            $existing[$key] = in_array($key, $multiline) ? wp_kses_post($value) : sanitize_text_field($value);
+            if (in_array($key, $rawFields)) {
+                $existing[$key] = wp_unslash($value);
+            } elseif (in_array($key, $multiline)) {
+                $existing[$key] = wp_kses_post($value);
+            } else {
+                $existing[$key] = sanitize_text_field($value);
+            }
         }
 
         update_option('fluxstack_site_settings', $existing);

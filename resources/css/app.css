@@ -41,6 +41,7 @@
 | Components — Reusable UI patterns
 |--------------------------------------------------------------------------
 */
+@import "./components/buttons.css";
 @import "./components/forms.css";
 
 /*

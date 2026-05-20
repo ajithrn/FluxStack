@@ -4,6 +4,7 @@
 !/public/.gitkeep
 .env
 npm-debug.log
+.DS_Store
 
 # Compiled block assets
 modules/*/build/

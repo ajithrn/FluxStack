@@ -64,10 +64,17 @@ return new class extends BaseModule
         if (isset($_POST['settings']) && is_array($_POST['settings'])) {
             $existing = get_option('fluxstack_site_settings', []);
             $incoming = (array) $_POST['settings'];
-            $multiline = ['address', 'footer_text', 'head_scripts', 'body_scripts', 'wl_custom_css'];
+            $rawFields = ['head_scripts', 'body_scripts', 'wl_custom_css'];
+            $multiline = ['address', 'footer_text'];
 
             foreach ($incoming as $key => $value) {
-                $existing[$key] = in_array($key, $multiline) ? wp_kses_post($value) : sanitize_text_field($value);
+                if (in_array($key, $rawFields)) {
+                    $existing[$key] = wp_unslash($value);
+                } elseif (in_array($key, $multiline)) {
+                    $existing[$key] = wp_kses_post($value);
+                } else {
+                    $existing[$key] = sanitize_text_field($value);
+                }
             }
             update_option('fluxstack_site_settings', $existing);
         }
