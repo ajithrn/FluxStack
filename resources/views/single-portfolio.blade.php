@@ -20,37 +20,35 @@
       $types = get_the_terms(get_the_ID(), 'portfolio_type');
     ?>
 
-    <article @php(post_class('portfolio-single'))>
-      {{-- Hero / Header --}}
+    <article @php(post_class('portfolio-single container'))>
+      {{-- Header --}}
       <header class="portfolio-single__header">
-        <div class="container--narrow">
-          @if (!empty($types) && !is_wp_error($types))
-            <div class="portfolio-single__types">
-              @foreach ($types as $type)
-                <span class="portfolio-single__type">{{ $type->name }}</span>
-              @endforeach
-            </div>
-          @endif
+        @if (!empty($types) && !is_wp_error($types))
+          <div class="portfolio-single__types">
+            @foreach ($types as $type)
+              <span class="portfolio-single__type">{{ $type->name }}</span>
+            @endforeach
+          </div>
+        @endif
 
-          <h1 class="portfolio-single__title">{!! get_the_title() !!}</h1>
+        <h1 class="portfolio-single__title">{!! get_the_title() !!}</h1>
 
-          @if (has_excerpt())
-            <p class="portfolio-single__excerpt">{{ get_the_excerpt() }}</p>
-          @endif
-        </div>
+        @if (has_excerpt())
+          <p class="portfolio-single__excerpt">{{ get_the_excerpt() }}</p>
+        @endif
       </header>
 
       {{-- Featured Image --}}
       @if (has_post_thumbnail())
-        <div class="portfolio-single__hero container">
+        <div class="portfolio-single__hero">
           <figure class="portfolio-single__featured">
             {!! get_the_post_thumbnail(null, 'large', ['class' => 'portfolio-single__img']) !!}
           </figure>
         </div>
       @endif
 
-      <div class="portfolio-single__body container--narrow">
-        {{-- Meta / Details Sidebar --}}
+      <div class="portfolio-single__body">
+        {{-- Meta / Details --}}
         @if ($client || $year || $location || $website)
           <aside class="portfolio-single__meta">
             @if ($client)
@@ -128,7 +126,7 @@
 
       {{-- Gallery --}}
       @if (!empty($gallery))
-        <section class="portfolio-single__gallery container">
+        <section class="portfolio-single__gallery">
           <h2 class="portfolio-single__section-title">{{ __('Gallery', 'fluxstack') }}</h2>
           <div class="portfolio-single__gallery-grid">
             @foreach ($gallery as $image)
@@ -141,7 +139,7 @@
       @endif
 
       {{-- Navigation --}}
-      <nav class="post-navigation container--narrow">
+      <nav class="post-navigation">
         <div class="post-navigation__inner">
           <?php $prev = get_adjacent_post(false, '', true); ?>
           <?php $next = get_adjacent_post(false, '', false); ?>

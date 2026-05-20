@@ -1,9 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="page-header container">
-    <h1 class="page-header__title">{{ post_type_archive_title('', false) }}</h1>
-  </div>
+  <header class="page-header">
+    <div class="container">
+      <h1 class="page-header__title">{{ post_type_archive_title('', false) }}</h1>
+    </div>
+  </header>
 
   {{-- Taxonomy filter --}}
   <?php $portfolio_types = get_terms(['taxonomy' => 'portfolio_type', 'hide_empty' => true]); ?>

@@ -2,8 +2,9 @@
  * Site Footer
  */
 
-.site-footer { background: var(--color-secondary-900); color: var(--color-secondary-300); margin-top: auto; }
-.site-footer__inner { padding: 3rem 0; }
+.site-footer { background: var(--color-secondary-900); color: var(--color-secondary-300); }
+
+.site-footer__inner { padding-top: 3rem; padding-bottom: 3rem; }
 
 .site-footer__top { display: grid; grid-template-columns: 1fr; gap: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--color-secondary-700); }
 @media (min-width: 768px) { .site-footer__top { grid-template-columns: 2fr 1fr 1fr; } }

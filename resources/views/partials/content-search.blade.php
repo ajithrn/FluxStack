@@ -1,6 +1,6 @@
-<article @php(post_class())>
-  <header>
-    <h2 class="entry-title">
+<article @php(post_class('search-result'))>
+  <header class="search-result__header">
+    <h2 class="search-result__title">
       <a href="{{ get_permalink() }}">
         {!! $title !!}
       </a>
@@ -9,7 +9,7 @@
     @includeWhen(get_post_type() === 'post', 'partials.entry-meta')
   </header>
 
-  <div class="entry-summary">
+  <div class="search-result__excerpt">
     @php(the_excerpt())
   </div>
 </article>

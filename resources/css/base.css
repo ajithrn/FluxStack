@@ -1,32 +1,102 @@
 /**
  * Base Styles
  * ===========
- * Global resets, body defaults, and utility classes.
+ * Global resets, body defaults, layout grid, and container system.
+ *
+ * Layout System:
+ * - CSS Grid for the site shell (header / main / footer).
+ * - .container: max-width + horizontal padding (default width).
+ * - .container--narrow: tighter content width for readability.
+ * - .container--wide: explicit alias for default max-width.
+ * - Every section gets padding — nothing bleeds to screen edges.
+ * - Blocks use WP alignment classes (alignwide/alignfull) within containers.
  */
 
+/* ─── Body ─── */
 body {
     font-family: var(--font-sans);
     color: var(--color-secondary-800);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 img { max-width: 100%; height: auto; display: block; }
 
-/* Layout utilities */
-.container--narrow {
+/* ─── Site Shell (CSS Grid) ─── */
+.site {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 1fr;
+    min-height: 100dvh;
+}
+
+.site__main {
     width: 100%;
+}
+
+/* ─── Container Modifiers ─── */
+/* The base .container is defined as a @utility override in app.css
+   to prevent Tailwind's built-in container from conflicting. */
+
+/* ─── WordPress Block Alignment ─── */
+.site__main .alignwide {
+    max-width: var(--container-max-width);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.site__main .alignfull {
+    width: calc(100% + var(--container-padding) * 2);
+    max-width: calc(100% + var(--container-padding) * 2);
+    margin-left: calc(var(--container-padding) * -1);
+    margin-right: calc(var(--container-padding) * -1);
+}
+
+/* WP constrained layout (theme.json contentSize/wideSize) */
+.site__main .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)) {
     max-width: var(--container-narrow);
     margin-left: auto;
     margin-right: auto;
-    padding-left: var(--container-padding);
-    padding-right: var(--container-padding);
 }
 
-/* WordPress block alignment */
-.main .alignwide { max-width: var(--container-max-width); margin-left: auto; margin-right: auto; }
-.main .alignfull { width: 100vw; max-width: 100vw; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); }
+.site__main .is-layout-constrained > .alignwide {
+    max-width: var(--container-max-width);
+}
 
-/* WP Admin Bar offset */
+/* ─── Skip Link ─── */
+.skip-link {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.skip-link:focus {
+    position: fixed;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 9999;
+    width: auto;
+    height: auto;
+    padding: 0.5rem 1rem;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+    background: var(--color-primary-600);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+}
+
+/* ─── WP Admin Bar offset ─── */
 .admin-bar .site-header { top: 32px; }
 @media (max-width: 782px) { .admin-bar .site-header { top: 46px; } }

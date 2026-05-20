@@ -1,7 +1,3 @@
 @php(the_content())
 
-@if ($pagination())
-  <nav class="page-nav" aria-label="Page">
-    {!! $pagination !!}
-  </nav>
-@endif
+{!! wp_link_pages(['echo' => 0, 'before' => '<nav class="page-nav" aria-label="Page"><p>' . __('Pages:', 'fluxstack'), 'after' => '</p></nav>']) !!}

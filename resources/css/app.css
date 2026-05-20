@@ -20,14 +20,14 @@
 
 /*
 |--------------------------------------------------------------------------
-| Base — Global resets, body defaults, layout utilities
+| Base — Global resets, site grid shell, container system
 |--------------------------------------------------------------------------
 */
 @import "./base.css";
 
 /*
 |--------------------------------------------------------------------------
-| Sections — One file per layout section
+| Sections — One file per layout section (BEM components)
 |--------------------------------------------------------------------------
 */
 @import "./sections/header.css";
@@ -38,7 +38,7 @@
 
 /*
 |--------------------------------------------------------------------------
-| Components — Reusable UI patterns
+| Components — Reusable UI patterns (BEM components)
 |--------------------------------------------------------------------------
 */
 @import "./components/buttons.css";

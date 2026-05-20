@@ -4,16 +4,17 @@
   @include('partials.page-header')
 
   @if (! have_posts())
-    <x-alert type="warning">
-      {!! __('Sorry, no results were found.', 'sage') !!}
-    </x-alert>
+    <div class="container">
+      <p>{{ __('Sorry, no results were found.', 'fluxstack') }}</p>
+      {!! get_search_form(false) !!}
+    </div>
+  @else
+    <div class="search-results container">
+      @while(have_posts()) @php(the_post())
+        @include('partials.content-search')
+      @endwhile
 
-    {!! get_search_form(false) !!}
+      {!! get_the_posts_navigation() !!}
+    </div>
   @endif
-
-  @while(have_posts()) @php(the_post())
-    @include('partials.content-search')
-  @endwhile
-
-  {!! get_the_posts_navigation() !!}
 @endsection

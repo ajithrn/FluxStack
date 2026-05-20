@@ -15,7 +15,5 @@
 
 /* 404 */
 .error-404 { text-align: center; padding: 6rem 0; }
-.error-404__title { font-size: 6rem; font-weight: 800; color: var(--color-secondary-200); margin: 0; line-height: 1; }
+.error-404__title { font-size: clamp(5rem, 15vw, 8rem); font-weight: 800; color: var(--color-secondary-200); margin: 0; line-height: 1; }
 .error-404__message { font-size: 1.1rem; color: var(--color-secondary-500); margin: 1rem 0 2rem; }
-.error-404__link { font-weight: 600; color: var(--color-primary-600); text-decoration: none; }
-.error-404__link:hover { color: var(--color-primary-700); }

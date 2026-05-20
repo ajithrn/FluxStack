@@ -6,6 +6,7 @@
       "contentSize": "48rem",
       "wideSize": "75rem"
     },
+    "appearanceTools": true,
     "background": {
       "backgroundImage": true
     },
@@ -27,6 +28,8 @@
     },
     "spacing": {
       "padding": true,
+      "margin": true,
+      "blockGap": true,
       "units": [
         "px",
         "%",

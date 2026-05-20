@@ -7,22 +7,16 @@
   <body @php(body_class())>
     @php(wp_body_open())
 
-    <div id="app" class="flex flex-col min-h-screen">
-      <a class="sr-only focus:not-sr-only" href="#main">
+    <div id="app" class="site">
+      <a class="skip-link" href="#main">
         {{ __('Skip to content', 'fluxstack') }}
       </a>
 
       @include('sections.header')
 
-      <main id="main" class="main flex-grow">
+      <main id="main" class="site__main">
         @yield('content')
       </main>
-
-      @hasSection('sidebar')
-        <aside class="sidebar">
-          @yield('sidebar')
-        </aside>
-      @endif
 
       @include('sections.footer')
     </div>

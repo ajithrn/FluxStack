@@ -1,8 +1,8 @@
-<article @php(post_class('single-post'))>
-  <header class="single-post__header container--narrow">
+<article @php(post_class('single-post container'))>
+  <header class="single-post__header">
     @include('partials.entry-meta')
 
-    <h1 class="single-post__title p-name">
+    <h1 class="single-post__title">
       {!! $title !!}
     </h1>
 
@@ -13,19 +13,19 @@
     @endif
   </header>
 
-  <div class="single-post__content container--narrow e-content">
+  <div class="single-post__content">
     @php(the_content())
   </div>
 
-  <div class="single-post__tags container--narrow">
-    @if (has_tag())
+  @if (has_tag())
+    <div class="single-post__tags">
       <div class="entry-tags">
         {!! get_the_tag_list('<span class="entry-tags__label">' . __('Tags:', 'fluxstack') . '</span> ') !!}
       </div>
-    @endif
-  </div>
+    </div>
+  @endif
 
-  <nav class="post-navigation container--narrow">
+  <nav class="post-navigation">
     <div class="post-navigation__inner">
       <?php $prev = get_previous_post(); ?>
       <?php $next = get_next_post(); ?>
@@ -46,5 +46,7 @@
     </div>
   </nav>
 
-  @php(comments_template())
+  <div class="single-post__comments">
+    @php(comments_template())
+  </div>
 </article>
