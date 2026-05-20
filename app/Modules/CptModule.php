@@ -175,5 +175,21 @@ abstract class CptModule extends BaseModule
                 }
             }
         }
+
+        // Scaffold CSS files from module styles/ to resources/css/modules/
+        $stylesDir = $this->path() . '/styles';
+        if (is_dir($stylesDir)) {
+            $themeCssDir = get_theme_file_path('resources/css/modules');
+            $cssFiles = glob($stylesDir . '/*.css');
+
+            foreach ($cssFiles as $file) {
+                $filename = basename($file);
+                $destination = $themeCssDir . '/' . $filename;
+
+                if (! file_exists($destination)) {
+                    copy($file, $destination);
+                }
+            }
+        }
     }
 }

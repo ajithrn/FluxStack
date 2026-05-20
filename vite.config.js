@@ -3,14 +3,50 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import laravel from 'laravel-vite-plugin'
 import { wordpressPlugin, wordpressThemeJson } from '@roots/vite-plugin';
+import { globSync } from 'node:fs';
+import path from 'node:path';
 
 if (! process.env.APP_URL) {
   process.env.APP_URL = 'http://example.test';
 }
 
+/**
+ * Resolve glob patterns in CSS @import statements.
+ * Allows: @import "../../modules/* /style.css" (without space)
+ */
+function cssGlobImport() {
+  return {
+    name: 'css-glob-import',
+    enforce: 'pre',
+    transform(code, id) {
+      if (!id.endsWith('.css')) return null;
+
+      const globImportRegex = /@import\s+["']([^"']*\*[^"']*)["']\s*;/g;
+      let hasGlob = false;
+      let result = code;
+
+      result = result.replace(globImportRegex, (match, pattern) => {
+        hasGlob = true;
+        const dir = path.dirname(id);
+        const resolvedPattern = path.resolve(dir, pattern);
+        const files = globSync(resolvedPattern);
+
+        if (files.length === 0) return '/* no files matched: ' + pattern + ' */';
+
+        return files
+          .map(file => `@import "${path.relative(dir, file)}";`)
+          .join('\n');
+      });
+
+      return hasGlob ? result : null;
+    },
+  };
+}
+
 export default defineConfig({
   base: '/app/themes/fluxstack/public/build/',
   plugins: [
+    cssGlobImport(),
     tailwindcss(),
     react({
       include: ['**/*.jsx'],

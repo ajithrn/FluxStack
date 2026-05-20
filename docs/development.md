@@ -113,21 +113,30 @@ return new class extends CptModule {
 
 CPT defaults: no block editor (`show_in_rest => false`), no content area (supports: title, thumbnail, excerpt, custom-fields). Override in `postTypeArgs()` if needed.
 
-### CPT Templates
+### CPT Templates & Styles
 
-CPT modules can include their own Blade templates in a `views/` directory. These auto-load when the module is active:
+CPT modules ship skeleton templates and CSS. On first activation, these are copied to the theme for per-project customization:
 
 ```
 modules/my-cpt/
 ├── module.php
 ├── acf-json/
-├── views/
-│   ├── archive.blade.php    ← CPT archive page
-│   └── single.blade.php     ← CPT single page
+├── views/                              ← Skeleton templates
+│   ├── archive-{post-type}.blade.php
+│   └── single-{post-type}.blade.php
+├── styles/                             ← Skeleton CSS
+│   └── {module-id}.css
 └── blocks/
 ```
 
-Templates use `@extends('layouts.app')` and have access to all theme views/partials. They're loaded via `template_include` filter — if the view file doesn't exist, WordPress falls back to the theme's default templates.
+**On boot, files are copied to:**
+- `resources/views/archive-{post-type}.blade.php`
+- `resources/views/single-{post-type}.blade.php`
+- `resources/css/modules/{module-id}.css`
+
+**Important:** Files are only copied if they don't already exist. Your customizations are never overwritten. To reset to defaults, delete the file and reactivate the module.
+
+After enabling a new CPT module, run `npm run build` to include its CSS.
 
 **Example archive template:**
 

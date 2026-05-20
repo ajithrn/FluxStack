@@ -1,0 +1,32 @@
+/**
+ * Base Styles
+ * ===========
+ * Global resets, body defaults, and utility classes.
+ */
+
+body {
+    font-family: var(--font-sans);
+    color: var(--color-secondary-800);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+/* Layout utilities */
+.container--narrow {
+    width: 100%;
+    max-width: var(--container-narrow);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
+}
+
+/* WordPress block alignment */
+.main .alignwide { max-width: var(--container-max-width); margin-left: auto; margin-right: auto; }
+.main .alignfull { width: 100vw; max-width: 100vw; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); }
+
+/* WP Admin Bar offset */
+.admin-bar .site-header { top: 32px; }
+@media (max-width: 782px) { .admin-bar .site-header { top: 46px; } }

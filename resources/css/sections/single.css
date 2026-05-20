@@ -1,0 +1,33 @@
+/**
+ * Single Post
+ */
+
+.single-post__header { padding: 3rem 0 2rem; }
+.single-post__title { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; line-height: 1.15; margin: 1rem 0 0; color: var(--color-secondary-900); }
+.single-post__featured { margin: 2rem 0 0; border-radius: var(--radius-lg); overflow: hidden; }
+.single-post__img { width: 100%; }
+
+.single-post__content { padding-bottom: 2rem; font-size: 1.05rem; line-height: 1.8; }
+.single-post__content h2 { font-size: 1.5rem; font-weight: 700; margin: 2.5rem 0 1rem; }
+.single-post__content h3 { font-size: 1.25rem; font-weight: 600; margin: 2rem 0 0.75rem; }
+.single-post__content p { margin: 0 0 1.5rem; }
+.single-post__content ul, .single-post__content ol { margin: 0 0 1.5rem; padding-left: 1.5rem; }
+.single-post__content li { margin-bottom: 0.5rem; }
+.single-post__content blockquote { border-left: 3px solid var(--color-primary-500); padding-left: 1.25rem; margin: 1.5rem 0; font-style: italic; color: var(--color-secondary-600); }
+.single-post__content a { color: var(--color-primary-600); text-decoration: underline; text-underline-offset: 2px; }
+.single-post__content img { border-radius: var(--radius-md); margin: 1.5rem 0; }
+.single-post__content pre { background: var(--color-secondary-50); border-radius: var(--radius-md); padding: 1.25rem; overflow-x: auto; font-size: 0.875rem; margin: 1.5rem 0; }
+.single-post__content code { font-family: var(--font-mono); font-size: 0.875em; background: var(--color-secondary-50); padding: 0.15em 0.35em; border-radius: var(--radius-sm); }
+.single-post__content pre code { background: none; padding: 0; }
+
+.entry-tags { font-size: 0.85rem; color: var(--color-secondary-500); margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--color-secondary-100); }
+.entry-tags a { color: var(--color-primary-600); text-decoration: none; margin-right: 0.5rem; }
+
+/* Post Navigation */
+.post-navigation { margin: 2.5rem 0; padding-top: 2rem; border-top: 1px solid var(--color-secondary-100); }
+.post-navigation__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.post-navigation__link { text-decoration: none; display: block; }
+.post-navigation__link--next { text-align: right; }
+.post-navigation__label { font-size: 0.8rem; color: var(--color-secondary-400); display: block; margin-bottom: 0.25rem; }
+.post-navigation__title { font-size: 0.95rem; font-weight: 600; color: var(--color-secondary-700); }
+.post-navigation__link:hover .post-navigation__title { color: var(--color-primary-600); }

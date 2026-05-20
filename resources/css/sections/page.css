@@ -1,0 +1,21 @@
+/**
+ * Page Content
+ */
+
+.page-content__header { padding: 3rem 0 1.5rem; }
+.page-content__title { font-size: clamp(2rem, 5vw, 2.75rem); font-weight: 800; line-height: 1.15; margin: 0; color: var(--color-secondary-900); }
+
+.page-content__body { padding-bottom: 3rem; font-size: 1.05rem; line-height: 1.8; }
+.page-content__body p { margin: 0 0 1.5rem; }
+.page-content__body h2 { font-size: 1.5rem; font-weight: 700; margin: 2.5rem 0 1rem; }
+.page-content__body h3 { font-size: 1.25rem; font-weight: 600; margin: 2rem 0 0.75rem; }
+.page-content__body ul, .page-content__body ol { margin: 0 0 1.5rem; padding-left: 1.5rem; }
+.page-content__body a { color: var(--color-primary-600); text-decoration: underline; text-underline-offset: 2px; }
+.page-content__body img { border-radius: var(--radius-md); margin: 1.5rem 0; }
+
+/* 404 */
+.error-404 { text-align: center; padding: 6rem 0; }
+.error-404__title { font-size: 6rem; font-weight: 800; color: var(--color-secondary-200); margin: 0; line-height: 1; }
+.error-404__message { font-size: 1.1rem; color: var(--color-secondary-500); margin: 1rem 0 2rem; }
+.error-404__link { font-weight: 600; color: var(--color-primary-600); text-decoration: none; }
+.error-404__link:hover { color: var(--color-primary-700); }

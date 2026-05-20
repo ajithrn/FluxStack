@@ -1,0 +1,27 @@
+/**
+ * Site Footer
+ */
+
+.site-footer { background: var(--color-secondary-900); color: var(--color-secondary-300); margin-top: auto; }
+.site-footer__inner { padding: 3rem 0; }
+
+.site-footer__top { display: grid; grid-template-columns: 1fr; gap: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--color-secondary-700); }
+@media (min-width: 768px) { .site-footer__top { grid-template-columns: 2fr 1fr 1fr; } }
+
+.site-footer__name { font-size: 1.1rem; font-weight: 700; color: #fff; }
+.site-footer__logo-link { text-decoration: none; }
+.site-footer__tagline { font-size: 0.9rem; margin: 0.5rem 0 0; opacity: 0.7; }
+
+.site-footer__heading { font-size: 0.85rem; font-weight: 600; color: #fff; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 0.75rem; }
+
+.site-footer__nav .nav { list-style: none; margin: 0; padding: 0; }
+.site-footer__nav .nav li { margin-bottom: 0.5rem; }
+.site-footer__nav .nav a { color: var(--color-secondary-300); text-decoration: none; font-size: 0.9rem; transition: color var(--transition-fast); }
+.site-footer__nav .nav a:hover { color: #fff; }
+
+.site-footer__contact p { margin: 0 0 0.4rem; font-size: 0.9rem; }
+.site-footer__contact a { color: var(--color-secondary-300); text-decoration: none; }
+.site-footer__contact a:hover { color: #fff; }
+
+.site-footer__bottom { padding-top: 1.5rem; text-align: center; }
+.site-footer__copyright { font-size: 0.8rem; margin: 0; opacity: 0.6; }

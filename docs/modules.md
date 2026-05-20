@@ -50,7 +50,10 @@
 - **ID:** `portfolio`
 - **Post Type:** `portfolio`
 - **Taxonomy:** `portfolio_type`
-- Project showcase with client, year, and type metadata
+- **ACF Fields:** client, year, location, website, project description, features (repeater), key details (repeater), gallery
+- **Scaffolded templates:** `archive-portfolio.blade.php`, `single-portfolio.blade.php`
+- **Scaffolded CSS:** `resources/css/modules/portfolio.css`
+- Project showcase with taxonomy filter, hover overlay cards, meta bar, features grid, image gallery
 
 ### Publications
 - **ID:** `publications`

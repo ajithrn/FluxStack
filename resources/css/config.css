@@ -1,0 +1,57 @@
+/**
+ * Design Tokens / Project Configuration
+ * ======================================
+ * Customize these per project. Change colors, fonts, and sizing here —
+ * everything else adapts automatically via CSS custom properties.
+ *
+ * These integrate with Tailwind 4's @theme system and are also available
+ * in the block editor via auto-generated theme.json.
+ */
+
+@theme {
+    /* ─── Colors: Primary ─── */
+    --color-primary-50: #eff6ff;
+    --color-primary-100: #dbeafe;
+    --color-primary-200: #bfdbfe;
+    --color-primary-300: #93c5fd;
+    --color-primary-400: #60a5fa;
+    --color-primary-500: #3b82f6;
+    --color-primary-600: #2563eb;
+    --color-primary-700: #1d4ed8;
+    --color-primary-800: #1e40af;
+    --color-primary-900: #1e3a8a;
+
+    /* ─── Colors: Secondary (Neutrals) ─── */
+    --color-secondary-50: #f8fafc;
+    --color-secondary-100: #f1f5f9;
+    --color-secondary-200: #e2e8f0;
+    --color-secondary-300: #cbd5e1;
+    --color-secondary-400: #94a3b8;
+    --color-secondary-500: #64748b;
+    --color-secondary-600: #475569;
+    --color-secondary-700: #334155;
+    --color-secondary-800: #1e293b;
+    --color-secondary-900: #0f172a;
+
+    /* ─── Typography ─── */
+    --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+    --font-serif: "Georgia", serif;
+    --font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+    /* ─── Layout ─── */
+    --container-max-width: 1200px;
+    --container-narrow: 48rem;
+    --container-padding: 1.5rem;
+
+    /* ─── Borders & Radius ─── */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+    --radius-full: 9999px;
+
+    /* ─── Transitions ─── */
+    --transition-fast: 0.15s;
+    --transition-base: 0.2s;
+    --transition-slow: 0.3s;
+}

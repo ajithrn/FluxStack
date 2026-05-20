@@ -166,21 +166,31 @@ PHP-only blocks show a styled placeholder with sample content when first inserte
 
 ### CPT Module View Scaffolding
 
-CPT modules ship skeleton Blade templates in `modules/{id}/views/`. On `boot()`, these are auto-copied to `resources/views/` if they don't already exist:
+CPT modules ship skeleton Blade templates and CSS in their folder. On `boot()`, these are auto-copied to the theme if they don't already exist:
 
 ```
-modules/portfolio/views/               ← Skeletons (shipped with module)
-├── archive-portfolio.blade.php
+modules/portfolio/                     ← Module source (don't edit for per-project changes)
+├── views/
+│   ├── archive-portfolio.blade.php
+│   └── single-portfolio.blade.php
+└── styles/
+    └── portfolio.css
+
+resources/views/                       ← Active templates (customize per project)
+├── archive-portfolio.blade.php        ← Copied on first boot
 └── single-portfolio.blade.php
 
-resources/views/                       ← Active templates (Sage uses these)
-├── archive-portfolio.blade.php        ← Copied on first boot, customize per project
-└── single-portfolio.blade.php
+resources/css/modules/                 ← Active module styles (customize per project)
+└── portfolio.css                      ← Copied on first boot
 ```
 
-- Only copies if the file doesn't exist in `resources/views/` (won't overwrite customizations)
+**Key behavior:**
+- Only copies if the file doesn't exist in the destination (won't overwrite customizations)
+- Deactivating and reactivating a module will NOT replace your customized files
+- To reset to module defaults, delete the file from `resources/` and reactivate
 - Templates use `@extends('layouts.app')` and follow WP template hierarchy naming
-- Sage auto-discovers them by name (e.g. `single-portfolio` for the `portfolio` CPT)
+- CSS files are auto-imported via glob in `app.css` (`@import "./modules/*.css"`)
+- After adding a new module with styles, run `npm run build` to include them
 
 ### Module Types
 
@@ -255,10 +265,38 @@ Site Settings (top-level admin menu)
 **Single command:** `npm run build`
 
 1. Vite processes `resources/css/` and `resources/js/`
-2. `@roots/vite-plugin` generates `theme.json` from Tailwind config
-3. `@vitejs/plugin-react` handles `.jsx` files (if any are imported in `editor.js`)
-4. Output goes to `public/build/`
-5. PHP-only blocks need no compilation at all
+2. `cssGlobImport` plugin resolves `@import "./modules/*.css"` glob patterns
+3. `@roots/vite-plugin` generates `theme.json` from Tailwind config
+4. `@vitejs/plugin-react` handles `.jsx` files (if any are imported in `editor.js`)
+5. Output goes to `public/build/`
+6. PHP-only blocks need no compilation at all
+
+### CSS Architecture
+
+```
+resources/css/
+├── app.css                    ← Entry point (imports only, never add styles here)
+├── config.css                 ← Design tokens: colors, fonts, sizing, radius, transitions
+│                                 (edit this per project to customize the theme)
+├── base.css                   ← Body defaults, layout utilities, WP alignment, admin bar
+├── sections/                  ← Theme layout sections (one file per section)
+│   ├── header.css             ← Site header + mobile nav
+│   ├── footer.css             ← Site footer
+│   ├── archive.css            ← Blog grid, post cards, entry meta, pagination
+│   ├── single.css             ← Single post typography, tags, prev/next nav
+│   └── page.css               ← Page content + 404
+├── components/                ← Reusable UI patterns
+│   └── forms.css              ← Search form, comment form
+├── modules/                   ← Module styles (scaffolded from modules on boot)
+│   └── portfolio.css          ← Customizable per project
+└── editor.css                 ← Block editor styles (separate Vite entry point)
+```
+
+**Per-project customization:**
+- Edit `config.css` to change colors, fonts, container width, border radius
+- Edit files in `sections/` to change layout-specific styles
+- Edit files in `modules/` to customize CPT/block appearance
+- All styles reference design tokens via `var(--...)` from config.css
 
 ## Key Differences from v1
 
